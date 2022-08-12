@@ -606,7 +606,7 @@ void PutServer()
 	*/
 	
 
-	if (*gKey & *gKeyArms)
+	if (*gKey & 0x10000)
 	{
 		//Draw player-list
 		const int nameWidth = ((MAX_NAME * 5) + 8 + 16);

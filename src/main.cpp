@@ -12,6 +12,8 @@
 #include "Networking.h"
 #include "Server.h"
 
+int* gKKey = (int*)0x49E210;
+
 const char* gameIp;
 const char* gamePort;
 const char* gamePlyrName;
@@ -80,6 +82,11 @@ int networkStarted = 0;
 // Puts the players because idk how to shove this above PutMyChar
 void PutFlash(void)
 {
+	if (networkStarted == 1 && !InServer())
+	{
+		if (*gKKey & 0x20000)
+			networkStarted = 0;
+	}
 
 	if (networkStarted != 1)
 	{
