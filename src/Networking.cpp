@@ -287,10 +287,10 @@ void HandleClient()
 							
 							if (strcmp(prevName, gVirtualPlayers[i].name))
 							{
-								RECT rcUsername = {0, i * 16, CS_window_surface_width, i * 16 + 16};
+								// RECT rcUsername = {0, i * 16, CS_window_surface_width, i * 16 + 16};
 								// CS_DrawColourFill2(&rcUsername, 0x000000, CS_SURFACE_ID_UNKNOWN_4);
-								// CS_PutText2((CS_window_surface_width - strlen(gVirtualPlayers[i].name) * 5) / 2, i * 16 + 2 + 1, gVirtualPlayers[i].name, 0x110022, CS_SURFACE_ID_UNKNOWN_4);
-								// CS_PutText2((CS_window_surface_height - strlen(gVirtualPlayers[i].name) * 5) / 2, i * 16 + 2, gVirtualPlayers[i].name, 0xFFFFFE, CS_SURFACE_ID_UNKNOWN_4);
+								CS_PutText(((CS_window_surface_width / 2) - strlen(gVirtualPlayers[i].name) * 5) / 2, i * 16 + 2 + 1, gVirtualPlayers[i].name, 0x110022);
+								CS_PutText(((CS_window_surface_width / 2) - strlen(gVirtualPlayers[i].name) * 5) / 2, i * 16 + 2, gVirtualPlayers[i].name, 0xFFFFFE);
 							}
 							
 							//Update variables

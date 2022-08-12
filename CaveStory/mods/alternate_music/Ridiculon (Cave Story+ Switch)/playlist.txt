@@ -1,0 +1,41 @@
+ogg_ridic/wanpaku.ogg, loop
+ogg_ridic/anzen.ogg, loop
+ogg_ridic/gameover.ogg
+ogg_ridic/gravity.ogg, loop
+ogg_ridic/weed.ogg, loop
+ogg_ridic/mdown2.ogg, loop
+ogg_ridic/fireeye.ogg, loop
+ogg_ridic/vivi.ogg, loop
+ogg_ridic/mura.ogg, loop
+ogg_ridic/fanfale1.ogg
+ogg_ridic/ginsuke.ogg, loop
+ogg_ridic/cemetery.ogg, loop
+ogg_ridic/plant.ogg, loop
+ogg_ridic/kodou.ogg, loop
+ogg_ridic/fanfale3.ogg
+ogg_ridic/fanfale2.ogg
+ogg_ridic/dr.ogg, loop
+ogg_ridic/escape.ogg, loop
+ogg_ridic/jenka.ogg, loop
+ogg_ridic/maze.ogg, loop
+ogg_ridic/access.ogg, loop
+ogg_ridic/ironh.ogg, loop
+ogg_ridic/grand.ogg, loop
+ogg_ridic/curly.ogg, loop
+ogg_ridic/oside.ogg, loop
+ogg_ridic/requiem.ogg, loop
+ogg_ridic/wanpak2.ogg, loop
+ogg_ridic/quiet.ogg, loop
+ogg_ridic/lastcave.ogg, loop
+ogg_ridic/balcony.ogg, loop
+ogg_ridic/lastbtl.ogg, loop
+ogg_ridic/lastbt3.ogg, loop
+ogg_ridic/ending.ogg, loop
+ogg_ridic/zonbie.ogg, loop
+ogg_ridic/bdown.ogg, loop
+ogg_ridic/hell.ogg, loop
+ogg_ridic/jenka2.ogg, loop
+ogg_ridic/marine.ogg, loop
+ogg_ridic/ballos.ogg, loop
+ogg_ridic/toroko.ogg
+ogg_ridic/white.ogg, loop

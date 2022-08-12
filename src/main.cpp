@@ -42,12 +42,11 @@ void DefaultConfigData(CS_ConfigData *conf)
 	conf->gamepad_buttons[5] = 4;
 	conf->gamepad_buttons[6] = 6;
 	conf->gamepad_buttons[7] = 3;
-
-	CS_MakeSurface_Generic(CS_window_surface_width * 2, MAX_CLIENTS * 16, CS_SURFACE_ID_UNKNOWN_4);
 }
 
 void InactiveWindow()
 {
+	CS_PutText(((CS_window_surface_width / 2) / 2), 18, "Disconnected.", RGB(255, 255, 255));
 	// nothing lol
 }
 
@@ -73,8 +72,10 @@ void ActStar()
 	{
 		HandleClient();
 	}
-	if (!(IsHosting() || InServer()))
-		return ServerDisconnect();
+	else
+	{
+		KillClient();
+	}
 }
 
 void PutFlash(void)
