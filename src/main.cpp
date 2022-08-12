@@ -6,7 +6,7 @@
 
 #include "mod_loader.h"
 
-#include "cs.h"
+// #include "cs.h"
 #include "cave_story.h"
 
 #include "Networking.h"
@@ -54,20 +54,40 @@ void InactiveWindow()
 }
 
 // Idk why I do this here tbh
+
+/*
 static void SetWindowName(HWND hWnd)
 {
+	CS_MakeSurface_Generic(CS_window_surface_width * 2, MAX_CLIENTS * 16, CS_SURFACE_ID_UNKNOWN_12);
 	// CS_MakeSurface_Generic(CS_window_surface_width * 2, MAX_CLIENTS * 16, CS_SURFACE_ID_UNKNOWN_4);
 	char* window_name;
-
 	window_name = "CS Freeware Online";
-	InitNetworking();
-	JoinServer(gameIp, gamePort, gamePlyrName);
 	SetWindowTextA(hWnd, window_name);
 }
+*/
+
 
 // Handles the connection instead of whimsical star lol
+/*
 void ActStar()
 {
+
+}
+*/
+
+int networkStarted = 0;
+
+// Puts the players because idk how to shove this above PutMyChar
+void PutFlash(void)
+{
+
+	if (networkStarted != 1)
+	{
+		InitNetworking();
+		JoinServer(gameIp, gamePort, gamePlyrName);
+		networkStarted = 1;
+	}
+
 	CS_GetFramePosition(&frame_x, &frame_y);
 
 	if (InServer())
@@ -78,12 +98,9 @@ void ActStar()
 	{
 		KillClient();
 	}
-}
 
-// Puts the players because idk how to shove this above PutMyChar
-void PutFlash(void)
-{
 	PutVirtualPlayers(frame_x, frame_y);
+	PutServer();
 }
 
 
@@ -94,8 +111,13 @@ void InitMod(void)
 	gamePlyrName = ModLoader_GetSettingString("Player Name", "Player");
 
 	ModLoader_WriteJump((void*)0x40AE30, (void*)DefaultConfigData);
-	ModLoader_WriteJump((void*)0x412320, (void*)SetWindowName);
+	// ModLoader_WriteJump((void*)0x412320, (void*)SetWindowName);
 	ModLoader_WriteJump((void*)0x412BC0, (void*)InactiveWindow);
-	ModLoader_WriteJump((void*)0x421040, (void*)ActStar);
+	/*
+	ModLoader_WriteByte((void*)0x403F65, 0xC9); //write LEAVE
+	ModLoader_WriteWord((void*)0x403F66, 0xEB11); //write short JMP to get past the switch table
+	ModLoader_WriteJump((void*)0x403F79, (void*)PutVirtualPlayers);
+	*/
+	// ModLoader_WriteJump((void*)0x421040, (void*)ActStar);
 	ModLoader_WriteJump((void*)0x40EE20, (void*)PutFlash);
 }

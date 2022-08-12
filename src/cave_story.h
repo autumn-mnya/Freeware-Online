@@ -143,7 +143,7 @@ static void (* const CS_CreateDustClouds)(int x, int y, signed int range, int co
 static void (* const CS_sub_46FA00)(void) = (void(*)(void))0x46FA00;
 // CortBox2
 static void (* const CS_DrawColourFill2)(RECT* dst_rect, int colour, CS_SurfaceID surf_no) = (void(*)(RECT*, int, CS_SurfaceID))0x40CA80;
-// MakeSurface_Generic
+// MakeSurface_Generic - 0x40C1D0
 static BOOL(* const CS_MakeSurface_Generic)(int bxsize, int bysize, int surf_no) = (BOOL(*)(int, int, int))0x40C1D0;
 // MakeSurface_File
 static BOOL(* const CS_MakeSurface_File)(const char *name, int surf_no) = (BOOL(*)(const char*, int))0x40BAC0;

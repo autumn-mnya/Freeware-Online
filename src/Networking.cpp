@@ -13,6 +13,7 @@
 #include "Server.h"
 #include "player.h"
 #include "cave_story.h"
+#include "cs.h"
 #include "mod_loader.h"
 
 ENetHost *client;
@@ -288,9 +289,9 @@ void HandleClient()
 							if (strcmp(prevName, gVirtualPlayers[i].name))
 							{
 								// RECT rcUsername = {0, i * 16, CS_window_surface_width, i * 16 + 16};
-								// CS_DrawColourFill2(&rcUsername, 0x000000, CS_SURFACE_ID_UNKNOWN_4);
-								CS_PutText(((CS_window_surface_width / 2) - strlen(gVirtualPlayers[i].name) * 5) / 2, i * 16 + 2 + 1, gVirtualPlayers[i].name, 0x110022);
-								CS_PutText(((CS_window_surface_width / 2) - strlen(gVirtualPlayers[i].name) * 5) / 2, i * 16 + 2, gVirtualPlayers[i].name, 0xFFFFFE);
+								// CS_DrawColourFill2(&rcUsername, 0x000000, CS_SURFACE_ID_UNKNOWN_23);
+								// CS_PutText2(((CS_window_surface_width / 2) - strlen(gVirtualPlayers[i].name) * 5) / 2, i * 16 + 2 + 1, gVirtualPlayers[i].name, 0x110022, CS_SURFACE_ID_UNKNOWN_23);
+								// CS_PutText2(((CS_window_surface_width / 2) - strlen(gVirtualPlayers[i].name) * 5) / 2, i * 16 + 2, gVirtualPlayers[i].name, 0xFFFFFE, CS_SURFACE_ID_UNKNOWN_23);
 							}
 							
 							//Update variables
@@ -508,8 +509,8 @@ void PutVirtualPlayers(int fx, int fy)
 				}
 				
 				//Draw username
-				RECT rcUsername = {0, i * 16, CS_window_surface_width, i * 16 + 16};
-				CS_DrawSprite_WithTransparency(&CS_clip_rect_common, drawX / 0x200 - fx / 0x200 - CS_window_surface_width / 2, drawY / 0x200 - fy / 0x200 - 22, &rcUsername, CS_SURFACE_ID_UNKNOWN_4);
+				// RECT rcUsername = {0, i * 16, CS_window_surface_width, i * 16 + 16};
+				// CS_DrawSprite_WithTransparency(&CS_clip_rect_common, drawX / 0x200 - fx / 0x200 - CS_window_surface_width / 2, drawY / 0x200 - fy / 0x200 - 22, &rcUsername, CS_SURFACE_ID_UNKNOWN_4);
 			}
 		}
 	}
@@ -604,8 +605,8 @@ void PutServer()
 		CS_DrawSprite_WithTransparency(&CS_clip_rect_common, 0, WINDOW_HEIGHT / 2, &rcChat, CS_SURFACE_ID_UNKNOWN_3);
 	*/
 	
-	/*
-	if (gKey & KEY_TAB)
+
+	if (*gKey & *gKeyArms)
 	{
 		//Draw player-list
 		const int nameWidth = ((MAX_NAME * 5) + 8 + 16);
@@ -619,8 +620,8 @@ void PutServer()
 		}
 		
 		//Draw actual playerlist
-		int playerPerLine = WINDOW_WIDTH / nameWidth;
-		int offX = (WINDOW_WIDTH - (nameWidth * playerPerLine)) / 2;
+		int playerPerLine = CS_window_surface_width / nameWidth;
+		int offX = (CS_window_surface_width - (nameWidth * playerPerLine)) / 2;
 		
 		int player_i = 0;
 		for (int i = 0; i < MAX_CLIENTS; i++)
@@ -633,22 +634,24 @@ void PutServer()
 				
 				//Draw back
 				RECT rcBack = {x, y, x + nameWidth, y + 20};
-				// CortBox(&rcBack, 0x000020);
+				CS_DrawColourFill(&rcBack, 0x000020);
 				
 				//Draw skin
 				RECT rcSkin = {0, 0, 16, 16};
-				// PutBitmap3(&rcBack, x, y + 2, &rcSkin, SURFACE_ID_SKIN_0 + i);
-				
+				CS_DrawSprite_WithTransparency(&rcBack, x, y + 2, &rcSkin, CS_SURFACE_ID_MY_CHAR);
+				// CS_SURFACE_ID_UNKNOWN_23
 				//Draw username
-				RECT rcUsername = {0, i * 16, WINDOW_WIDTH, i * 16 + 16};
-				// PutBitmap3(&rcBack, x + nameWidth / 2 - WINDOW_WIDTH / 2, y - 1, &rcUsername, SURFACE_ID_USERNAME);
+				/*
+				RECT rcUsername = {0, i * 16, CS_window_surface_width, i * 16 + 16};
+				CS_DrawSprite_WithTransparency(&rcBack, x + nameWidth / 2 - CS_window_surface_width / 2, y - 1, &rcUsername, CS_SURFACE_ID_UNKNOWN_23);
 				
 				//Draw mapname
-				RECT rcMapName = {WINDOW_WIDTH, i * 16, WINDOW_WIDTH * 2, i * 16 + 16};
-				// PutBitmap3(&rcBack, x + nameWidth / 2 - WINDOW_WIDTH / 2, y + 9, &rcMapName, SURFACE_ID_USERNAME);
+				RECT rcMapName = { CS_window_surface_width, i * 16, CS_window_surface_width * 2, i * 16 + 16};
+				CS_DrawSprite_WithTransparency(&rcBack, x + nameWidth / 2 - CS_window_surface_width / 2, y + 9, &rcMapName, CS_SURFACE_ID_UNKNOWN_23);
+				*/
 			}
 		}
-	}*/
+	}
 }
 
 //Get profile to write to / load from
