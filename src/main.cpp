@@ -12,11 +12,12 @@
 #include "Networking.h"
 #include "Server.h"
 
-int* gKKey = (int*)0x49E210;
-
 const char* gameIp;
 const char* gamePort;
 const char* gamePlyrName;
+
+
+int* gKKey = (int*)0x49E210;
 
 void ServerDisconnect()
 {
