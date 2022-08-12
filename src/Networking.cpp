@@ -462,14 +462,14 @@ void PutVirtualPlayers(int fx, int fy)
 					++rect_arms.top;
 				
 				if (gVirtualPlayers[i].direct)
-					CS_DrawSprite_WithTransparency(
+					CS_PutBitmap3(
 						&CS_clip_rect_common,
 						(drawX - 0x1000) / 0x200 - fx / 0x200,
 						(drawY - 0x1000) / 0x200 - fy / 0x200 + arms_offset_y,
 						&rect_arms,
 						CS_SURFACE_ID_ARMS);
 				else
-					CS_DrawSprite_WithTransparency(
+					CS_PutBitmap3(
 						&CS_clip_rect_common,
 						(drawX - 0x1000) / 0x200 - fx / 0x200 - 8,
 						(drawY - 0x1000) / 0x200 - fy / 0x200 + arms_offset_y,
@@ -493,7 +493,7 @@ void PutVirtualPlayers(int fx, int fy)
 						rect.bottom += 32;
 					}
 					
-					CS_DrawSprite_WithTransparency(&CS_clip_rect_common, (drawX - 0x1000) / 0x200 - fx / 0x200, (drawY - 0x1000) / 0x200 - fy / 0x200, &rect, CS_SURFACE_ID_MY_CHAR);
+					CS_PutBitmap3(&CS_clip_rect_common, (drawX - 0x1000) / 0x200 - fx / 0x200, (drawY - 0x1000) / 0x200 - fy / 0x200, &rect, CS_SURFACE_ID_MY_CHAR);
 					
 					//Draw airtank
 					RECT rcBubble[2];
@@ -503,9 +503,9 @@ void PutVirtualPlayers(int fx, int fy)
 					++gVirtualPlayers[i].bubble;
 					
 					if (gVirtualPlayers[i].equip & 0x10 && gVirtualPlayers[i].flag & 0x100)
-						CS_DrawSprite_WithTransparency(&CS_clip_rect_common, drawX / 0x200 - 12 - fx / 0x200, gVirtualPlayers[i].y / 0x200 - 12 - fy / 0x200, &rcBubble[(gVirtualPlayers[i].bubble >> 1) & 1], CS_SURFACE_ID_UNKNOWN_19);
+						CS_PutBitmap3(&CS_clip_rect_common, drawX / 0x200 - 12 - fx / 0x200, gVirtualPlayers[i].y / 0x200 - 12 - fy / 0x200, &rcBubble[(gVirtualPlayers[i].bubble >> 1) & 1], CS_SURFACE_ID_UNKNOWN_19);
 					else if (gVirtualPlayers[i].unit == 1)
-						CS_DrawSprite_WithTransparency(&CS_clip_rect_common, drawY / 0x200 - 12 - fx / 0x200, gVirtualPlayers[i].y / 0x200 - 12 - fy / 0x200, &rcBubble[(gVirtualPlayers[i].bubble >> 1) & 1], CS_SURFACE_ID_UNKNOWN_19);
+						CS_PutBitmap3(&CS_clip_rect_common, drawY / 0x200 - 12 - fx / 0x200, gVirtualPlayers[i].y / 0x200 - 12 - fy / 0x200, &rcBubble[(gVirtualPlayers[i].bubble >> 1) & 1], CS_SURFACE_ID_UNKNOWN_19);
 				}
 				
 				//Draw username
@@ -634,11 +634,11 @@ void PutServer()
 				
 				//Draw back
 				RECT rcBack = {x, y, x + nameWidth, y + 20};
-				CS_DrawColourFill(&rcBack, 0x000020);
+				CS_CortBox(&rcBack, 0x000020);
 				
 				//Draw skin
 				RECT rcSkin = {0, 0, 16, 16};
-				CS_DrawSprite_WithTransparency(&rcBack, x, y + 2, &rcSkin, CS_SURFACE_ID_MY_CHAR);
+				CS_PutBitmap3(&rcBack, x, y + 2, &rcSkin, CS_SURFACE_ID_MY_CHAR);
 				// CS_SURFACE_ID_UNKNOWN_23
 				//Draw username
 				/*

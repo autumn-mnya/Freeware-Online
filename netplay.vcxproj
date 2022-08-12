@@ -90,6 +90,7 @@
     <ClCompile Include="src\\Server.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\playermain.h" />
     <ClInclude Include="src\\cave_story.h" />
     <ClInclude Include="src\\cs.h" />
     <ClInclude Include="src\\mod_loader.h" />

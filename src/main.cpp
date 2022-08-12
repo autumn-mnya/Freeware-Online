@@ -8,7 +8,7 @@
 
 // #include "cs.h"
 #include "cave_story.h"
-
+#include "playermain.h"
 #include "Networking.h"
 #include "Server.h"
 
@@ -85,6 +85,7 @@ void PutFlash(void)
 {
 	if (networkStarted == 1 && !InServer())
 	{
+		// Period key pressed, reset network state.
 		if (*gKKey & 0x20000)
 			networkStarted = 0;
 	}
