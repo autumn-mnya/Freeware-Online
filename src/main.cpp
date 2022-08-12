@@ -44,12 +44,16 @@ void DefaultConfigData(CS_ConfigData *conf)
 	conf->gamepad_buttons[7] = 3;
 }
 
+int frame_x = 0;
+int frame_y = 0;
+
+// ok but actually this is nice
 void InactiveWindow()
 {
-	// CS_PutText(((CS_window_surface_width / 2) / 2), 18, "Disconnected.", RGB(255, 255, 255));
 	// nothing lol
 }
 
+// Idk why I do this here tbh
 static void SetWindowName(HWND hWnd)
 {
 	// CS_MakeSurface_Generic(CS_window_surface_width * 2, MAX_CLIENTS * 16, CS_SURFACE_ID_UNKNOWN_4);
@@ -61,9 +65,7 @@ static void SetWindowName(HWND hWnd)
 	SetWindowTextA(hWnd, window_name);
 }
 
-int frame_x = 0;
-int frame_y = 0;
-
+// Handles the connection instead of whimsical star lol
 void ActStar()
 {
 	CS_GetFramePosition(&frame_x, &frame_y);
@@ -78,6 +80,7 @@ void ActStar()
 	}
 }
 
+// Puts the players because idk how to shove this above PutMyChar
 void PutFlash(void)
 {
 	PutVirtualPlayers(frame_x, frame_y);
