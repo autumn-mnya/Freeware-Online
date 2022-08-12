@@ -12,6 +12,10 @@
 #include "Networking.h"
 #include "Server.h"
 
+const char* gameIp;
+const char* gamePort;
+const char* gamePlyrName;
+
 void ServerDisconnect()
 {
 	if (IsHosting())
@@ -54,23 +58,40 @@ static void SetWindowName(HWND hWnd)
 
 	window_name = "CS Freeware Online";
 	InitNetworking();
-	JoinServer("10.0.0.75", "28000", "Freeware");
+	JoinServer(gameIp, gamePort, gamePlyrName);
 	SetWindowTextA(hWnd, window_name);
 }
 
+int frame_x = 0;
+int frame_y = 0;
+
 void ActStar()
 {
+	CS_GetFramePosition(&frame_x, &frame_y);
+
 	if (InServer())
+	{
 		HandleClient();
+	}
 	if (!(IsHosting() || InServer()))
 		return ServerDisconnect();
+}
+
+void PutFlash(void)
+{
+	PutVirtualPlayers(frame_x, frame_y);
 }
 
 
 void InitMod(void)
 {
+	gameIp = ModLoader_GetSettingString("IP", "127.0.0.1");
+	gamePort = ModLoader_GetSettingString("PORT", "25565");
+	gamePlyrName = ModLoader_GetSettingString("PLAYER_NAME", "Player");
+
 	ModLoader_WriteJump((void*)0x40AE30, (void*)DefaultConfigData);
 	ModLoader_WriteJump((void*)0x412320, (void*)SetWindowName);
 	ModLoader_WriteJump((void*)0x412BC0, (void*)InactiveWindow);
 	ModLoader_WriteJump((void*)0x421040, (void*)ActStar);
+	ModLoader_WriteJump((void*)0x40EE20, (void*)PutFlash);
 }

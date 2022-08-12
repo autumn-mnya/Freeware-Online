@@ -155,6 +155,8 @@ static void (* const CS_ReleaseSurface)(int s) = (void(*)(int))0x40B7A0;
 static void (* const CS_PutText)(int x, int y, const char* text, unsigned int colour) = (void(*)(int, int, const char*, unsigned int))0x40CE00;
 // PutText2
 static void (* const CS_PutText2)(int x, int y, const char* text, unsigned int colour, CS_SurfaceID) = (void(*)(int, int, const char*, unsigned int, CS_SurfaceID))0x40CEB0;
+// GetFramePosition - 0x40F020
+static void (* const CS_GetFramePosition)(int *fx, int *fy) = (void(*)(int*, int*))0x40F020;
 
 // Hookspaces & Hookjumps
 

@@ -107,8 +107,8 @@ bool JoinServer(const char *ip, const char *port, const char *name)
 	/*
 	for (int i = 0; i < MAX_CLIENTS; i++)
 	{
-		ReleaseSurface(SURFACE_ID_SKIN_0 + i);
-		MakeSurface_File("MyChar", SURFACE_ID_SKIN_0 + i);
+		CS_ReleaseSurface(CS_SURFACE_ID_MY_CHAR + i);
+		CS_MakeSurface_File("MyChar", CS_SURFACE_ID_MY_CHAR + i);
 	}
 	*/
 	
