@@ -46,7 +46,7 @@ void DefaultConfigData(CS_ConfigData *conf)
 
 void InactiveWindow()
 {
-	CS_PutText(((CS_window_surface_width / 2) / 2), 18, "Disconnected.", RGB(255, 255, 255));
+	// CS_PutText(((CS_window_surface_width / 2) / 2), 18, "Disconnected.", RGB(255, 255, 255));
 	// nothing lol
 }
 
@@ -87,8 +87,8 @@ void PutFlash(void)
 void InitMod(void)
 {
 	gameIp = ModLoader_GetSettingString("IP", "127.0.0.1");
-	gamePort = ModLoader_GetSettingString("PORT", "25565");
-	gamePlyrName = ModLoader_GetSettingString("PLAYER_NAME", "Player");
+	gamePort = ModLoader_GetSettingString("Port", "25565");
+	gamePlyrName = ModLoader_GetSettingString("Player Name", "Player");
 
 	ModLoader_WriteJump((void*)0x40AE30, (void*)DefaultConfigData);
 	ModLoader_WriteJump((void*)0x412320, (void*)SetWindowName);
