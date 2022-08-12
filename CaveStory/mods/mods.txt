@@ -1,2 +1,2 @@
-graphics_enhancement
 netplay
+graphics_enhancement
