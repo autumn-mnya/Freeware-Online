@@ -1,0 +1,5 @@
+/.git
+/.vs
+/Debug
+/Release
+netplay.vcxproj.user
