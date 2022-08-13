@@ -2,6 +2,7 @@
 // Public domain
 
 #include <ddraw.h>
+#include <dinput.h>
 #include <windows.h>
 
 #define BULLET_MAX 0x40
@@ -1055,79 +1056,79 @@ static int (* const CS_Random)(int min, int max) = (int(*)(int, int))0x40F350;
 // PutNumber4 - 0x40F380
 static void (* const CS_PutNumber4)(int x, int y, int, int) = (void(*)(int, int, int, int))0x40F380;
 // Game - 0x40F5F0
-
+static BOOL(* const CS_Game)(HWND hWnd) = (BOOL(*)(HWND))0x40F5F0;
 // ModeOpening - 0x40F730
-
+static int (* const CS_ModeOpening)(HWND hWnd) = (int(*)(HWND))0x40F730;
 // ModeTitle - 0x40F9B0
-
+static int (* const CS_ModeTitle)(HWND hWnd) = (int(*)(HWND))0x40F9B0;
 // ModeAction - 0x410400
-
+static int (* const CS_ModeAction)(HWND hWnd) = (int(*)(HWND))0x410400;
 // GetCompileDate - 0x4108B0
-
+static void (* const CS_GetCompileDate)(int *year, int *month, int *day) = (void(*)(int*, int*, int*))0x4108B0;
 // GetCompileVersion - 0x410990
-
+static BOOL(* const CS_GetCompileVersion)(int* v1, int* v2, int* v3, int* v4) = (BOOL(*)(int*, int*, int*, int*))0x410990;
 // OpenSoundVolume - 0x410AB0
-
+static BOOL(* const CS_OpenSoundVolume)(HWND hWnd) = (BOOL(*)(HWND))0x410AB0;
 // DeleteLog - 0x410BC0
-
+static void (* const CS_DeleteLog)(void) = (void(*)(void))0x410BC0;
 // WriteLog - 0x410C10
-
+static BOOL(* const CS_WriteLog)(const char *string, int value1, int value2, int value3) = (BOOL(*)(const char*, int, int, int))0x410C10;
 // GetDateLimit - 0x410CA0
-
+static int (* const CS_GetDateLimit)(SYSTEMTIME* system_time_low, SYSTEMTIME* system_time_high) = (int(*)(SYSTEMTIME*, SYSTEMTIME*))0x410CA0;
 // IsKeyFile - 0x410D10
-
+static BOOL(* const CS_IsKeyFile)(const char *name) = (BOOL(*)(const char*))0x410D10;
 // GetFileSizeLong - 0x410D80
-
+static long(* const CS_GetFileSizeLong)(const char *path) = (long(*)(const char*))0x410D80;
 // ErrorLog - 0x410DE0
-
+static BOOL(* const CS_ErrorLog)(const char *string, int value) = (BOOL(*)(const char*, int))0x410DE0;
 // IsShiftJIS - 0x410E90
-
+static BOOL(* const CS_IsShiftJIS)(unsigned char c) = (BOOL(*)(unsigned char))0x410E90;
 // CenteringWindowByParent - 0x410EE0
-
+static BOOL(* const CS_CenteringWindowByParent)(HWND hWnd) = (BOOL(*)(HWND))0x410EE0;
 // LoadWindowRect - 0x410FE0
-
+static BOOL(* const CS_LoadWindowRect)(HWND hWnd, const char *filename, BOOL unknown) = (BOOL(*)(HWND, const char*, BOOL))0x410FE0;
 // SaveWindowRect - 0x4111F0
-
+static BOOL(* const CS_SaveWindowRect)(HWND hWnd, const char *filename) = (BOOL(*)(HWND, const char*))0x4111F0;
 // IsEnableBitmap - 0x4112E0
-
+static BOOL(* const CS_IsEnableBitmap)(const char *path) = (BOOL(*)(const char*))0x4112E0;
 // LoadGenericData - 0x411390
-
+static BOOL(* const CS_LoadGenericData)(void) = (BOOL(*)(void))0x411390;
 // ReleaseDirectInput - 0x411E10
-
+static void(* const CS_ReleaseDirectInput)(void) = (void(*)(void))0x411E10;
 // ActivateDirectInput - 0x411E60
-
+static BOOL(* const CS_ActivateDirectInput)(BOOL aquire) = (BOOL(*)(BOOL))0x411E60;
 // InitDirectInput - 0x411EB0
-
+static BOOL(* const CS_InitDirectInput)(HINSTANCE hinst, HWND hWnd) = (BOOL(*)(HINSTANCE, HWND))0x411EB0;
 // HookAllDirectInputDevices - 0x411EF0
-
+static BOOL(* const CS_FindAndOpenDirectInputDevice)(HWND hWnd) = (BOOL(*)(HWND))0x411EF0;
 // EnumDevices_Callback - 0x411FC0
-
+static BOOL(* const CS_EnumDevices_Callback)(LPCDIDEVICEINSTANCE lpddi, LPVOID pvRef) = (BOOL(*)(LPCDIDEVICEINSTANCE, LPVOID))0x411FC0;
 // GetJoystickStatus - 0x4120F0
-
+static BOOL(* const CS_GetJoystickStatus)(CS_DIRECTINPUTSTATUS *status) = (BOOL(*)(CS_DIRECTINPUTSTATUS*))0x4120F0;
 // ResetJoystickStatus - 0x412250
-
+static BOOL(* const CS_ResetJoystickStatus)(void) = (BOOL(*)(void))0x412250;
 // GetTrg - 0x4122E0
-
+static void (* const CS_GetTrg)(void) = (void(*)(void))0x4122E0;
 // SetWindowName - 0x412320
-
+static void (* const CS_SetWindowName)(HWND hWnd) = (void(*)(HWND))0x412320;
 // PutFramePerSecound - 0x412370
-
+static void (* const CS_PutFramePerSecound)(void) = (void(*)(void))0x412370;
 // CountFramePerSecound - 0x4123A0
-
+static unsigned long (* const CS_CountFramePerSecound)(void) = (unsigned long(*)(void))0x4123A0;
 // WinMain - 0x412420
-
+static int (* const CS_WinMain)(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) = (int(*)(HINSTANCE, HINSTANCE, LPSTR, int))0x412420;
 // InactiveWindow - 0x412BC0
-
+static void (* const CS_InactiveWindow)(void) = (void(*)(void))0x412BC0;
 // ActiveWindow - 0x412BF0
-
+static void (* const CS_ActiveWindow)(void) = (void(*)(void))0x412BF0;
 // DragAndDropHandler - 0x412C30
-
+static BOOL(* const CS_DragAndDropHandler)(HWND hWnd, WPARAM wParam) = (BOOL(*)(HWND, WPARAM))0x412C30;
 // WindowProcedure - 0x412CA0
-
+static LRESULT (* const CS_WindowProcedure)(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam) = (LRESULT(*)(HWND, UINT, WPARAM, LPARAM))0x412CA0;
 // SystemTask - 0x413570
-
+static BOOL (* const CS_SystemTask)(void) = (BOOL(*)(void))0x413570;
 // JoystickProc - 0x4135E0
-
+static void (* const CS_JoystickProc)(void) = (void(*)(void))0x4135E0;
 // InitMapData2 - 0x413750
 
 // LoadMapData2 - 0x413770
