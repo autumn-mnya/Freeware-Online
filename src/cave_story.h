@@ -1218,53 +1218,53 @@ static void (* const CS_ResetNoise)(void) = (void(*)(void))0x416D80;
 // SleepNoise - 0x416DF0
 static void (* const CS_SleepNoise)(void) = (void(*)(void))0x416DF0;
 // ResetMyCharFlag - 0x416E20
-
+static void (* const CS_ResetMyCharFlag)(void) = (void(*)(void))0x416E20;
 // JudgeHitMyCharBlock - 0x416E30
-
+static int (* const CS_JudgeHitMyCharBlock)(int x, int y) = (int(*)(int, int))0x416E30;
 // PutlittleStar - 0x417160
-
+static void (* const CS_PutlittleStar)(void) = (void(*)(void))0x417160;
 // JudgeHitMyCharTriangleA - 0x4171D0
-
+static int (* const CS_JudgeHitMyCharTriangleA)(int x, int y) = (int(*)(int, int))0x4171D0;
 // JudgeHitMyCharTriangleB - 0x4172E0
-
+static int (* const CS_JudgeHitMyCharTriangleB)(int x, int y) = (int(*)(int, int))0x4172E0;
 // JudgeHitMyCharTriangleC - 0x4173F0
-
+static int (* const CS_JudgeHitMyCharTriangleC)(int x, int y) = (int(*)(int, int))0x4173F0;
 // JudgeHitMyCharTriangleD - 0x417500
-
+static int (* const CS_JudgeHitMyCharTriangleD)(int x, int y) = (int(*)(int, int))0x417500;
 // JudgeHitMyCharTriangleE - 0x417610
-
+static int (* const CS_JudgeHitMyCharTriangleE)(int x, int y) = (int(*)(int, int))0x417610;
 // JudgeHitMyCharTriangleF - 0x417720
-
+static int (* const CS_JudgeHitMyCharTriangleF)(int x, int y) = (int(*)(int, int))0x417720;
 // JudgeHitMyCharTriangleG - 0x417830
-
+static int (* const CS_JudgeHitMyCharTriangleG)(int x, int y) = (int(*)(int, int))0x417830;
 // JudgeHitMyCharTriangleH - 0x417940
-
+static int (* const CS_JudgeHitMyCharTriangleH)(int x, int y) = (int(*)(int, int))0x417940;
 // JudgeHitMyCharWater - 0x417A50
-
+static int (* const CS_JudgeHitMyCharWater)(int x, int y) = (int(*)(int, int))0x417A50;
 // JudgeHitMyCharDamage - 0x417AE0
-
+static int (* const CS_JudgeHitMyCharDamage)(int x, int y) = (int(*)(int, int))0x417AE0;
 // JudgeHitMyCharDamageW - 0x417B70
-
+static int (* const CS_JudgeHitMyCharDamageW)(int x, int y) = (int(*)(int, int))0x417B70;
 // JudgeHitMyCharVectLeft - 0x417C00
-
+static int (* const CS_JudgeHitMyCharVectLeft)(int x, int y) = (int(*)(int, int))0x417C00;
 // JudgeHitMyCharVectUp - 0x417C90
-
+static int (* const CS_JudgeHitMyCharVectUp)(int x, int y) = (int(*)(int, int))0x417C90;
 // JudgeHitMyCharVectRight - 0x417D20
-
+static int (* const CS_JudgeHitMyCharVectRight)(int x, int y) = (int(*)(int, int))0x417D20;
 // JudgeHitMyCharVectDown - 0x417DB0
-
+static int (* const CS_JudgeHitMyCharVectDown)(int x, int y) = (int(*)(int, int))0x417DB0;
 // HitMyCharMap - 0x417E40
-
+static void (* const CS_HitMyCharMap)(void) = (void(*)(void))0x417E40;
 // JudgeHitMyCharNPC - 0x4187F0
-
+static int (* const CS_JudgeHitMyCharNPC)(CS_NPCHAR *npc) = (int(*)(CS_NPCHAR*))0x4187F0;
 // JudgeHitMyCharNPC3 - 0x418B10
-
+static unsigned char (* const CS_JudgeHitMyCharNPC3)(CS_NPCHAR* npc) = (unsigned char(*)(CS_NPCHAR*))0x418B10;
 // JudgeHitMyCharNPC4 - 0x418C20
-
+static int (* const CS_JudgeHitMyCharNPC4)(CS_NPCHAR* npc) = (int(*)(CS_NPCHAR*))0x418C20;
 // HitMyCharNpChar - 0x419030
-
+static void (* const CS_HitMyCharNpChar)(void) = (void(*)(void))0x419030;
 // HitMyCharBoss - 0x419450
-
+static void (* const CS_HitMyCharBoss)(void) = (void(*)(void))0x419450;
 // AddExpMyChar - 0x4196F0
 
 // ZeroExpMyChar - 0x419890
