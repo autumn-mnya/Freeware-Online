@@ -1439,7 +1439,7 @@ static void (* const CS_ChangeSoundPan)(int no, long pan) = (void(*)(int, long))
 // MakePixToneObject - 0x4207E0
 static int (* const CS_MakePixToneObject)(const CS_PIXTONEPARAMETER* ptp, int ptp_num, int no) = (int(*)(const CS_PIXTONEPARAMETER*, int, int))0x4207E0;
 // TransferStage - 0x420BE0
-
+static BOOL(* const CS_TransferStage)(int no, int w, int x, int y) = (BOOL(*)(int, int, int, int))0x420BE0;
 // ChangeMusic - 0x420EE0
 static void (* const CS_ChangeMusic)(int music_id) = (void(*)(int))0x420EE0;
 // ReCallMusic - 0x420F50
