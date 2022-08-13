@@ -442,13 +442,13 @@ static void (* const CS_SetCaret)(int x, int y, int code, int dir) = (void(*)(in
 static BOOL (* const CS_LoadConfigData)(CS_ConfigData* config_memory) = (BOOL(*)(CS_ConfigData*))0x40AD60;
 // DefaultConfigData - 0x40AE30
 static void(* const CS_DefaultConfigData)(CS_ConfigData* config_memory) = (void(*)(CS_ConfigData*))0x40AE30;
-// VersionDialog
+// VersionDialog - 0x40AEC0
 
-// DebugMuteDialog
+// DebugMuteDialog - 0x40AFC0
 
-// DebugSaveDialog
+// DebugSaveDialog - 0x40B1D0
 
-// QuitDialog
+// QuitDialog - 0x40B290
 
 // SetClientOffset - 0x40B320
 static void(* const CS_SetClientOffset)(int width, int height) = (void(*)(int, int))0x40B320;
@@ -456,95 +456,95 @@ static void(* const CS_SetClientOffset)(int width, int height) = (void(*)(int, i
 static BOOL (* const CS_Flip_SystemTask)(HWND hWnd) = (BOOL(*)(HWND))0x40B340;
 // StartDirectDraw - 0x40B340
 static BOOL (* const CS_StartDirectDraw)(HWND hWnd, int lMagnification, int lColourDepth) = (BOOL(*)(HWND hWnd, int, int))0x40B340;
-// EndDirectDraw
+// EndDirectDraw - 0x40B6C0
 
 // ReleaseSurface - 0x40B7A0
 static void (* const CS_ReleaseSurface)(int s) = (void(*)(int))0x40B7A0;
-// MakeSurface_Resource
+// MakeSurface_Resource - 0x40B800
 
 // MakeSurface_File - 0x40BAC0
 static BOOL(* const CS_MakeSurface_File)(const char* name, int surf_no) = (BOOL(*)(const char*, int))0x40BAC0;
-// ReloadBitmap_Resource
+// ReloadBitmap_Resource - 0x40BE10
 
 // ReloadBitmap_File - 0x40BFD0
 static BOOL(* const CS_ReloadBitmap_File)(const char* name, int surf_no) = (BOOL(*)(const char*, int))0x40BFD0;
 // MakeSurface_Generic - 0x40C1D0
 static BOOL(* const CS_MakeSurface_Generic)(int bxsize, int bysize, int surf_no) = (BOOL(*)(int, int, int))0x40C1D0;
-// BackupSurface
+// BackupSurface - 0x40C320
 
 // PutBitmap3 - 0x40C3C0
 static void (* const CS_PutBitmap3)(const RECT*, int, int, const RECT*, CS_SurfaceID) = (void(*)(const RECT*, int, int, const RECT*, CS_SurfaceID))0x40C3C0;
 // PutBitmap4 - 0x40C5B0
 static void (* const CS_PutBitmap4)(const RECT*, int, int, const RECT*, CS_SurfaceID) = (void(*)(const RECT*, int, int, const RECT*, CS_SurfaceID))0x40C5B0;
-// Surface2Surface
+// Surface2Surface - 0x40C7A0
 
-// GetCortBoxColor
+// GetCortBoxColor - 0x40C8B0
 
 // CortBox - 0x40C9E0
 static void (* const CS_CortBox)(RECT* dst_rect, int colour) = (void(*)(RECT*, int))0x40C9E0;
 // CortBox2 - 0x40CA80
 static void (* const CS_CortBox2)(RECT* dst_rect, int colour, CS_SurfaceID surf_no) = (void(*)(RECT*, int, CS_SurfaceID))0x40CA80;
-// out
+// out - 0x40CB30
 
 // RestoreSurfaces - 0x40CB60
 static int (* const CS_RestoreSurfaces)(void) = (int(*)(void))0x40CB60;
-// InitTextObject
+// InitTextObject - 0x40CD50
 
 // PutText - 0x40CE00
 static void (* const CS_PutText)(int x, int y, const char* text, unsigned int colour) = (void(*)(int, int, const char*, unsigned int))0x40CE00;
 // PutText2 - 0x40CEB0
 static void (* const CS_PutText2)(int x, int y, const char* text, unsigned int colour, CS_SurfaceID) = (void(*)(int, int, const char*, unsigned int, CS_SurfaceID))0x40CEB0;
-// EndTextObject
+// EndTextObject - 0x40CF70
 
-// ActionStripper
+// ActionStripper - 0x40CF90
 
-// PutStripper
+// PutStripper - 0x40D010
 
-// SetStripper
+// SetStripper - 0x40D150
 
-// RestoreStripper
+// RestoreStripper - 0x40D240
 
-// ActionIllust
+// ActionIllust - 0x40D2D0
 
-// PutIllust
+// PutIllust - 0x40D350
 
-// ReloadIllust
+// ReloadIllust - 0x40D3A0
 
-// InitCreditScript
+// InitCreditScript - 0x40D3E0
 
-// ReleaseCreditScript
+// ReleaseCreditScript - 0x40D410
 
 // StartCreditScript - 0x40D440
 static BOOL(* const CS_StartCreditScript)(void) = (BOOL(*)(void))0x40D440;
-// ActionCredit
+// ActionCredit - 0x40D5C0
 
-// ActionCredit_Read
+// ActionCredit_Read - 0x40D620
 
-// GetScriptNumber
+// GetScriptNumber - 0x40DB00
 
-// SetCreditIllust
+// SetCreditIllust - 0x40DB40
 
-// CutCreditIllust
+// CutCreditIllust - 0x40DB60
 
-// Scene_DownIsland
+// Scene_DownIsland - 0x40DB70
 
-// Call_Escape
+// Call_Escape - 0x40DD70
 
-// InitFade
+// InitFade - 0x40DE60
 
-// SetFadeMask
+// SetFadeMask - 0x40DE90
 
-// ClearFade
+// ClearFade - 0x40DEA0
 
-// StartFadeOut
+// StartFadeOut - 0x40DEC0
 
-// StartFadeIn
+// StartFadeIn - 0x40DF50
 
-// ProcFade
+// ProcFade - 0x40DFE0
 
-// PutFade
+// PutFade - 0x40E770
 
-// GetFadeActive
+// GetFadeActive - 0x40E830
 
 // InitFlags - 0x40E850
 static void (* const CS_InitFlags)(void) = (void(*)(void))0x40E850;
@@ -562,335 +562,335 @@ static void (* const CS_SetSkipFlag)(long a) = (void(*)(long))0x40E970;
 static void (* const CS_CutSkipFlag)(long a) = (void(*)(long))0x40E9C0;
 // GetSkipFlag - 0x40EA10
 static BOOL(* const CS_GetSkipFlag)(long a) = (BOOL(*)(long))0x40EA10;
-// InitFlash
+// InitFlash - 0x40EA50
 
-// SetFlash
+// SetFlash - 0x40EA70
 
-// ActFlash_Explosion
+// ActFlash_Explosion - 0x40EAC0
 
-// ActFlash_Flash
+// ActFlash_Flash - 0x40ED20
 
-// ActFlash
+// ActFlash - 0x40EDE0
 
-// PutFlash
+// PutFlash - 0x40EE20
 
-// ResetFlash
+// ResetFlash - 0x40EE60
 
-// MoveFrame3
+// MoveFrame3 - 0x40EE70
 
 // GetFramePosition - 0x40F020
 static void (* const CS_GetFramePosition)(int* fx, int* fy) = (void(*)(int*, int*))0x40F020;
-// SetFramePosition
+// SetFramePosition - 0x40F040
 
-// SetFrameMyChar
+// SetFrameMyChar - 0x40F130
 
-// SetFrameTargetMyChar
+// SetFrameTargetMyChar - 0x40F220
 
-// SetFrameTargetNpChar
+// SetFrameTargetNpChar - 0x40F250
 
-// SetFrameTargetBoss
+// SetFrameTargetBoss - 0x40F2D0
 
-// SetQuake
+// SetQuake - 0x40F310
 
-// SetQuake2
+// SetQuake2 - 0x40F320
 
-// ResetQuake
+// ResetQuake - 0x40F330
 
 // Random - 0x40F350
 static int (* const CS_Random)(int min, int max) = (int(*)(int, int))0x40F350;
 // PutNumber4 - 0x40F380
 static void (* const CS_PutNumber4)(int x, int y, int, int) = (void(*)(int, int, int, int))0x40F380;
-// Game
+// Game - 0x40F5F0
 
-// ModeOpening
+// ModeOpening - 0x40F730
 
-// ModeTitle
+// ModeTitle - 0x40F9B0
 
-// ModeAction
+// ModeAction - 0x410400
 
-// GetCompileDate
+// GetCompileDate - 0x4108B0
 
-// GetCompileVersion
+// GetCompileVersion - 0x410990
 
-// OpenSoundVolume
+// OpenSoundVolume - 0x410AB0
 
-// DeleteLog
+// DeleteLog - 0x410BC0
 
-// WriteLog
+// WriteLog - 0x410C10
 
-// GetDateLimit
+// GetDateLimit - 0x410CA0
 
-// IsKeyFile
+// IsKeyFile - 0x410D10
 
-// GetFileSizeLong
+// GetFileSizeLong - 0x410D80
 
-// ErrorLog
+// ErrorLog - 0x410DE0
 
-// IsShiftJIS
+// IsShiftJIS - 0x410E90
 
-// CenteringWindowByParent
+// CenteringWindowByParent - 0x410EE0
 
-// LoadWindowRect
+// LoadWindowRect - 0x410FE0
 
-// SaveWindowRect
+// SaveWindowRect - 0x4111F0
 
-// IsEnableBitmap
+// IsEnableBitmap - 0x4112E0
 
-// LoadGenericData
+// LoadGenericData - 0x411390
 
-// ReleaseDirectInput
+// ReleaseDirectInput - 0x411E10
 
-// ActivateDirectInput
+// ActivateDirectInput - 0x411E60
 
-// InitDirectInput
+// InitDirectInput - 0x411EB0
 
-// HookAllDirectInputDevices
+// HookAllDirectInputDevices - 0x411EF0
 
-// EnumDevices_Callback
+// EnumDevices_Callback - 0x411FC0
 
-// GetJoystickStatus
+// GetJoystickStatus - 0x4120F0
 
-// ResetJoystickStatus
+// ResetJoystickStatus - 0x412250
 
-// GetTrg
+// GetTrg - 0x4122E0
 
-// SetWindowName
+// SetWindowName - 0x412320
 
-// PutFramePerSecound
+// PutFramePerSecound - 0x412370
 
-// CountFramePerSecound
+// CountFramePerSecound - 0x4123A0
 
-// WinMain
+// WinMain - 0x412420
 
-// InactiveWindow
+// InactiveWindow - 0x412BC0
 
-// ActiveWindow
+// ActiveWindow - 0x412BF0
 
-// DragAndDropHandler
+// DragAndDropHandler - 0x412C30
 
-// WindowProcedure
+// WindowProcedure - 0x412CA0
 
-// SystemTask
+// SystemTask - 0x413570
 
-// JoystickProc
+// JoystickProc - 0x4135E0
 
-// InitMapData2
+// InitMapData2 - 0x413750
 
-// LoadMapData2
+// LoadMapData2 - 0x413770
 
-// LoadAttributeData
+// LoadAttributeData - 0x4138A0
 
-// EndMapData
+// EndMapData - 0x413930
 
-// ReleasePartsImage
+// ReleasePartsImage - 0x413950
 
-// GetMapData
+// GetMapData - 0x413960
 
-// GetAttribute
+// GetAttribute - 0x4139A0
 
-// DeleteMapParts
+// DeleteMapParts - 0x413A00
 
-// ShiftMapParts
+// ShiftMapParts - 0x413A20
 
-// ChangeMapParts
+// ChangeMapParts - 0x413A60
 
-// PutStage_Back
+// PutStage_Back - 0x413AF0
 
-// PutStage_Front
+// PutStage_Front - 0x413C60
 
-// PutMapDataVector
+// PutMapDataVector - 0x413E40
 
-// ReadyMapName
+// ReadyMapName - 0x4140F0
 
-// PutMapName
+// PutMapName - 0x414250
 
-// StartMapName
+// StartMapName - 0x414310
 
-// RestoreMapName
+// RestoreMapName - 0x414330
 
-// WriteMinimMapLine
+// WriteMinimMapLine - 0x4143C0
 
-// MiniMapLoop
+// MiniMapLoop - 0x414640
 
-// IsMapping
+// IsMapping - 0x414B00
 
-// StartMapping
+// StartMapping - 0x414B20
 
-// SetMapping
+// SetMapping - 0x414B40
 
-// InitMyChar
+// InitMyChar - 0x414B50
 
-// AnimationMyChar
+// AnimationMyChar - 0x414BF0
 
-// ShowMyChar
+// ShowMyChar - 0x415220
 
 // PutMyChar - 0x415250
 static void (* const CS_PutMyChar)(int camera_x, int camera_y) = (void(*)(int, int))0x415250;
-// ActMyChar_Normal
+// ActMyChar_Normal - 0x4156C0
 
-// ActMyChar_Stream
+// ActMyChar_Stream - 0x416470
 
-// ActMyChar
+// ActMyChar - 0x4168C0
 
-// AirProcess
+// AirProcess - 0x416990
 
-// GetMyCharPosition
+// GetMyCharPosition - 0x416AA0
 
-// SetMyCharPosition
+// SetMyCharPosition - 0x416AC0
 
-// MoveMyChar
+// MoveMyChar - 0x416B30
 
-// ZeroMyCharXMove
+// ZeroMyCharXMove - 0x416B50
 
-// GetUnitMyChar
+// GetUnitMyChar - 0x416B60
 
-// SetMyCharDirect
+// SetMyCharDirect - 0x416B70
 
-// ChangeMyUnit
+// ChangeMyUnit - 0x416C40
 
-// PitMyChar
+// PitMyChar - 0x416C50
 
-// EquipItem
+// EquipItem - 0x416C70
 
-// ResetCheck
+// ResetCheck - 0x416CA0
 
-// SetNoise
+// SetNoise - 0x416CC0
 
-// CutNoise
+// CutNoise - 0x416D40
 
-// ResetNoise
+// ResetNoise - 0x416D80
 
-// SleepNoise
+// SleepNoise - 0x416DF0
 
-// ResetMyCharFlag
+// ResetMyCharFlag - 0x416E20
 
-// JudgeHitMyCharBlock
+// JudgeHitMyCharBlock - 0x416E30
 
-// PutlittleStar
+// PutlittleStar - 0x417160
 
-// JudgeHitMyCharTriangleA
+// JudgeHitMyCharTriangleA - 0x4171D0
 
-// JudgeHitMyCharTriangleB
+// JudgeHitMyCharTriangleB - 0x4172E0
 
-// JudgeHitMyCharTriangleC
+// JudgeHitMyCharTriangleC - 0x4173F0
 
-// JudgeHitMyCharTriangleD
+// JudgeHitMyCharTriangleD - 0x417500
 
-// JudgeHitMyCharTriangleE
+// JudgeHitMyCharTriangleE - 0x417610
 
-// JudgeHitMyCharTriangleF
+// JudgeHitMyCharTriangleF - 0x417720
 
-// JudgeHitMyCharTriangleG
+// JudgeHitMyCharTriangleG - 0x417830
 
-// JudgeHitMyCharTriangleH
+// JudgeHitMyCharTriangleH - 0x417940
 
-// JudgeHitMyCharWater
+// JudgeHitMyCharWater - 0x417A50
 
-// JudgeHitMyCharDamage
+// JudgeHitMyCharDamage - 0x417AE0
 
-// JudgeHitMyCharDamageW
+// JudgeHitMyCharDamageW - 0x417B70
 
-// JudgeHitMyCharVectLeft
+// JudgeHitMyCharVectLeft - 0x417C00
 
-// JudgeHitMyCharVectUp
+// JudgeHitMyCharVectUp - 0x417C90
 
-// JudgeHitMyCharVectRight
+// JudgeHitMyCharVectRight - 0x417D20
 
-// JudgeHitMyCharVectDown
+// JudgeHitMyCharVectDown - 0x417DB0
 
-// HitMyCharMap
+// HitMyCharMap - 0x417E40
 
-// JudgeHitMyCharNPC
+// JudgeHitMyCharNPC - 0x4187F0
 
-// JudgeHitMyCharNPC3
+// JudgeHitMyCharNPC3 - 0x418B10
 
-// JudgeHitMyCharNPC4
+// JudgeHitMyCharNPC4 - 0x418C20
 
-// HitMyCharNpChar
+// HitMyCharNpChar - 0x419030
 
-// HitMyCharBoss
+// HitMyCharBoss - 0x419450
 
-// AddExpMyChar
+// AddExpMyChar - 0x4196F0
 
-// ZeroExpMyChar
+// ZeroExpMyChar - 0x419890
 
-// IsMaxExpMyChar
+// IsMaxExpMyChar - 0x4198C0
 
-// DamageMyChar
+// DamageMyChar - 0x419910
 
-// ZeroArmsEnergy_All
+// ZeroArmsEnergy_All - 0x419B50
 
-// AddBulletMyChar
+// AddBulletMyChar - 0x419BA0
 
-// AddLifeMyChar
+// AddLifeMyChar - 0x419C60
 
-// AddMaxLifeMyChar
+// AddMaxLifeMyChar - 0x419CB0
 
-// PutArmsEnergy
+// PutArmsEnergy - 0x419D10
 
-// PutActiveArmsList
+// PutActiveArmsList - 0x41A0B0
 
-// PutMyLife
+// PutMyLife - 0x41A1D0
 
 // PutMyAir - 0x41A350
 static void (* const CS_PutMyAir)(int x, int y) = (void(*)(int, int))0x41A350;
-// PutTimeCounter
+// PutTimeCounter - 0x41A430
 
-// SaveTimeCounter
+// SaveTimeCounter - 0x41A5D0
 
-// LoadTimeCounter
+// LoadTimeCounter - 0x41A7C0
 
-// MakeSoundObject8
+// MakeSoundObject8 - 0x41A8F0
 
-// ChangeOrganFrequency
+// ChangeOrganFrequency - 0x41ABA0
 
-// ChangeOrganPan
+// ChangeOrganPan - 0x41AC70
 
-// ChangeOrganVolume
+// ChangeOrganVolume - 0x41AD20
 
-// PlayOrganObject
+// PlayOrganObject - 0x41ADC0
 
-// ReleaseOrganyaObject
+// ReleaseOrganyaObject - 0x41B2A0
 
-// InitWaveData100
+// InitWaveData100 - 0x41B380
 
-// MakeOrganyaWave
+// MakeOrganyaWave - 0x41B3F0
 
-// ChangeDramFrequency
+// ChangeDramFrequency - 0x41B440
 
-// ChangeDramPan
+// ChangeDramPan - 0x41B480
 
-// ChangeDramVolume
+// ChangeDramVolume - 0x41B4D0
 
-// PlayDramObject
+// PlayDramObject - 0x41B510
 
-// OrgData::OrgData
+// OrgData::OrgData - 0x41B600
 
-// OrgData::InitOrgData
+// OrgData::InitOrgData - 0x41B650
 
-// OrgData::SetMusicInfo
+// OrgData::SetMusicInfo - 0x41B730
 
-// OrgData::NoteAlloc
+// OrgData::NoteAlloc - 0x41B890
 
-// OrgData::ReleaseNote
+// OrgData::ReleaseNote - 0x41BA70
 
-// OrgData::InitMusicData
+// OrgData::InitMusicData - 0x41BAD0
 
-// OrgData::GetMusicInfo
+// OrgData::GetMusicInfo - 0x41C0B0
 
-// InitMMTimer
+// InitMMTimer - 0x41C180
 
-// StartTimer
+// StartTimer - 0x41C1E0
 
-// TimerProc
+// TimerProc - 0x41C230
 
-// QuitMMTimer
+// QuitMMTimer - 0x41C250
 
-// OrgData::PlayData
+// OrgData::PlayData - 0x41C2B0
 
-// OrgData::SetPlayerPointer
+// OrgData::SetPlayerPointer - 0x41C630
 
-// StartOrganya
+// StartOrganya - 0x41C6C0
 
 // LoadOrganya - 0x41C6F0
 static void (* const CS_LoadOrganya)(const char*) = (void(*)(const char*))0x41C6F0;
@@ -906,31 +906,31 @@ static void (* const CS_ChangeOrganyaVolume)(int) = (void(*)(int))0x41C7C0;
 static void (* const CS_StopOrganyaMusic)(void) = (void(*)(void))0x41C7F0;
 // SetOrganyaFadeout - 0x41C880
 static void (* const CS_SetOrganyaFadeout)(void) = (void(*)(void))0x41C880;
-// EndOrganya
+// EndOrganya - 0x41C890
 
-// MakeWaveTables
+// MakeWaveTables - 0x41C8F0
 
-// MakePixelWaveData
+// MakePixelWaveData - 0x41CB10
 
-// IsProfile
+// IsProfile - 0x41CFC0
 
-// SaveProfile
+// SaveProfile - 0x41D040
 
-// LoadProfile
+// LoadProfile - 0x41D260
 
-// InitializeGame
+// InitializeGame - 0x41D550
 
-// ClearPermitStage
+// ClearPermitStage - 0x41D610
 
-// AddPermitStage
+// AddPermitStage - 0x41D630
 
-// SubPermitStage
+// SubPermitStage - 0x41D6A0
 
-// MoveStageSelectCursor
+// MoveStageSelectCursor - 0x41D740
 
-// PutStageSelectObject
+// PutStageSelectObject - 0x41D840
 
-// StageSelectLoop
+// StageSelectLoop - 0x41DA00
 
 // ShootBullet_Frontial - 0x41DBD0
 static void (* const CS_ShootBullet_Frontia1)(int level) = (void(*)(int))0x41DBD0;
@@ -956,967 +956,971 @@ static void (* const CS_ResetSpurCharge)(void) = (void(*)(void))0x41F9E0;
 static void (* const CS_ShootBullet_Spur)(int level) = (void(*)(int))0x41FA10;
 // ShootBullet - 0x41FE70
 static void (* const CS_ShootBullet)(void) = (void(*)(void))0x41FE70;
-// InitDirectSound
+// InitDirectSound - 0x4200C0
 
-// EndDirectSound
+// EndDirectSound - 0x4201A0
 
-// InitSoundObject
+// InitSoundObject - 0x420240
 
-// LoadSoundObject
+// LoadSoundObject - 0x420390
 
-// PlaySoundObject
+// PlaySoundObject - 0x420640
 
-// ChangeSoundFrequency
+// ChangeSoundFrequency - 0x420720
 
-// ChangeSoundVolume
+// ChangeSoundVolume - 0x420760
 
-// ChangeSoundPan
+// ChangeSoundPan - 0x4207A0
 
-// MakePixToneObject
+// MakePixToneObject - 0x4207E0
 
-// TransferStage
+// TransferStage - 0x420BE0
 
 // ChangeMusic - 0x420EE0
 static void (* const CS_ChangeMusic)(int music_id) = (void(*)(int))0x420EE0;
 // ReCallMusic - 0x420F50
 static void (* const CS_ReCallMusic)(void) = (void(*)(void))0x420F50;
-// InitStar
+// InitStar - 0x420FA0
 
-// ActStar
+// ActStar - 0x421040
 
-// PutStar
+// PutStar - 0x4213B0
 
-// InitTextScript2
+// InitTextScript2 - 0x4214E0
 
-// EndTextScript
+// EndTextScript - 0x421570
 
-// EncryptionBinaryData2
+// EncryptionBinaryData2 - 0x4215C0
 
-// LoadTextScript2
+// LoadTextScript2 - 0x421660
 
-// LoadTextScript_Stage
+// LoadTextScript_Stage - 0x421750
 
-// GetTextScriptPath
+// GetTextScriptPath - 0x4218E0
 
-// GetTextScriptNo
+// GetTextScriptNo - 0x421900
 
-// StartTextScript
+// StartTextScript - 0x421990
 
-// JumpTextScript
+// JumpTextScript - 0x421AF0
 
-// StopTextScript
+// StopTextScript - 0x421C50
 
-// CheckNewLine
+// CheckNewLine - 0x421C80
 
-// SetNumberTextScript
+// SetNumberTextScript - 0x421D10
 
-// ClearTextLine
+// ClearTextLine - 0x421E90
 
-// PutTextScript
+// PutTextScript - 0x421F10
 
 // TextScriptProc - 0x422510
 static void (* const CS_TextScriptProc)(void) = (void(*)(void))0x422510;
-// RestoreTextScript
+// RestoreTextScript - 0x425790
 
-// InitTriangleTable
+// InitTriangleTable - 0x4257F0
 
-// GetSin
+// GetSin - 0x4258B0
 
-// GetCos
+// GetCos - 0x4258C0
 
-// GetArktan
+// GetArktan - 0x4258E0
 
-// ClearValueView
+// ClearValueView - 0x425BC0
 
-// SetValueView
+// SetValueView - 0x425BF0
 
-// ActValueView
+// ActValueView - 0x426360
 
-// PutValueView
+// PutValueView - 0x426430
 
-// ActNpc000
+// ActNpc000 - 0x426530
 
-// ActNpc002
+// ActNpc001 - 0x4265B0
 
-// ActNpc003
+// ActNpc002 - 0x426AF0
 
-// ActNpc004
+// ActNpc003 - 0x426FD0
 
-// ActNpc005
+// ActNpc004 - 0x427040
 
-// ActNpc006
+// ActNpc005 - 0x427480
 
-// ActNpc007
+// ActNpc006 - 0x427820
 
-// ActNpc008
+// ActNpc007 - 0x427C60
 
-// ActNpc009
+// ActNpc008 - 0x427F00
 
-// ActNpc010
+// ActNpc009 - 0x428260
 
-// ActNpc011
+// ActNpc010 - 0x428540
 
-// ActNpc012
+// ActNpc011 - 0x4289B0
 
-// ActNpc013
+// ActNpc012 - 0x428B10
 
-// ActNpc014
+// ActNpc013 - 0x429940
 
-// ActNpc015
+// ActNpc014 - 0x429A30
 
-// ActNpc016
+// ActNpc015 - 0x429BF0
 
-// ActNpc017
+// ActNpc016 - 0x429E00
 
-// ActNpc018
+// ActNpc017 - 0x42A0B0
 
-// ActNpc019
+// ActNpc018 - 0x42A360
 
-// ActNpc020
+// ActNpc019 - 0x42A490
 
-// ActNpc021
+// ActNpc020 - 0x42A830
 
-// ActNpc022
+// ActNpc021 - 0x42A940
 
-// ActNpc023
+// ActNpc022 - 0x42A9C0
 
-// ActNpc024
+// ActNpc023 - 0x42AA70
 
-// ActNpc025
+// ActNpc024 - 0x42ABD0
 
-// ActNpc026
+// ActNpc025 - 0x42B280
 
-// ActNpc027
+// ActNpc026 - 0x42B5E0
 
-// ActNpc028
+// ActNpc027 - 0x42BA90
 
-// ActNpc029
+// ActNpc028 - 0x42BAE0
 
-// ActNpc030
+// ActNpc029 - 0x42C1A0
 
-// ActNpc031
+// ActNpc030 - 0x42C320
 
-// ActNpc032
+// ActNpc031 - 0x42C4C0
 
-// ActNpc033
+// ActNpc032 - 0x42CA10
 
-// ActNpc034
+// ActNpc033 - 0x42CAC0
 
-// ActNpc035
+// ActNpc034 - 0x42CC20
 
-// ActNpc036
+// ActNpc035 - 0x42CCB0
 
-// ActNpc037
+// ActNpc036 - 0x42D010
 
-// ActNpc038
+// ActNpc037 - 0x42D760
 
-// ActNpc039
+// ActNpc038 - 0x42D810
 
-// ActNpc040
+// ActNpc039 - 0x42D960
 
-// ActNpc041
+// ActNpc040 - 0x42D9F0
 
-// ActNpc042
+// ActNpc041 - 0x42DE00
 
-// ActNpc043
+// ActNpc042 - 0x42DE70
 
-// ActNpc044
+// ActNpc043 - 0x42E9F0
 
-// ActNpc045
+// ActNpc044 - 0x42EAB0
 
-// ActNpc046
+// ActNpc045 - 0x42F060
 
-// ActNpc047
+// ActNpc046 - 0x42F320
 
-// ActNpc048
+// ActNpc047 - 0x42F3F0
 
-// ActNpc049
+// ActNpc048 - 0x42F780
 
-// ActNpc050
+// ActNpc049 - 0x42F9E0
 
-// ActNpc051
+// ActNpc050 - 0x42FEC0
 
-// ActNpc052
+// ActNpc051 - 0x4301B0
 
-// ActNpc053
+// ActNpc052 - 0x430780
 
-// ActNpc054
+// ActNpc053 - 0x4307D0
 
-// ActNpc055
+// ActNpc054 - 0x430B00
 
-// ActNpc056
+// ActNpc055 - 0x430EB0
 
-// ActNpc057
+// ActNpc056 - 0x4311D0
 
-// ActNpc058
+// ActNpc057 - 0x4315E0
 
-// ActNpc059
+// ActNpc058 - 0x431C20
 
-// ActNpc060
+// ActNpc059 - 0x4321F0
 
-// ActNpc061
+// ActNpc060 - 0x432460
 
-// ActNpc062
+// ActNpc061 - 0x432B50
 
-// ActNpc063
+// ActNpc062 - 0x4334C0
 
-// ActNpc064
+// ActNpc063 - 0x4336C0
 
-// ActNpc065
+// ActNpc064 - 0x433C00
 
-// ActNpc066
+// ActNpc065 - 0x433FC0
 
-// ActNpc067
+// ActNpc066 - 0x4342B0
 
-// ActNpc068
+// ActNpc067 - 0x4345E0
 
-// ActNpc069
+// ActNpc068 - 0x434D10
 
-// ActNpc070
+// ActNpc069 - 0x4355F0
 
-// ActNpc071
+// ActNpc070 - 0x435AB0
 
-// ActNpc072
+// ActNpc071 - 0x435BA0
 
-// ActNpc073
+// ActNpc072 - 0x435DE0
 
-// ActNpc074
+// ActNpc073 - 0x435FC0
 
-// ActNpc075
+// ActNpc074 - 0x436180
 
-// ActNpc076
+// ActNpc075 - 0x436540
 
-// ActNpc077
+// ActNpc076 - 0x436650
 
-// ActNpc078
+// ActNpc077 - 0x436690
 
-// ActNpc079
+// ActNpc078 - 0x4367E0
 
-// ActNpc080
+// ActNpc079 - 0x436870
 
-// ActNpc081
+// ActNpc080 - 0x436AE0
 
-// ActNpc082
+// ActNpc081 - 0x4370F0
 
-// ActNpc083
+// ActNpc082 - 0x4375E0
 
-// ActNpc084
+// ActNpc083 - 0x437D90
 
-// ActNpc085
+// ActNpc084 - 0x438250
 
-// ActNpc086
+// ActNpc085 - 0x4383D0
 
-// ActNpc087
+// ActNpc086 - 0x438590
 
-// ActNpc088
+// ActNpc087 - 0x438850
 
-// ActNpc089
+// ActNpc088 - 0x438B10
 
-// ActNpc090
+// ActNpc089 - 0x439580
 
-// ActNpc091
+// ActNpc090 - 0x439B00
 
-// ActNpc092
+// ActNpc091 - 0x439B50
 
-// ActNpc093
+// ActNpc092 - 0x439BC0
 
-// ActNpc094
+// ActNpc093 - 0x439DC0
 
-// ActNpc095
+// ActNpc094 - 0x43A220
 
-// ActNpc096
+// ActNpc095 - 0x43A680
 
-// ActNpc097
+// ActNpc096 - 0x43AAF0
 
-// ActNpc098
+// ActNpc097 - 0x43AD10
 
-// ActNpc099
+// ActNpc098 - 0x43AF20
 
-// ActNpc100
+// ActNpc099 - 0x43B140
 
-// ActNpc101
+// ActNpc100 - 0x43B350
 
-// ActNpc102
+// ActNpc101 - 0x43B410
 
-// ActNpc103
+// ActNpc102 - 0x43B4E0
 
-// ActNpc104
+// ActNpc103 - 0x43B5F0
 
-// ActNpc105
+// ActNpc104 - 0x43B7F0
 
-// ActNpc106
+// ActNpc105 - 0x43BD00
 
-// ActNpc107
+// ActNpc106 - 0x43BDB0
 
-// ActNpc108
+// ActNpc107 - 0x43BE00
 
-// ActNpc109
+// ActNpc108 - 0x43C4B0
 
-// ActNpc110
+// ActNpc109 - 0x43C610
 
-// ActNpc111
+// ActNpc110 - 0x43C8E0
 
-// ActNpc112
+// ActNpc111 - 0x43CDE0
 
-// ActNpc113
+// ActNpc112 - 0x43D0A0
 
-// ActNpc114
+// ActNpc113 - 0x43D320
 
-// ActNpc115
+// ActNpc114 - 0x43D860
 
-// ActNpc116
+// ActNpc115 - 0x43DAE0
 
-// ActNpc117
+// ActNpc116 - 0x43E190
 
-// ActNpc118
+// ActNpc117 - 0x43E1E0
 
-// ActNpc119
+// ActNpc118 - 0x43E9B0
 
-// ActNpc120
+// ActNpc119 - 0x43F230
 
-// ActNpc121
+// ActNpc120 - 0x43F280
 
-// ActNpc122
+// ActNpc121 - 0x43F310
 
-// ActNpc123
+// ActNpc122 - 0x43F4A0
 
-// ActNpc124
+// ActNpc123 - 0x43FC70
 
-// ActNpc125
+// ActNpc124 - 0x43FEF0
 
-// ActNpc126
+// ActNpc125 - 0x4400D0
 
-// ActNpc127
+// ActNpc126 - 0x4401F0
 
-// ActNpc128
+// ActNpc127 - 0x440760
 
-// ActNpc129
+// ActNpc128 - 0x4408B0
 
-// ActNpc130
+// ActNpc129 - 0x440CF0
 
-// ActNpc131
+// ActNpc130 - 0x441000
 
-// ActNpc132
+// ActNpc131 - 0x441360
 
-// ActNpc133
+// ActNpc132 - 0x441440
 
-// ActNpc134
+// ActNpc133 - 0x4419B0
 
-// ActNpc135
+// ActNpc134 - 0x441B20
 
-// ActNpc136
+// ActNpc135 - 0x441EC0
 
-// ActNpc137
+// ActNpc136 - 0x442340
 
-// ActNpc138
+// ActNpc137 - 0x442540
 
-// ActNpc139
+// ActNpc138 - 0x442590
 
-// ActNpc140
+// ActNpc139 - 0x442790
 
-// ActNpc141
+// ActNpc140 - 0x442BF0
 
-// ActNpc142
+// ActNpc141 - 0x443AC0
 
-// ActNpc143
+// ActNpc142 - 0x443EC0
 
-// ActNpc144
+// ActNpc143 - 0x444190
 
-// ActNpc145
+// ActNpc144 - 0x444230
 
-// ActNpc146
+// ActNpc145 - 0x444620
 
-// ActNpc147
+// ActNpc146 - 0x444780
 
-// ActNpc148
+// ActNpc147 - 0x444930
 
-// ActNpc149
+// ActNpc148 - 0x445050
 
-// ActNpc150
+// ActNpc149 - 0x445170
 
-// ActNpc151
+// ActNpc150 - 0x445660
 
-// ActNpc152
+// ActNpc151 - 0x445E30
 
-// ActNpc153
+// ActNpc152 - 0x445FA0
 
-// ActNpc154
+// ActNpc153 - 0x446020
 
-// ActNpc155
+// ActNpc154 - 0x446500
 
-// ActNpc156
+// ActNpc155 - 0x446710
 
-// ActNpc157
+// ActNpc156 - 0x446B60
 
-// ActNpc158
+// ActNpc157 - 0x446CA0
 
-// ActNpc159
+// ActNpc158 - 0x447180
 
-// ActNpc160
+// ActNpc159 - 0x4474C0
 
-// ActNpc161
+// ActNpc160 - 0x447700
 
-// ActNpc162
+// ActNpc161 - 0x447CB0
 
-// ActNpc163
+// ActNpc162 - 0x447E90
 
-// ActNpc164
+// ActNpc163 - 0x4482A0
 
-// ActNpc165
+// ActNpc164 - 0x448410
 
-// ActNpc166
+// ActNpc165 - 0x448580
 
-// ActNpc167
+// ActNpc166 - 0x4486E0
 
-// ActNpc168
+// ActNpc167 - 0x4487F0
 
-// ActNpc169
+// ActNpc168 - 0x448A10
 
-// ActNpc170
+// ActNpc169 - 0x448BE0
 
-// ActNpc171
+// ActNpc170 - 0x4495A0
 
-// ActNpc172
+// ActNpc171 - 0x4498C0
 
-// ActNpc173
+// ActNpc172 - 0x449C10
 
-// ActNpc174
+// ActNpc173 - 0x449D70
 
-// ActNpc175
+// ActNpc174 - 0x44A3C0
 
-// ActNpc176
+// ActNpc175 - 0x44A610
 
-// ActNpc177
+// ActNpc176 - 0x44A7D0
 
-// ActNpc178
+// ActNpc177 - 0x44ABB0
 
-// ActNpc179
+// ActNpc178 - 0x44AEE0
 
-// ActNpc180
+// ActNpc179 - 0x44B080
 
-// ActNpc181
+// ActNpc180 - 0x44B210
 
-// ActNpc182
+// ActNpc181 - 0x44BE10
 
-// ActNpc183
+// ActNpc182 - 0x44C220
 
-// ActNpc184
+// ActNpc183 - 0x44C630
 
-// ActNpc185
+// ActNpc184 - 0x44C7A0
 
-// ActNpc186
+// ActNpc185 - 0x44CA60
 
-// ActNpc187
+// ActNpc186 - 0x44CBE0
 
-// ActNpc188
+// ActNpc187 - 0x44CDB0
 
-// ActNpc189
+// ActNpc188 - 0x44D070
 
-// ActNpc190
+// ActNpc189 - 0x44D3A0
 
-// ActNpc191
+// ActNpc190 - 0x44D5E0
 
-// ActNpc192
+// ActNpc191 - 0x44D740
 
-// ActNpc193
+// ActNpc192 - 0x44DA00
 
-// ActNpc194
+// ActNpc193 - 0x44DE20
 
-// ActNpc195
+// ActNpc194 - 0x44DEA0
 
-// ActNpc196
+// ActNpc195 - 0x44DF10
 
-// ActNpc197
+// ActNpc196 - 0x44DF60
 
-// ActNpc198
+// ActNpc197 - 0x44E020
 
-// ActNpc199
+// ActNpc198 - 0x44E260
 
-// ActNpc200
+// ActNpc199 - 0x44E400
 
-// ActNpc201
+// ActNpc200 - 0x44E5F0
 
-// ActNpc202
+// ActNpc201 - 0x44EC40
 
-// ActNpc203
+// ActNpc202 - 0x44ECE0
 
-// ActNpc204
+// ActNpc203 - 0x44EE40
 
-// ActNpc205
+// ActNpc204 - 0x44F1F0
 
-// ActNpc206
+// ActNpc205 - 0x44F3E0
 
-// ActNpc207
+// ActNpc206 - 0x44F6D0
 
-// ActNpc208
+// ActNpc207 - 0x44FB40
 
-// ActNpc209
+// ActNpc208 - 0x44FCB0
 
-// ActNpc210
+// ActNpc209 - 0x450280
 
-// ActNpc211
+// ActNpc210 - 0x450400
 
-// ActNpc212
+// ActNpc211 - 0x450760
 
-// ActNpc213
+// ActNpc212 - 0x450810
 
-// ActNpc214
+// ActNpc213 - 0x450BF0
 
-// ActNpc215
+// ActNpc214 - 0x4512A0
 
-// ActNpc216
+// ActNpc215 - 0x451430
 
-// ActNpc217
+// ActNpc216 - 0x4517F0
 
-// ActNpc218
+// ActNpc217 - 0x451840
 
-// ActNpc219
+// ActNpc218 - 0x451CA0
 
-// ActNpc220
+// ActNpc219 - 0x451DA0
 
-// ActNpc221
+// ActNpc220 - 0x451E90
 
-// ActNpc222
+// ActNpc221 - 0x452000
 
-// ActNpc223
+// ActNpc222 - 0x452470
 
-// ActNpc224
+// ActNpc223 - 0x4524E0
 
-// ActNpc225
+// ActNpc224 - 0x452700
 
-// ActNpc226
+// ActNpc225 - 0x4528D0
 
-// ActNpc227
+// ActNpc226 - 0x452A50
 
-// ActNpc228
+// ActNpc227 - 0x452D10
 
-// ActNpc229
+// ActNpc228 - 0x452D60
 
-// ActNpc230
+// ActNpc229 - 0x4530D0
 
-// ActNpc231
+// ActNpc230 - 0x453190
 
-// ActNpc232
+// ActNpc231 - 0x453260
 
-// ActNpc233
+// ActNpc232 - 0x4536F0
 
-// ActNpc234
+// ActNpc233 - 0x4539B0
 
-// ActNpc235
+// ActNpc234 - 0x453E60
 
-// ActNpc236
+// ActNpc235 - 0x453F20
 
-// ActNpc237
+// ActNpc236 - 0x454310
 
-// ActNpc238
+// ActNpc237 - 0x4548B0
 
-// ActNpc239
+// ActNpc238 - 0x454A00
 
-// ActNpc240
+// ActNpc239 - 0x454DF0
 
-// ActNpc241
+// ActNpc240 - 0x454F00
 
-// ActNpc242
+// ActNpc241 - 0x455370
 
-// ActNpc243
+// ActNpc242 - 0x455710
 
-// ActNpc244
+// ActNpc243 - 0x455A10
 
-// ActNpc245
+// ActNpc244 - 0x455AB0
 
-// ActNpc246
+// ActNpc245 - 0x455C10
 
-// ActNpc247
+// ActNpc246 - 0x455E00
 
-// ActNpc248
+// ActNpc247 - 0x456110
 
-// ActNpc249
+// ActNpc248 - 0x456F50
 
-// ActNpc250
+// ActNpc249 - 0x4570B0
 
-// ActNpc251
+// ActNpc250 - 0x457180
 
-// ActNpc252
+// ActNpc251 - 0x457470
 
-// ActNpc253
+// ActNpc252 - 0x457570
 
-// ActNpc254
+// ActNpc253 - 0x4579D0
 
-// ActNpc255
+// ActNpc254 - 0x457B00
 
-// ActNpc256
+// ActNpc255 - 0x457D70
 
-// ActNpc257
+// ActNpc256 - 0x458010
 
-// ActNpc258
+// ActNpc257 - 0x458360
 
-// ActNpc259
+// ActNpc258 - 0x4585A0
 
-// ActNpc260
+// ActNpc259 - 0x4585F0
 
-// ActNpc261
+// ActNpc260 - 0x458810
 
-// ActNpc262
+// ActNpc261 - 0x458A70
 
-// ActNpc263
+// ActNpc262 - 0x458C30
 
-// ActNpc264
+// ActNpc263 - 0x458DF0
 
-// ActNpc265
+// ActNpc264 - 0x459950
 
-// ActNpc266
+// ActNpc265 - 0x459B30
 
-// ActNpc267
+// ActNpc266 - 0x459C00
 
-// ActNpc268
+// ActNpc267 - 0x459D80
 
-// ActNpc269
+// ActNpc268 - 0x45B3D0
 
-// ActNpc270
+// ActNpc269 - 0x45BCB0
 
-// ActNpc271
+// ActNpc270 - 0x45BF10
 
-// ActNpc272
+// ActNpc271 - 0x45C230
 
-// ActNpc273
+// ActNpc272 - 0x45C500
 
-// ActNpc274
+// ActNpc273 - 0x45C5A0
 
-// ActNpc275
+// ActNpc274 - 0x45C750
 
-// ActNpc276
+// ActNpc275 - 0x45CC80
 
-// ActNpc277
+// ActNpc276 - 0x45CEA0
 
-// ActNpc278
+// ActNpc277 - 0x45D780
 
-// ActNpc279
+// ActNpc278 - 0x45D930
 
-// ActNpc280
+// ActNpc279 - 0x45DCF0
 
-// ActNpc281
+// ActNpc280 - 0x45E110
 
-// ActNpc282
+// ActNpc281 - 0x45E360
 
-// ActNpc283
+// ActNpc282 - 0x45E4C0
 
-// ActNpc284
+// ActNpc283 - 0x45E950
 
-// ActNpc285
+// ActNpc284 - 0x45F910
 
-// ActNpc286
+// ActNpc285 - 0x460910
 
-// ActNpc287
+// ActNpc286 - 0x460AE0
 
-// ActNpc288
+// ActNpc287 - 0x460BB0
 
-// ActNpc289
+// ActNpc288 - 0x460D70
 
-// ActNpc290
+// ActNpc289 - 0x4610D0
 
-// ActNpc291
+// ActNpc290 - 0x4614A0
 
-// ActNpc292
+// ActNpc291 - 0x461800
 
-// ActNpc293
+// ActNpc292 - 0x4618B0
 
-// ActNpc294
+// ActNpc293 - 0x4618C0
 
-// ActNpc295
+// ActNpc294 - 0x4619E0
 
-// ActNpc296
+// ActNpc295 - 0x461B90
 
-// ActNpc297
+// ActNpc296 - 0x461E40
 
-// ActNpc298
+// ActNpc297 - 0x461FD0
 
-// ActNpc299
+// ActNpc298 - 0x462050
 
-// ActNpc300
+// ActNpc299 - 0x4623D0
 
-// ActNpc301
+// ActNpc300 - 0x4624E0
 
-// ActNpc302
+// ActNpc301 - 0x4625A0
 
-// ActNpc303
+// ActNpc302 - 0x462890
 
-// ActNpc304
+// ActNpc303 - 0x462AF0
 
-// ActNpc305
+// ActNpc304 - 0x462C80
 
-// ActNpc306
+// ActNpc305 - 0x462E00
 
-// ActNpc307
+// ActNpc306 - 0x462F60
 
-// ActNpc308
+// ActNpc307 - 0x4630F0
 
-// ActNpc309
+// ActNpc308 - 0x4632B0
 
-// ActNpc310
+// ActNpc309 - 0x463710
 
-// ActNpc311
+// ActNpc310 - 0x463AC0
 
-// ActNpc312
+// ActNpc311 - 0x464090
 
-// ActNpc313
+// ActNpc312 - 0x464740
 
-// ActNpc314
+// ActNpc313 - 0x464BB0
 
-// ActNpc315
+// ActNpc314 - 0x465CC0
 
-// ActNpc316
+// ActNpc315 - 0x465F60
 
-// ActNpc317
+// ActNpc316 - 0x4664B0
 
-// ActNpc318
+// ActNpc317 - 0x466790
 
-// ActNpc319
+// ActNpc318 - 0x466B80
 
-// ActNpc320
+// ActNpc319 - 0x466E50
 
-// ActNpc321
+// ActNpc320 - 0x4670C0
 
-// ActNpc322
+// ActNpc321 - 0x4673F0
 
-// ActNpc323
+// ActNpc322 - 0x4676D0
 
-// ActNpc324
+// ActNpc323 - 0x467C60
 
-// ActNpc325
+// ActNpc324 - 0x467F40
 
-// ActNpc326
+// ActNpc325 - 0x467FE0
 
-// ActNpc327
+// ActNpc326 - 0x468230
 
-// ActNpc328
+// ActNpc327 - 0x468830
 
-// ActNpc329
+// ActNpc328 - 0x468990
 
-// ActNpc330
+// ActNpc329 - 0x4689E0
 
-// ActNpc331
+// ActNpc330 - 0x468A90
 
-// ActNpc332
+// ActNpc331 - 0x468D70
 
-// ActNpc333
+// ActNpc332 - 0x468F50
 
-// ActNpc334
+// ActNpc333 - 0x469140
 
-// ActNpc335
+// ActNpc334 - 0x469290
 
-// ActNpc336
+// ActNpc335 - 0x469430
 
-// ActNpc337
+// ActNpc336 - 0x469610
 
-// ActNpc338
+// ActNpc337 - 0x4696B0
 
-// ActNpc339
+// ActNpc338 - 0x469800
 
-// ActNpc340
+// ActNpc339 - 0x469AA0
 
-// ActNpc341
+// ActNpc340 - 0x469B40
 
-// ActNpc342
+// ActNpc341 - 0x46B240
 
-// ActNpc343
+// ActNpc342 - 0x46B340
 
-// ActNpc344
+// ActNpc343 - 0x46BD80
 
-// ActNpc345
+// ActNpc344 - 0x46BE10
 
-// ActNpc346
+// ActNpc345 - 0x46BF00
 
-// ActNpc347
+// ActNpc346 - 0x46C1D0
 
-// ActNpc348
+// ActNpc347 - 0x46C710
 
-// ActNpc349
+// ActNpc348 - 0x46C9B0
 
-// ActNpc350
+// ActNpc349 - 0x46CAC0
 
-// ActNpc351
+// ActNpc350 - 0x46CB50
 
-// ActNpc352
+// ActNpc351 - 0x46D340
 
-// ActNpc353
+// ActNpc352 - 0x46D5D0
 
-// ActNpc354
+// ActNpc353 - 0x46DBE0
 
-// ActNpc355
+// ActNpc354 - 0x46E110
 
-// ActNpc356
+// ActNpc355 - 0x46E280
 
-// ActNpc357
+// ActNpc356 - 0x46E480
 
-// ActNpc358
+// ActNpc357 - 0x46E730
 
-// ActNpc359
+// ActNpc358 - 0x46E870
 
-// ActNpc360
+// ActNpc359 - 0x46E9E0
 
-// InitNpChar
+// ActNpc360 - 0x46EA90
 
-// LoadEvent
+// InitNpChar - 0x46EB30
 
-// SetUniqueParameter
+// LoadEvent - 0x46EB50
+
+// SetUniqueParameter - 0x46EE50
 
 // SetNpChar - 0x46EFD0
 static void (* const CS_SetNpChar)(int object_ID, int x_pos, int y_pos, int a4, int a5, int facing_right, int a7, int object_RAM_index) = (void(*)(int, int, int, int, int, int, int, int))0x46EFD0;
 // SetDestroyNpChar - 0x46F150
 static void (* const CS_SetDestroyNpChar)(int x, int y, signed int range, int count) = (void(*)(int, int, int, int))0x46F150;
-// SetDestroyNpCharUp
+// SetDestroyNpCharUp - 0x46F200
 
-// SetExpObjects
+// SetExpObjects - 0x46F2B0
 
-// SetBulletObject
+// SetBulletObject - 0x46F430
 
-// SetLifeObject
+// SetLifeObject - 0x46F630
 
-// VanishNpChar
+// VanishNpChar - 0x46F760
 
-// PutNpChar
+// PutNpChar - 0x46F810
 
 // ActNpChar - 0x46FA00
 static void (* const CS_ActNpChar)(void) = (void(*)(void))0x46FA00;
-// ChangeNpCharByEvent
+// ChangeNpCharByEvent - 0x46FAB0
 
-// ChangeCheckableNpCharByEvent
+// ChangeCheckableNpCharByEvent - 0x46FD10
 
-// SetNpCharActionNo
+// SetNpCharActionNo - 0x46FF90
 
-// MoveNpChar
+// MoveNpChar - 0x470060
 
-// BackStepMyChar
+// BackStepMyChar - 0x470150
 
 // DeleteNpCharEvent - 0x470250
 static void (* const CS_DeleteNpCharEvent)(int code) = (void(*)(int))0x470250;
 // DeleteNpCharCode - 0x4702D0
 static void (* const CS_DeleteNpCharCode)(int code, BOOL bSmoke) = (void(*)(int, BOOL))0x4702D0;
-// GetNpCharPosition
+// GetNpCharPosition - 0x470460
 
-// IsNpCharCode
+// IsNpCharCode - 0x470490
 
-// GetNpCharAlive
+// GetNpCharAlive - 0x4704F0
 
-// CountAliveNpChar
+// CountAliveNpChar - 0x470560
 
-// JadgeHitNpCharBlock
+// JadgeHitNpCharBlock - 0x4705C0
 
-// JudgeHitNpCharTriangleA
+// JudgeHitNpCharTriangleA - 0x470870
 
-// JudgeHitNpCharTriangleB
+// JudgeHitNpCharTriangleB - 0x470970
 
-// JudgeHitNpCharTriangleC
+// JudgeHitNpCharTriangleC - 0x470A70
 
-// JudgeHitNpCharTriangleD
+// JudgeHitNpCharTriangleD - 0x470B70
 
-// JudgeHitNpCharTriangleE
+// JudgeHitNpCharTriangleE - 0x470C70
 
-// JudgeHitNpCharTriangleF
+// JudgeHitNpCharTriangleF - 0x470D80
 
-// JudgeHitNpCharTriangleG
+// JudgeHitNpCharTriangleG - 0x470E90
 
-// JudgeHitNpCharTriangleH
+// JudgeHitNpCharTriangleH - 0x470FA0
 
-// JudgeHitNpCharWater
+// JudgeHitNpCharWater - 0x4710B0
 
-// HitNpCharMap
+// HitNpCharMap - 0x471160
 
 // LoseNpChar - 0x471B80
 static void (* const CS_LoseNpChar)(CS_NPCHAR* npc, BOOL bVanish) = (void(*)(CS_NPCHAR*, BOOL))0x471B80;
-// HitNpCharBullet
+// HitNpCharBullet - 0x471D50
 
-// LoadNpcTable
+// LoadNpcTable - 0x472400
 
-// ReleaseNpcTable
+// ReleaseNpcTable - 0x472710
 
-// InitBossChar
+// InitBossChar - 0x472740
 
-// PutBossChar
+// PutBossChar - 0x472770
 
-// SetBossCharActNo
+// SetBossCharActNo - 0x472940
 
-// HitBossBullet
+// HitBossBullet - 0x472950
 
-// ActBossChar_0
+// ActBossChar_0 - 0x472FF0
 
-// ActBossChar
+// ActBossChar - 0x473000
 
-// HitBossMap
+// HitBossMap - 0x473080
 
-// ActBossChar_Core_Face
+// ActBossChar_Core_Face - 0x4739B0
 
-// ActBossChar_Core_Tail
+// ActBossChar_Core_Tail - 0x473BD0
 
-// ActBossChar_Core_Mini
+// ActBossChar_Core_Mini - 0x473DE0
 
-// ActBossChar_Core_Hit
+// ActBossChar_Core_Hit - 0x474340
 
-// ActBossChar_Core
+// ActBossChar_Core - 0x474400
 
-// ActBossChar_Undead
+// ActBossChar_Undead - 0x4753D0
 
-// ActBossCharA_Head
+// ActBossCharA_Head - 0x476790
 
-// ActBossCharA_Tail
+// ActBossCharA_Tail - 0x4769A0
 
-// ActBossCharA_Face
+// ActBossCharA_Face - 0x476B90
 
-// ActBossCharA_Mini
+// ActBossCharA_Mini - 0x476E50
 
-// ActBossCharA_Hit
+// ActBossCharA_Hit - 0x477230
 
-// ActBossChar_Ballos
+// ActBossChar_Ballos - 0x4772F0
 
-// ActBossChar_Eye
+// ActBossChar_Eye - 0x478AA0
 
-// ActBossChar_Body
+// ActBossChar_Body - 0x478F20
 
-// ActBossChar_HITAI
+// ActBossChar_HITAI - 0x478FE0
 
-// ActBossChar_HARA
+// ActBossChar_HARA - 0x479010
 
-// ActBossChar_Frog
+// ActBossChar_Frog - 0x479030
 
-// ActBossChar02_01
+// ActBossChar02_01 - 0x47A6A0
 
-// ActBossChar_Ironhead
+// ActBossChar02_02 - 0x47A800
 
-// InitBossLife
+// ActBossChar_Ironhead - 0x47A8A0
 
-// StartBossLife
+// InitBossLife - 0x47B450
 
-// StartBossLife2
+// StartBossLife - 0x47B460
 
-// PutBossLife
+// StartBossLife2 - 0x47B500
 
-// ActBossChar_Omega
+// PutBossLife - 0x47B540
 
-// ActBoss01_12
+// ActBossChar_Omega - 0x47B6F0
 
-// ActBoss01_34
+// ActBoss01_12 - 0x47C380
 
-// ActBoss01_5
+// ActBoss01_34 - 0x47C4E0
 
-// ActBossChar_Press
+// ActBoss01_5 - 0x47C7A0
 
-// ActBossChar_Twin
+// ActBossChar_Press - 0x47C820
 
-// ActBossCharT_DragonBody
+// ActBossChar_Twin - 0x47D170
 
-// ActBossCharT_DragonHead
+// ActBossCharT_DragonBody - 0x47DAA0
 
-// ActBossChar_MonstX
+// ActBossCharT_DragonHead - 0x47DF10
 
-// ActBossChar_03_01
+// ActBossChar_MonstX - 0x47E6F0
 
-// ActBossChar_03_02
+// ActBossChar_03_01 - 0x47F710
 
-// ActBossChar_03_03
+// ActBossChar_03_02 - 0x480090
 
-// ActBossChar_03_04
+// ActBossChar_03_03 - 0x4802A0
 
-// ActBossChar_03_face
+// ActBossChar_03_04 - 0x480550
+
+// ActBossChar_03_face - 0x4808C0
 
 
 
