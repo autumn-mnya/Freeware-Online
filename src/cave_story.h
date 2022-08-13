@@ -1266,35 +1266,35 @@ static void (* const CS_HitMyCharNpChar)(void) = (void(*)(void))0x419030;
 // HitMyCharBoss - 0x419450
 static void (* const CS_HitMyCharBoss)(void) = (void(*)(void))0x419450;
 // AddExpMyChar - 0x4196F0
-
+static void (* const CS_AddExpMyChar)(int x) = (void(*)(int))0x4196F0;
 // ZeroExpMyChar - 0x419890
-
+static void (* const CS_ZeroExpMyChar)(void) = (void(*)(void))0x419890;
 // IsMaxExpMyChar - 0x4198C0
-
+static BOOL(* const CS_IsExpMyChar)(void) = (BOOL(*)(void))0x4198C0;
 // DamageMyChar - 0x419910
-
+static void (* const CS_DamageMyChar)(int damage) = (void(*)(int))0x419910;
 // ZeroArmsEnergy_All - 0x419B50
-
+static void (* const CS_ZeroArmsEnergy_All)(void) = (void(*)(void))0x419B50;
 // AddBulletMyChar - 0x419BA0
-
+static void (* const CS_AddBulletMyChar)(int no, int val) = (void(*)(int, int))0x419BA0;
 // AddLifeMyChar - 0x419C60
-
+static void (* const CS_AddLifeMyChar)(int x) = (void(*)(int))0x419C60;
 // AddMaxLifeMyChar - 0x419CB0
-
+static void (* const CS_AddMaxLifeMyChar)(int val) = (void(*)(int))0x419CB0;
 // PutArmsEnergy - 0x419D10
-
+static void (* const CS_PutArmsEnergy)(BOOL flash) = (void(*)(BOOL))0x419D10;
 // PutActiveArmsList - 0x41A0B0
-
+static void (* const CS_PutActiveArmsList)(void) = (void(*)(void))0x41A0B0;
 // PutMyLife - 0x41A1D0
-
+static void (* const CS_PutMyLife)(BOOL flash) = (void(*)(BOOL))0x41A1D0;
 // PutMyAir - 0x41A350
 static void (* const CS_PutMyAir)(int x, int y) = (void(*)(int, int))0x41A350;
 // PutTimeCounter - 0x41A430
-
+static void (* const CS_PutTimeCounter)(int x, int y) = (void(*)(int, int))0x41A430;
 // SaveTimeCounter - 0x41A5D0
-
+static BOOL(* const CS_SaveTimeCounter)(void) = (BOOL(*)(void))0x41A5D0;
 // LoadTimeCounter - 0x41A7C0
-
+static int (* const CS_LoadTimeCounter)(void) = (int(*)(void))0x41A7C0;
 // MakeSoundObject8 - 0x41A8F0
 
 // ChangeOrganFrequency - 0x41ABA0
