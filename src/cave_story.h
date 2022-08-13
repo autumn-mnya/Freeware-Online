@@ -1,4 +1,4 @@
-// Mod loader for Freeware Cave Story
+﻿// Mod loader for Freeware Cave Story
 // Public domain
 
 #include <ddraw.h>
@@ -6,6 +6,54 @@
 
 #define BULLET_MAX 0x40
 #define CARET_MAX 0x40
+
+// Variables
+#define CS_window_upscale (*(int*)0x48F914) // mag
+#define CS_clip_rect_common (*(RECT*)0x48F91C) // grcGame
+#define CS_down_key_mapping (*(int*)0x49363C)
+#define CS_background_tile_width (*(int*)0x499C78)
+#define CS_background_tile_height (*(int*)0x499C7C)
+#define CS_dword_499C8C (*(int*)0x499C8C)
+#define CS_window_padding_h (*(int*)0x49CDA8)
+#define CS_window_padding_w (*(int*)0x49CDAC)
+#define CS_window_surface_width (*(int*)0x49D374)
+#define CS_window_surface_height (*(int*)0x49D378)
+#define CS_directdraw (*(IDirectDraw7**)0x49D37C)
+#define CS_screen_primary_surface (*(IDirectDrawSurface7** const)0x49D380)
+#define CS_screen_surface (*(IDirectDrawSurface7** const)0x49D384)
+#define CS_surfaces (*(IDirectDrawSurface7*(*)[40])0x49D388)
+#define CS_fade_counter (*(int*)0x49DB38)
+#define CS_camera_x_pos (*(signed int*)0x49E1C8)
+#define CS_camera_y_pos (*(signed int*)0x49E1CC)
+#define CS_camera_x_destination (*(signed int*)0x49E1D0)
+#define CS_camera_y_destination (*(signed int*)0x49E1D4)
+#define CS_gamemode_flags (*(unsigned int*)0x49E1E8)
+#define CS_input_bitfield_held (*(int*)0x49E210)
+#define CS_input_bitfield_newly_pressed (*(int*)0x49E214)
+#define CS_tsc_buffer (*(char**)0x4A5AD8)
+#define CS_tsc_offset (*(unsigned int*)0x4A5AE0)
+#define CS_pxm_buffer (*(unsigned char**)0x49E480)
+#define CS_pxa_buffer ((unsigned char*)0x49E484)
+#define CS_hWnd (*(HWND* const)0x49E458)
+#define CS_gamepad_enabled (*(int*)0x49E45C)
+#define CS_level_width (*(unsigned short*)0x49E586)
+#define CS_level_height (*(unsigned short*)0x49E588)
+#define CS_quote_display_flags (*(char*)0x49E638)
+#define CS_quote_facing_right (*(BOOL*)0x49E640)
+#define CS_quote_x_pos (*(int*)0x49E654) // gMC.x
+#define CS_quote_y_pos (*(int*)0x49E658) // gMC.y
+#define CS_quote_frame_id (*(int*)0x49E678) // gMC.ani_no
+#define CS_quote_sprite_half_width (*(int*)0x49E68C)
+#define CS_quote_sprite_half_height (*(int*)0x49E690)
+#define CS_quote_weapon_selected (*(int*)0x499C68)
+#define CS_music_fade_flag (*(int*)0x4A4E10)
+#define CS_current_room (*(int*)0x4A57F0) // gStageNo
+#define CS_current_music (*(int*)0x4A57F4) // gMusicNo
+#define CS_previous_song_last_position (*(int*)0x4A57F8)
+#define CS_previous_music (*(int*)0x4A57FC)
+
+// String array
+#define CS_org_playlist (*(char*(*)[42])0x4981E8)
 
 struct OTHER_RECT	// The original name for this struct is unknown
 {
@@ -61,6 +109,49 @@ typedef enum CS_SurfaceID
 } CS_SurfaceID;
 
 // Structs
+
+// inventory
+typedef struct CS_ARMS
+{
+	int code;
+
+	int level;
+
+	int exp;
+
+	int max_num;
+
+	int num;
+} CS_ARMS;
+
+typedef struct CS_ITEM
+{
+	int code;
+} CS_ITEM;
+
+// background
+
+typedef struct CS_BACK
+{
+	BOOL flag;	// Unused - purpose unknown
+	int partsW;
+	int partsH;
+	int numX;
+	int numY;
+	int type;
+	int fx;
+} CS_BACK;
+
+// Boss
+
+typedef struct CS_BOSSLIFE	// Not the original struct name
+{
+	BOOL flag;
+	int* pLife;
+	int max;
+	int br;
+	int count;
+} CS_BOSSLIFE;
 
 // Config
 typedef struct CS_ConfigData
@@ -139,6 +230,187 @@ struct CS_CARET
 	RECT rect;
 };
 
+struct CS_CARET_TABLE
+{
+	int view_left;
+	int view_top;
+};
+
+// Ending
+
+enum CS_CREDIT_MODE
+{
+	CREDIT_MODE_STOP,
+	CREDIT_MODE_SCROLL_READ,
+	CREDIT_MODE_SCROLL_WAIT
+};
+
+enum CS_ILLUSTRATION_ACTION
+{
+	ILLUSTRATION_ACTION_IDLE,
+	ILLUSTRATION_ACTION_SLIDE_IN,
+	ILLUSTRATION_ACTION_SLIDE_OUT
+};
+
+struct CS_CREDIT
+{
+	long size;
+	char* pData;
+	int offset;
+	int wait;
+	CS_CREDIT_MODE mode;
+	int start_x;
+};
+
+struct CS_STRIP
+{
+	int flag;
+	int x;
+	int y;
+	int cast;
+	char str[0x40];
+};
+
+struct CS_ILLUSTRATION
+{
+	CS_ILLUSTRATION_ACTION act_no;
+	int x;
+};
+
+struct CS_ISLAND_SPRITE
+{
+	int x;
+	int y;
+};
+
+// Fade
+
+#define CS_WINDOW_WIDTH 320
+#define CS_WINDOW_HEIGHT 240
+
+#define FADE_WIDTH	(((CS_WINDOW_WIDTH - 1) / 16) + 1)
+#define FADE_HEIGHT	(((CS_WINDOW_HEIGHT - 1) / 16) + 1)
+
+struct CS_FADE
+{
+	int mode;
+	BOOL bMask;
+	int count;
+	signed char ani_no[FADE_HEIGHT][FADE_WIDTH];
+	signed char flag[FADE_HEIGHT][FADE_WIDTH];	// Not a BOOLEAN (those are unsigned)
+	signed char dir;
+};
+
+// Flash
+
+enum CS_FlashMode
+{
+	FLASH_MODE_EXPLOSION = 1,
+	FLASH_MODE_FLASH = 2
+};
+
+static struct
+{
+	CS_FlashMode mode;
+	int act_no;
+	BOOL flag;
+	int cnt;
+	int width;
+	int x;
+	int y;
+	RECT rect1;
+	RECT rect2;
+} flash;
+
+// Input
+
+struct CS_DIRECTINPUTSTATUS
+{
+	BOOL bLeft;
+	BOOL bRight;
+	BOOL bUp;
+	BOOL bDown;
+	BOOL bButton[32]; // 32 is the number of buttons in DirectInput's `DIJOYSTATE` struct
+};
+
+// Mapping
+
+typedef struct CS_MAP_DATA
+{
+	unsigned char* data;
+	unsigned char atrb[0x100];
+	short width;
+	short length;
+} CS_MAP_DATA;
+
+// Map Name
+
+typedef struct CS_MAP_NAME
+{
+	BOOL flag;
+	int wait;
+	char name[0x20];
+} CS_MAP_NAME;
+
+// MyChar
+
+typedef struct CS_MYCHAR
+{
+	unsigned char cond;
+	unsigned int flag;
+	int direct;
+	BOOL up;
+	BOOL down;
+	int unit;
+	int equip;
+	int x;
+	int y;
+	int tgt_x;
+	int tgt_y;
+	int index_x;
+	int index_y;
+	int xm;
+	int ym;
+	int ani_wait;
+	int ani_no;
+	OTHER_RECT hit;
+	OTHER_RECT view;
+	RECT rect;
+	RECT rect_arms;
+	int level;
+	int exp_wait;
+	int exp_count;
+	unsigned char shock;
+	unsigned char no_life;
+	unsigned char rensha;
+	unsigned char bubble;
+	short life;
+	short star;
+	short max_life;
+	short a;
+	int lifeBr;
+	int lifeBr_count;
+	int air;
+	int air_get;
+	signed char sprash;
+	signed char ques;
+	signed char boost_sw;
+	int boost_cnt;
+} CS_MYCHAR;
+
+// MycParam
+
+typedef struct CS_ARMS_LEVEL
+{
+	int exp[3];
+} CS_ARMS_LEVEL;
+
+typedef struct CS_REC
+{
+	long counter[4];
+	unsigned char random[4];
+} CS_REC;
+
 // Npc Entity flags
 enum NPCFlags
 {
@@ -210,55 +482,237 @@ struct CS_EVENT
 	unsigned short bits;
 };
 
-// Variables
-#define CS_window_upscale (*(int*)0x48F914) // mag
-#define CS_clip_rect_common (*(RECT*)0x48F91C) // grcGame
-#define CS_down_key_mapping (*(int*)0x49363C)
-#define CS_background_tile_width (*(int*)0x499C78)
-#define CS_background_tile_height (*(int*)0x499C7C)
-#define CS_dword_499C8C (*(int*)0x499C8C)
-#define CS_window_padding_h (*(int*)0x49CDA8)
-#define CS_window_padding_w (*(int*)0x49CDAC)
-#define CS_window_surface_width (*(int*)0x49D374)
-#define CS_window_surface_height (*(int*)0x49D378)
-#define CS_directdraw (*(IDirectDraw7**)0x49D37C)
-#define CS_screen_primary_surface (*(IDirectDrawSurface7** const)0x49D380)
-#define CS_screen_surface (*(IDirectDrawSurface7** const)0x49D384)
-#define CS_surfaces (*(IDirectDrawSurface7*(*)[40])0x49D388)
-#define CS_fade_counter (*(int*)0x49DB38)
-#define CS_camera_x_pos (*(signed int*)0x49E1C8)
-#define CS_camera_y_pos (*(signed int*)0x49E1CC)
-#define CS_camera_x_destination (*(signed int*)0x49E1D0)
-#define CS_camera_y_destination (*(signed int*)0x49E1D4)
-#define CS_gamemode_flags (*(unsigned int*)0x49E1E8)
-#define CS_input_bitfield_held (*(int*)0x49E210)
-#define CS_input_bitfield_newly_pressed (*(int*)0x49E214)
-#define CS_tsc_buffer (*(char**)0x4A5AD8)
-#define CS_tsc_offset (*(unsigned int*)0x4A5AE0)
-#define CS_pxm_buffer (*(unsigned char**)0x49E480)
-#define CS_pxa_buffer ((unsigned char*)0x49E484)
-#define CS_hWnd (*(HWND* const)0x49E458)
-#define CS_gamepad_enabled (*(int*)0x49E45C)
-#define CS_level_width (*(unsigned short*)0x49E586)
-#define CS_level_height (*(unsigned short*)0x49E588)
-#define CS_quote_display_flags (*(char*)0x49E638)
-#define CS_quote_facing_right (*(BOOL*)0x49E640)
-#define CS_quote_x_pos (*(int*)0x49E654) // gMC.x
-#define CS_quote_y_pos (*(int*)0x49E658) // gMC.y
-#define CS_quote_frame_id (*(int*)0x49E678) // gMC.ani_no
-#define CS_quote_sprite_half_width (*(int*)0x49E68C)
-#define CS_quote_sprite_half_height (*(int*)0x49E690)
-#define CS_quote_weapon_selected (*(int*)0x499C68)
-#define CS_music_fade_flag (*(int*)0x4A4E10)
-#define CS_current_room (*(int*)0x4A57F0) // gStageNo
-#define CS_current_music (*(int*)0x4A57F4) // gMusicNo
-#define CS_previous_song_last_position (*(int*)0x4A57F8)
-#define CS_previous_music (*(int*)0x4A57FC)
+// Npc Table
 
-// String array
-#define CS_org_playlist (*(char*(*)[42])0x4981E8)
+struct CS_NPC_TBL_RECT
+{
+	unsigned char front;
+	unsigned char top;
+	unsigned char back;
+	unsigned char bottom;
+};
 
+struct CS_NPC_TABLE
+{
+	unsigned short bits;
+	unsigned short life;
+	unsigned char surf;
+	unsigned char hit_voice;
+	unsigned char destroy_voice;
+	unsigned char size;
+	long exp;
+	long damage;
+	CS_NPC_TBL_RECT hit;
+	CS_NPC_TBL_RECT view;
+};
 
+// PixTone
+
+typedef struct CS_PIXTONEPARAMETER2
+{
+	int model;
+	double num;
+	int top;
+	int offset;
+} CS_PIXTONEPARAMETER2;
+
+typedef struct CS_PIXTONEPARAMETER
+{
+	int use;
+	int size;
+	CS_PIXTONEPARAMETER2 oMain;
+	CS_PIXTONEPARAMETER2 oPitch;
+	CS_PIXTONEPARAMETER2 oVolume;
+	int initial;
+	int pointAx;
+	int pointAy;
+	int pointBx;
+	int pointBy;
+	int pointCx;
+	int pointCy;
+} CS_PIXTONEPARAMETER;
+
+// Permit Stage
+
+typedef struct CS_PERMIT_STAGE
+{
+	int index;
+	int event;
+} CS_PERMIT_STAGE;
+
+// Stage Table
+
+typedef struct CS_STAGE_TABLE
+{
+	char parts[0x20];
+	char map[0x20];
+	int bkType;
+	char back[0x20];
+	char npc[0x20];
+	char boss[0x20];
+	signed char boss_no;
+	char name[0x20];
+} CS_STAGE_TABLE;
+
+// MusicID
+typedef enum CS_MusicID
+{
+	MUS_SILENCE = 0x0,
+	MUS_MISCHIEVOUS_ROBOT = 0x1,
+	MUS_SAFETY = 0x2,
+	MUS_GAME_OVER = 0x3,
+	MUS_GRAVITY = 0x4,
+	MUS_ON_TO_GRASSTOWN = 0x5,
+	MUS_MELTDOWN2 = 0x6,
+	MUS_EYES_OF_FLAME = 0x7,
+	MUS_GESTATION = 0x8,
+	MUS_MIMIGA_TOWN = 0x9,
+	MUS_GOT_ITEM = 0xA,
+	MUS_BALROGS_THEME = 0xB,
+	MUS_CEMETERY = 0xC,
+	MUS_PLANT = 0xD,
+	MUS_PULSE = 0xE,
+	MUS_VICTORY = 0xF,
+	MUS_GET_HEART_TANK = 0x10,
+	MUS_TYRANT = 0x11,
+	MUS_RUN = 0x12,
+	MUS_JENKA1 = 0x13,
+	MUS_LABYRINTH_FIGHT = 0x14,
+	MUS_ACCESS = 0x15,
+	MUS_OPPRESSION = 0x16,
+	MUS_GEOTHERMAL = 0x17,
+	MUS_CAVE_STORY = 0x18,
+	MUS_MOONSONG = 0x19,
+	MUS_HEROS_END = 0x1A,
+	MUS_SCORCHING_BACK = 0x1B,
+	MUS_QUIET = 0x1C,
+	MUS_LAST_CAVE = 0x1D,
+	MUS_BALCONY = 0x1E,
+	MUS_CHARGE = 0x1F,
+	MUS_LAST_BATTLE = 0x20,
+	MUS_THE_WAY_BACK_HOME = 0x21,
+	MUS_ZOMBIE = 0x22,
+	MUS_BREAK_DOWN = 0x23,
+	MUS_RUNNING_HELL = 0x24,
+	MUS_JENKA2 = 0x25,
+	MUS_LIVING_WATERWAY = 0x26,
+	MUS_SEAL_CHAMBER = 0x27,
+	MUS_TOROKOS_THEME = 0x28,
+	MUS_WHITE = 0x29
+} CS_MusicID;
+
+// Profile
+
+typedef struct PROFILEDATA
+{
+	char code[8];
+	int stage;
+	CS_MusicID music;
+	int x;
+	int y;
+	int direct;
+	short max_life;
+	short star;
+	short life;
+	short a;
+	int select_arms;
+	int select_item;
+	int equip;
+	int unit;
+	int counter;
+	CS_ARMS arms[8];
+	CS_ITEM items[32];
+	CS_PERMIT_STAGE permitstage[8];
+	signed char permit_mapping[0x80];
+	char FLAG[4];
+	unsigned char flags[1000];
+} PROFILEDATA;
+
+// Star
+
+static struct
+{
+	int cond;
+	int code;
+	int direct;
+	int x;
+	int y;
+	int xm;
+	int ym;
+	int act_no;
+	int act_wait;
+	int ani_no;
+	int ani_wait;
+	int view_left;
+	int view_top;
+	RECT rect;
+} cs_star[3];
+
+// TextScript
+
+typedef struct CS_TEXT_SCRIPT
+{
+	// Path (reload when exit teleporter menu/inventory)
+	char path[MAX_PATH];
+
+	// Script buffer
+	long size;
+	char* data;
+
+	// Mode (ex. NOD, WAI)
+	signed char mode;
+
+	// Flags
+	signed char flags;
+
+	// Current positions (read position in buffer, x position in line)
+	int p_read;
+	int p_write;
+
+	// Current line to write to
+	int line;
+
+	// Line y positions
+	int ypos_line[4];
+
+	// Event stuff
+	int wait;
+	int wait_next;
+	int next_event;
+
+	// Yes/no selected
+	signed char select;
+
+	// Current face
+	int face;
+	int face_x;
+
+	// Current item
+	int item;
+	int item_y;
+
+	// Text rect
+	RECT rcText;
+
+	// ..?
+	int offsetY;
+
+	// NOD cursor blink
+	unsigned char wait_beam;
+} CS_TEXT_SCRIPT;
+
+// ValueView
+
+typedef struct CS_VALUEVIEW
+{
+	BOOL flag;
+	int* px;
+	int* py;
+	int offset_y;
+	int value;
+	int count;
+	RECT rect;
+} CS_VALUEVIEW;
 
 ///////////////
 // Functions //
