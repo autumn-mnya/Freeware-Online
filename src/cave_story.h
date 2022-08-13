@@ -1163,16 +1163,16 @@ static void (* const CS_PutMapName)(BOOL bMini) = (void(*)(BOOL))0x414250;
 static void (* const CS_StartMapName)(void) = (void(*)(void))0x414310;
 // RestoreMapName - 0x414330
 static void (* const CS_RestoreMapName)(void) = (void(*)(void))0x414330;
-// WriteMinimMapLine - 0x4143C0
-
+// WriteMiniMapLine - 0x4143C0
+static void (* const CS_WriteMiniMapLine)(int line) = (void(*)(int))0x4143C0;
 // MiniMapLoop - 0x414640
-
+static int (* const CS_MiniMapLoop)(void) = (int(*)(void))0x414640;
 // IsMapping - 0x414B00
-
+static BOOL(* const CS_IsMapping)(void) = (BOOL(*)(void))0x414B00;
 // StartMapping - 0x414B20
-
+static void (* const CS_StartMapping)(void) = (void(*)(void))0x414B20;
 // SetMapping - 0x414B40
-
+static void (* const CS_SetMapping)(int a) = (void(*)(int))0x414B40;
 // InitMyChar - 0x414B50
 
 // AnimationMyChar - 0x414BF0
