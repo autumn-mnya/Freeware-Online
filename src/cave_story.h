@@ -2267,35 +2267,35 @@ static BOOL (* const CS_GetNpCharAlive)(int code_event) = (BOOL(*)(int))0x4704F0
 // CountAliveNpChar - 0x470560
 static int (* const CS_CountAliveNpChar)(void) = (int(*)(void))0x470560;
 // JadgeHitNpCharBlock - 0x4705C0
-
+static void (* const CS_JadgeHitNpCharBlock)(CS_NPCHAR* npc, int x, int y) = (void(*)(CS_NPCHAR*, int, int))0x4705C0;
 // JudgeHitNpCharTriangleA - 0x470870
-
+static void (* const CS_JudgeHitNpCharTriangleA)(CS_NPCHAR* npc, int x, int y) = (void(*)(CS_NPCHAR*, int, int))0x470870;
 // JudgeHitNpCharTriangleB - 0x470970
-
+static void (* const CS_JudgeHitNpCharTriangleB)(CS_NPCHAR* npc, int x, int y) = (void(*)(CS_NPCHAR*, int, int))0x470970;
 // JudgeHitNpCharTriangleC - 0x470A70
-
+static void (* const CS_JudgeHitNpCharTriangleC)(CS_NPCHAR* npc, int x, int y) = (void(*)(CS_NPCHAR*, int, int))0x470A70;
 // JudgeHitNpCharTriangleD - 0x470B70
-
+static void (* const CS_JudgeHitNpCharTriangleD)(CS_NPCHAR* npc, int x, int y) = (void(*)(CS_NPCHAR*, int, int))0x470B70;
 // JudgeHitNpCharTriangleE - 0x470C70
-
+static void (* const CS_JudgeHitNpCharTriangleE)(CS_NPCHAR* npc, int x, int y) = (void(*)(CS_NPCHAR*, int, int))0x470C70;
 // JudgeHitNpCharTriangleF - 0x470D80
-
+static void (* const CS_JudgeHitNpCharTriangleF)(CS_NPCHAR* npc, int x, int y) = (void(*)(CS_NPCHAR*, int, int))0x470D80;
 // JudgeHitNpCharTriangleG - 0x470E90
-
+static void (* const CS_JudgeHitNpCharTriangleG)(CS_NPCHAR* npc, int x, int y) = (void(*)(CS_NPCHAR*, int, int))0x470E90;
 // JudgeHitNpCharTriangleH - 0x470FA0
-
+static void (* const CS_JudgeHitNpCharTriangleH)(CS_NPCHAR* npc, int x, int y) = (void(*)(CS_NPCHAR*, int, int))0x470FA0;
 // JudgeHitNpCharWater - 0x4710B0
-
+static void (* const CS_JudgeHitNpCharWater)(CS_NPCHAR* npc, int x, int y) = (void(*)(CS_NPCHAR*, int, int))0x4710B0;
 // HitNpCharMap - 0x471160
-
+static void (* const CS_HitNpCharMap)(void) = (void(*)(void))0x471160;
 // LoseNpChar - 0x471B80
 static void (* const CS_LoseNpChar)(CS_NPCHAR* npc, BOOL bVanish) = (void(*)(CS_NPCHAR*, BOOL))0x471B80;
 // HitNpCharBullet - 0x471D50
-
+static void (* const CS_JudgeHitNpCharBullet)(void) = (void(*)(void))0x471D50;
 // LoadNpcTable - 0x472400
-
+static BOOL (* const CS_LoadNpcTable)(const char *path) = (BOOL(*)(const char*))0x472400;
 // ReleaseNpcTable - 0x472710
-
+static void (* const CS_ReleaseNpcTable)(void) = (void(*)(void))0x472710;
 // InitBossChar - 0x472740
 
 // PutBossChar - 0x472770
