@@ -1445,11 +1445,11 @@ static void (* const CS_ChangeMusic)(int music_id) = (void(*)(int))0x420EE0;
 // ReCallMusic - 0x420F50
 static void (* const CS_ReCallMusic)(void) = (void(*)(void))0x420F50;
 // InitStar - 0x420FA0
-
+static void (* const CS_InitStar)(void) = (void(*)(void))0x420FA0;
 // ActStar - 0x421040
-
+static void (* const CS_ActStar)(void) = (void(*)(void))0x421040;
 // PutStar - 0x4213B0
-
+static void (* const CS_PutStar)(int fx, int fy) = (void(*)(int, int))0x4213B0;
 // InitTextScript2 - 0x4214E0
 
 // EndTextScript - 0x421570
