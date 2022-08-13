@@ -1451,53 +1451,53 @@ static void (* const CS_ActStar)(void) = (void(*)(void))0x421040;
 // PutStar - 0x4213B0
 static void (* const CS_PutStar)(int fx, int fy) = (void(*)(int, int))0x4213B0;
 // InitTextScript2 - 0x4214E0
-
+static BOOL(* const CS_InitTextScript2)(void) = (BOOL(*)(void))0x4214E0;
 // EndTextScript - 0x421570
-
+static void (* const CS_EndTextScript)(void) = (void(*)(void))0x421570;
 // EncryptionBinaryData2 - 0x4215C0
-
+static void (* const CS_EncryptionBinaryData2)(unsigned char* pData, long size) = (void(*)(unsigned char*, long))0x4215C0;
 // LoadTextScript2 - 0x421660
-
+static BOOL(* const CS_LoadTextScript2)(const char *name) = (BOOL(*)(const char*))0x421660;
 // LoadTextScript_Stage - 0x421750
-
+static BOOL(* const CS_LoadTextScript_Stage)(const char* name) = (BOOL(*)(const char*))0x421750;
 // GetTextScriptPath - 0x4218E0
-
+static void (* const CS_GetTextScriptPath)(char *path) = (void(*)(char*))0x4218E0;
 // GetTextScriptNo - 0x421900
-
+static int (* const CS_GetTextScriptNo)(int a) = (int(*)(int))0x421900;
 // StartTextScript - 0x421990
-
+static BOOL(* const CS_StartTextScript)(const char* name) = (BOOL(*)(const char*))0x421990;
 // JumpTextScript - 0x421AF0
-
+static BOOL(* const CS_JumpTextScript)(int no) = (BOOL(*)(int))0x421AF0;
 // StopTextScript - 0x421C50
-
+static void (* const CS_StopTextScript)(void) = (void(*)(void))0x421C50;
 // CheckNewLine - 0x421C80
-
+static void (* const CS_CheckNewLine)(void) = (void(*)(void))0x421C80;
 // SetNumberTextScript - 0x421D10
-
+static void (* const CS_SeeNumberTextScript)(int index) = (void(*)(int))0x421D10;
 // ClearTextLine - 0x421E90
-
+static void (* const CS_ClearTextLine)(void) = (void(*)(void))0x421E90;
 // PutTextScript - 0x421F10
-
+static void (* const CS_PutTextScript)(void) = (void(*)(void))0x421F10;
 // TextScriptProc - 0x422510
 static void (* const CS_TextScriptProc)(void) = (void(*)(void))0x422510;
 // RestoreTextScript - 0x425790
-
+static void (* const CS_RestoreTextScript)(void) = (void(*)(void))0x425790;
 // InitTriangleTable - 0x4257F0
-
+static void (* const CS_InitTriangleTable)(void) = (void(*)(void))0x4257F0;
 // GetSin - 0x4258B0
-
+static int (* const CS_GetSin)(unsigned char deg) = (int(*)(unsigned char))0x4258B0;
 // GetCos - 0x4258C0
-
+static int (* const CS_GetCos)(unsigned char deg) = (int(*)(unsigned char))0x4258C0;
 // GetArktan - 0x4258E0
-
+static unsigned char (* const CS_GetArktan)(int x, int y) = (unsigned char(*)(int, int))0x4258E0;
 // ClearValueView - 0x425BC0
-
+static void (* const CS_ClearValueView)(void) = (void(*)(void))0x425BC0;
 // SetValueView - 0x425BF0
-
+static void (* const CS_SetValueView)(int *px, int *py, int value) = (void(*)(int*, int*, int))0x425BF0;
 // ActValueView - 0x426360
-
+static void (* const CS_ActValueView)(void) = (void(*)(void))0x426360;
 // PutValueView - 0x426430
-
+static void (* const CS_PutValueView)(int flx, int fly) = (void(*)(int, int))0x426430;
 // ActNpc000 - 0x426530
 
 // ActNpc001 - 0x4265B0
