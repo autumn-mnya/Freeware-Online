@@ -629,6 +629,15 @@ typedef struct PROFILEDATA
 	unsigned char flags[1000];
 } PROFILEDATA;
 
+// Sound
+
+enum CS_SoundMode
+{
+	SOUND_MODE_PLAY_LOOP = -1,
+	SOUND_MODE_STOP = 0,
+	SOUND_MODE_PLAY = 1
+};
+
 // Star
 
 static struct
@@ -1412,23 +1421,23 @@ static void (* const CS_ShootBullet_Spur)(int level) = (void(*)(int))0x41FA10;
 // ShootBullet - 0x41FE70
 static void (* const CS_ShootBullet)(void) = (void(*)(void))0x41FE70;
 // InitDirectSound - 0x4200C0
-
+static BOOL(* const CS_InitDirectSound)(HWND hWnd) = (BOOL(*)(HWND))0x4200C0;
 // EndDirectSound - 0x4201A0
-
+static void (* const CS_EndDirectSound)(void) = (void(*)(void))0x4201A0;
 // InitSoundObject - 0x420240
-
+static BOOL(* const CS_InitSoundObject)(LPCSTR resname, int no) = (BOOL(*)(LPCSTR, int))0x420240;
 // LoadSoundObject - 0x420390
-
+static BOOL(* const CS_LoadSoundObject)(LPCSTR file_name, int no) = (BOOL(*)(LPCSTR, int))0x420390;
 // PlaySoundObject - 0x420640
-
+static BOOL(* const CS_PlaySoundObject)(int no, CS_SoundMode mode) = (BOOL(*)(int, CS_SoundMode))0x420640;
 // ChangeSoundFrequency - 0x420720
-
+static void (* const CS_ChangeSoundFrequency)(int no, DWORD rate) = (void(*)(int, DWORD))0x420720;
 // ChangeSoundVolume - 0x420760
-
+static void (* const CS_ChangeSoundVolume)(int no, long volume) = (void(*)(int, long))0x420760;
 // ChangeSoundPan - 0x4207A0
-
+static void (* const CS_ChangeSoundPan)(int no, long pan) = (void(*)(int, long))0x4207A0;
 // MakePixToneObject - 0x4207E0
-
+static int (* const CS_MakePixToneObject)(const CS_PIXTONEPARAMETER* ptp, int ptp_num, int no) = (int(*)(const CS_PIXTONEPARAMETER*, int, int))0x4207E0;
 // TransferStage - 0x420BE0
 
 // ChangeMusic - 0x420EE0
