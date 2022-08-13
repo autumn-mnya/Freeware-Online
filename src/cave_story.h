@@ -1296,29 +1296,29 @@ static BOOL(* const CS_SaveTimeCounter)(void) = (BOOL(*)(void))0x41A5D0;
 // LoadTimeCounter - 0x41A7C0
 static int (* const CS_LoadTimeCounter)(void) = (int(*)(void))0x41A7C0;
 // MakeSoundObject8 - 0x41A8F0
-
+static BOOL(* const CS_MakeSoundObject8)(signed char* wavep, signed char track, signed char pipi) = (BOOL(*)(signed char*, signed char, signed char))0x41A8F0;
 // ChangeOrganFrequency - 0x41ABA0
-
+static void (* const CS_ChangeOrganFrequency)(unsigned char key, signed char track, long a) = (void(*)(unsigned char, signed char, long))0x41ABA0;
 // ChangeOrganPan - 0x41AC70
-
+static void (* const CS_ChangeOrganPan)(unsigned char key, unsigned char pan, signed char track) = (void(*)(unsigned char, unsigned char, signed char))0x41AC70;
 // ChangeOrganVolume - 0x41AD20
-
+static void (* const CS_ChangeOrganVolume)(int no, long volume, signed char track) = (void(*)(int, long, signed char))0x41AD20;
 // PlayOrganObject - 0x41ADC0
-
+static void (* const CS_PlayOrganObject)(unsigned char key, int mode, signed char track, long freq) = (void(*)(unsigned char, int, signed char, long))0x41ADC03;
 // ReleaseOrganyaObject - 0x41B2A0
-
+static void (* const CS_ReleaseOrganyaObject)(signed char track) = (void(*)(signed char))0x41B2A0;
 // InitWaveData100 - 0x41B380
-
+static BOOL(* const CS_InitWaveData100)(void) = (BOOL(*)(void))0x41B380;
 // MakeOrganyaWave - 0x41B3F0
-
+static BOOL(* const CS_MakeOrganyaWave)(signed char track, signed char wave_no, signed char pipi) = (BOOL(*)(signed char, signed char, signed char))0x41B3F0;
 // ChangeDramFrequency - 0x41B440
-
+static void (* const CS_ChangeDramFrequency)(unsigned char key, signed char track) = (void(*)(unsigned char, signed char))0x41B440;
 // ChangeDramPan - 0x41B480
-
+static void (* const CS_ChangeDramPan)(unsigned char pan, signed char track) = (void(*)(unsigned char, signed char))0x41B440;
 // ChangeDramVolume - 0x41B4D0
-
+static void (* const CS_ChangeDramVolume)(long volume, signed char track) = (void(*)(long, signed char))0x41B4D0;
 // PlayDramObject - 0x41B510
-
+static void (* const CS_PlayDramObject)(unsigned char key, int mode, signed char track) = (void(*)(unsigned char, int, signed char))0x41B510;
 // OrgData::OrgData - 0x41B600
 
 // OrgData::InitOrgData - 0x41B650
@@ -1362,7 +1362,7 @@ static void (* const CS_StopOrganyaMusic)(void) = (void(*)(void))0x41C7F0;
 // SetOrganyaFadeout - 0x41C880
 static void (* const CS_SetOrganyaFadeout)(void) = (void(*)(void))0x41C880;
 // EndOrganya - 0x41C890
-
+static void (* const CS_EndOrganya)(void) = (void(*)(void))0x41C890;
 // MakeWaveTables - 0x41C8F0
 
 // MakePixelWaveData - 0x41CB10
