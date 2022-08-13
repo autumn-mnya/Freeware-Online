@@ -1364,17 +1364,17 @@ static void (* const CS_SetOrganyaFadeout)(void) = (void(*)(void))0x41C880;
 // EndOrganya - 0x41C890
 static void (* const CS_EndOrganya)(void) = (void(*)(void))0x41C890;
 // MakeWaveTables - 0x41C8F0
-
+static void (* const CS_MakeWaveTables)(void) = (void(*)(void))0x41C8F0;
 // MakePixelWaveData - 0x41CB10
-
+static BOOL (* const CS_MakePixelWaveData)(const CS_PIXTONEPARAMETER* ptp, unsigned char* pData) = (BOOL(*)(const CS_PIXTONEPARAMETER*, unsigned char*))0x41CB10;
 // IsProfile - 0x41CFC0
-
+static BOOL(* const CS_IsProfile)(void) = (BOOL(*)(void))0x41CFC0;
 // SaveProfile - 0x41D040
-
+static BOOL(* const CS_SaveProfile)(const char *name) = (BOOL(*)(const char*))0x41D040;
 // LoadProfile - 0x41D260
-
+static BOOL(* const CS_LoadProfile)(const char *name) = (BOOL(*)(const char*))0x41D260;
 // InitializeGame - 0x41D550
-
+static BOOL(* const CS_InitializeGame)(HWND hWnd) = (BOOL(*)(HWND))0x41D550;
 // ClearPermitStage - 0x41D610
 
 // AddPermitStage - 0x41D630
