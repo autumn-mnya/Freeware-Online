@@ -1130,39 +1130,39 @@ static BOOL (* const CS_SystemTask)(void) = (BOOL(*)(void))0x413570;
 // JoystickProc - 0x4135E0
 static void (* const CS_JoystickProc)(void) = (void(*)(void))0x4135E0;
 // InitMapData2 - 0x413750
-
+static BOOL(* const CS_InitMapData2)(void) = (BOOL(*)(void))0x413750;
 // LoadMapData2 - 0x413770
-
+static BOOL(* const CS_LoadMapData2)(const char *path_map) = (BOOL(*)(const char*))0x413770;
 // LoadAttributeData - 0x4138A0
-
+static BOOL(* const CS_LoadAttributeData)(const char *path_atrb) = (BOOL(*)(const char*))0x4138A0;
 // EndMapData - 0x413930
-
+static void (* const CS_EndMapData)(void) = (void(*)(void))0x413930;
 // ReleasePartsImage - 0x413950
-
+static void (* const CS_ReleasePartsImage)(void) = (void(*)(void))0x413950;
 // GetMapData - 0x413960
-
+static void (* const CS_GetMapData)(unsigned char** data, short* mw, short* ml) = (void(*)(unsigned char**, short*, short*))0x413960;
 // GetAttribute - 0x4139A0
-
+static unsigned char (* const CS_GetAttribute)(int x, int y) = (unsigned char(*)(int, int))0x4139A0;
 // DeleteMapParts - 0x413A00
-
+static void (* const CS_DeleteMapParts)(int x, int y) = (void(*)(int, int))0x413A00;
 // ShiftMapParts - 0x413A20
-
+static void (* const CS_ShiftMapParts)(int x, int y) = (void(*)(int, int))0x413A20;
 // ChangeMapParts - 0x413A60
-
+static BOOL(* const CS_ChangeMapParts)(int x, int y, unsigned char no) = (BOOL(*)(int, int, unsigned char))0x413A60;
 // PutStage_Back - 0x413AF0
-
+static void (* const CS_PutStage_Back)(int fx, int fy) = (void(*)(int, int))0x413AF0;
 // PutStage_Front - 0x413C60
-
+static void (* const CS_PutStage_Front)(int fx, int fy) = (void(*)(int, int))0x413C60;
 // PutMapDataVector - 0x413E40
-
+static void (* const CS_PutMapDataVector)(int fx, int fy) = (void(*)(int, int))0x413E40;
 // ReadyMapName - 0x4140F0
-
+static void (* const CS_ReadyMapName)(const char *str) = (void(*)(const char*))0x4140F0;
 // PutMapName - 0x414250
-
+static void (* const CS_PutMapName)(BOOL bMini) = (void(*)(BOOL))0x414250;
 // StartMapName - 0x414310
-
+static void (* const CS_StartMapName)(void) = (void(*)(void))0x414310;
 // RestoreMapName - 0x414330
-
+static void (* const CS_RestoreMapName)(void) = (void(*)(void))0x414330;
 // WriteMinimMapLine - 0x4143C0
 
 // MiniMapLoop - 0x414640
