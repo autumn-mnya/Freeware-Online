@@ -1174,49 +1174,49 @@ static void (* const CS_StartMapping)(void) = (void(*)(void))0x414B20;
 // SetMapping - 0x414B40
 static void (* const CS_SetMapping)(int a) = (void(*)(int))0x414B40;
 // InitMyChar - 0x414B50
-
+static void (* const CS_InitMyChar)(void) = (void(*)(void))0x414B50;
 // AnimationMyChar - 0x414BF0
-
+static void (* const CS_AnimationMyChar)(BOOL bKey) = (void(*)(BOOL))0x414BF0;
 // ShowMyChar - 0x415220
-
+static void (* const CS_ShowMyChar)(BOOL bShow) = (void(*)(BOOL))0x415220;
 // PutMyChar - 0x415250
 static void (* const CS_PutMyChar)(int camera_x, int camera_y) = (void(*)(int, int))0x415250;
 // ActMyChar_Normal - 0x4156C0
-
+static void (* const CS_ActMyChar_Normal)(BOOL bKey) = (void(*)(BOOL))0x4156C0;
 // ActMyChar_Stream - 0x416470
-
+static void (* const CS_ActMyChar_Stream)(BOOL bKey) = (void(*)(BOOL))0x416470;
 // ActMyChar - 0x4168C0
-
+static void (* const CS_ActMyChar)(BOOL bKey) = (void(*)(BOOL))0x4168C0;
 // AirProcess - 0x416990
-
+static void (* const CS_AirProcess)(void) = (void(*)(void))0x416990;
 // GetMyCharPosition - 0x416AA0
-
+static void (* const CS_GetMyCharPosition)(int *x, int *y) = (void(*)(int*, int*))0x416AA0;
 // SetMyCharPosition - 0x416AC0
-
+static void (* const CS_SetMyCharPosition)(int x, int y) = (void(*)(int, int))0x416AC0;
 // MoveMyChar - 0x416B30
-
+static void (* const CS_MoveMyChar)(int x, int y) = (void(*)(int, int))0x416B30;
 // ZeroMyCharXMove - 0x416B50
-
+static void (* const CS_ZeroMyCharXMove)(void) = (void(*)(void))0x416B50;
 // GetUnitMyChar - 0x416B60
-
+static int (* const CS_GetUnitMyChar)(void) = (int(*)(void))0x416B60;
 // SetMyCharDirect - 0x416B70
-
+static void (* const CS_SetMyCharDirect)(unsigned char dir) = (void(*)(unsigned char))0x416B70;
 // ChangeMyUnit - 0x416C40
-
+static void (* const CS_ChangeMyUnit)(unsigned char a) = (void(*)(unsigned char))0x416C40;
 // PitMyChar - 0x416C50
-
+static void (* const CS_PitMyChar)(void) = (void(*)(void))0x416C50;
 // EquipItem - 0x416C70
-
+static void (* const CS_EquipItem)(int flag, BOOL b) = (void(*)(int, BOOL))0x416C70;
 // ResetCheck - 0x416CA0
-
+static void (* const CS_ResetCheck)(void) = (void(*)(void))0x416CA0;
 // SetNoise - 0x416CC0
-
+static void (* const CS_SetNoise)(int no, int freq) = (void(*)(int, int))0x416CC0;
 // CutNoise - 0x416D40
-
+static void (* const CS_CutNoise)(void) = (void(*)(void))0x416D40;
 // ResetNoise - 0x416D80
-
+static void (* const CS_ResetNoise)(void) = (void(*)(void))0x416D80;
 // SleepNoise - 0x416DF0
-
+static void (* const CS_SleepNoise)(void) = (void(*)(void))0x416DF0;
 // ResetMyCharFlag - 0x416E20
 
 // JudgeHitMyCharBlock - 0x416E30
