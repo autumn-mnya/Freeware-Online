@@ -1376,17 +1376,17 @@ static BOOL(* const CS_LoadProfile)(const char *name) = (BOOL(*)(const char*))0x
 // InitializeGame - 0x41D550
 static BOOL(* const CS_InitializeGame)(HWND hWnd) = (BOOL(*)(HWND))0x41D550;
 // ClearPermitStage - 0x41D610
-
+static void (* const CS_ClearPermitStage)(void) = (void(*)(void))0x41D610;
 // AddPermitStage - 0x41D630
-
+static BOOL(* const CS_AddPermitStage)(int index, int event) = (BOOL(*)(int, int))0x41D630;
 // SubPermitStage - 0x41D6A0
-
+static BOOL(* const CS_SubPermitStage)(int index) = (BOOL(*)(int))0x41D6A0;
 // MoveStageSelectCursor - 0x41D740
-
+static void (* const CS_MoveStageSelectCursor)(void) = (void(*)(void))0x41D740;
 // PutStageSelectObject - 0x41D840
-
+static void (* const CS_PutStageSelectObject)(void) = (void(*)(void))0x41D840;
 // StageSelectLoop - 0x41DA00
-
+static int (* const CS_StageSelectLoop)(int *p_event) = (int(*)(int*))0x41DA00;
 // ShootBullet_Frontial - 0x41DBD0
 static void (* const CS_ShootBullet_Frontia1)(int level) = (void(*)(int))0x41DBD0;
 // ShootBullet_PoleStar - 0x41DE60
