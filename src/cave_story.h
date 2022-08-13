@@ -61,6 +61,8 @@ typedef enum CS_SurfaceID
 } CS_SurfaceID;
 
 // Structs
+
+// Config
 typedef struct CS_ConfigData
 {
 	char magic_string[0x20];
@@ -73,6 +75,7 @@ typedef struct CS_ConfigData
 	unsigned long gamepad_buttons[8];
 } CS_ConfigData;
 
+// Bullet
 typedef struct CS_BULLET
 {
 	int flag;
@@ -103,6 +106,7 @@ typedef struct CS_BULLET
 	OTHER_RECT view;
 } CS_BULLET;
 
+// Bullet Table
 typedef struct CS_BULLET_TABLE
 {
 	signed char damage;
@@ -116,6 +120,7 @@ typedef struct CS_BULLET_TABLE
 	OTHER_RECT view;
 } CS_BULLET_TABLE;
 
+// Caret
 struct CS_CARET
 {
 	int cond;
@@ -134,6 +139,7 @@ struct CS_CARET
 	RECT rect;
 };
 
+// Npc Entity flags
 enum NPCFlags
 {
 	NPC_SOLID_SOFT = 1 << 0,                // Pushes Quote out
@@ -153,6 +159,7 @@ enum NPCFlags
 	NPC_SHOW_DAMAGE = 1 << 15               // Show the number of damage taken when harmed
 };
 
+// NpChar
 typedef struct CS_NPCHAR
 {
 	unsigned char cond;
@@ -191,6 +198,8 @@ typedef struct CS_NPCHAR
 	struct CS_NPCHAR* pNpc;
 } CS_NPCHAR;
 
+// NpChar Event
+
 struct CS_EVENT
 {
 	short x;
@@ -202,8 +211,8 @@ struct CS_EVENT
 };
 
 // Variables
-#define CS_window_upscale (*(int*)0x48F914)
-#define CS_clip_rect_common (*(RECT*)0x48F91C)
+#define CS_window_upscale (*(int*)0x48F914) // mag
+#define CS_clip_rect_common (*(RECT*)0x48F91C) // grcGame
 #define CS_down_key_mapping (*(int*)0x49363C)
 #define CS_background_tile_width (*(int*)0x499C78)
 #define CS_background_tile_height (*(int*)0x499C7C)
@@ -234,107 +243,29 @@ struct CS_EVENT
 #define CS_level_height (*(unsigned short*)0x49E588)
 #define CS_quote_display_flags (*(char*)0x49E638)
 #define CS_quote_facing_right (*(BOOL*)0x49E640)
-#define CS_quote_x_pos (*(int*)0x49E654)
-#define CS_quote_y_pos (*(int*)0x49E658)
-#define CS_quote_frame_id (*(int*)0x49E678)
+#define CS_quote_x_pos (*(int*)0x49E654) // gMC.x
+#define CS_quote_y_pos (*(int*)0x49E658) // gMC.y
+#define CS_quote_frame_id (*(int*)0x49E678) // gMC.ani_no
 #define CS_quote_sprite_half_width (*(int*)0x49E68C)
 #define CS_quote_sprite_half_height (*(int*)0x49E690)
 #define CS_quote_weapon_selected (*(int*)0x499C68)
 #define CS_music_fade_flag (*(int*)0x4A4E10)
-#define CS_current_room (*(int*)0x4A57F0)
-#define CS_current_music (*(int*)0x4A57F4)
+#define CS_current_room (*(int*)0x4A57F0) // gStageNo
+#define CS_current_music (*(int*)0x4A57F4) // gMusicNo
 #define CS_previous_song_last_position (*(int*)0x4A57F8)
 #define CS_previous_music (*(int*)0x4A57FC)
 
 // String array
 #define CS_org_playlist (*(char*(*)[42])0x4981E8)
 
-// Functions
-static int (* const CS_LoadConfigData)(CS_ConfigData *config_memory) = (int(*)(CS_ConfigData*))0x40AD60;
-static BOOL (* const CS_Flip_SystemTask)(HWND hWnd) = (BOOL(*)(HWND))0x40B340;
-static void (* const CS_PutBitmap3)(const RECT*,int,int,const RECT*,CS_SurfaceID) = (void(*)(const RECT*,int,int,const RECT*,CS_SurfaceID))0x40C3C0;
-static void (* const CS_PutBitmap4)(const RECT*, int, int, const RECT*, CS_SurfaceID) = (void(*)(const RECT*,int,int,const RECT*,CS_SurfaceID))0x40C5B0;
-static void (* const CS_CortBox)(RECT *dst_rect, int colour) = (void(*)(RECT*,int))0x40C9E0;
-static int (* const CS_RestoreSurfaces)(void) = (int(*)(void))0x40CB60;
-static BOOL (* const CS_StartCreditScript)(void) = (BOOL(*)(void))0x40D440;
-static int (* const CS_Random)(int min, int max) = (int(*)(int,int))0x40F350;
-static void (* const CS_PutNumber4)(int x, int y, int, int) = (void(*)(int,int,int,int))0x40F380;
-static void (* const CS_PutMyChar)(int camera_x, int camera_y) = (void(*)(int,int))0x415250;
-static void (* const CS_PutMyAir)(int x, int y) = (void(*)(int,int))0x41A350;
-static void (* const CS_LoadOrganya)(const char *) = (void(*)(const char*))0x41C6F0;
-static void (* const CS_SetOrganyaPosition)(int) = (void(*)(int))0x41C730;
-static int (* const CS_GetOrganyaPosition)(void) = (int(*)(void))0x41C770;
-static void (* const CS_PlayOrganyaMusic)(void) = (void(*)(void))0x41C790;
-static void (* const CS_ChangeOrganyaVolume)(int) = (void(*)(int))0x41C7C0;
-static void (* const CS_StopOrganyaMusic)(void) = (void(*)(void))0x41C7F0;
-static void (* const CS_SetOrganyaFadeout)(void) = (void(*)(void))0x41C880;
-static void (* const CS_ChangeMusic)(int music_id) = (void(*)(int))0x420EE0;
-static void (* const CS_ReCallMusic)(void) = (void(*)(void))0x420F50;
-static void (* const CS_TextScriptProc)(void) = (void(*)(void))0x422510;
-static void (* const CS_SetNpChar)(int object_ID, int x_pos, int y_pos, int a4, int a5, int facing_right, int a7, int object_RAM_index) = (void(*)(int,int,int,int,int,int,int,int))0x46EFD0;
-static void (* const CS_SetDestroyNpChar)(int x, int y, signed int range, int count) = (void(*)(int,int,int,int))0x46F150;
-// Good name for this would be 'UpdateAllNPCs'
-static void (* const CS_ActNpChar)(void) = (void(*)(void))0x46FA00;
-// CortBox2
-static void (* const CS_CortBox2)(RECT* dst_rect, int colour, CS_SurfaceID surf_no) = (void(*)(RECT*, int, CS_SurfaceID))0x40CA80;
-// MakeSurface_Generic - 0x40C1D0
-static BOOL(* const CS_MakeSurface_Generic)(int bxsize, int bysize, int surf_no) = (BOOL(*)(int, int, int))0x40C1D0;
-// MakeSurface_File
-static BOOL(* const CS_MakeSurface_File)(const char *name, int surf_no) = (BOOL(*)(const char*, int))0x40BAC0;
-// ReloadBitmap_File
-static BOOL(* const CS_ReloadBitmap_File)(const char* name, int surf_no) = (BOOL(*)(const char*, int))0x40BFD0;
-// ReleaseSurface - 0x40B7A0
-static void (* const CS_ReleaseSurface)(int s) = (void(*)(int))0x40B7A0;
-// PutText
-static void (* const CS_PutText)(int x, int y, const char* text, unsigned int colour) = (void(*)(int, int, const char*, unsigned int))0x40CE00;
-// PutText2
-static void (* const CS_PutText2)(int x, int y, const char* text, unsigned int colour, CS_SurfaceID) = (void(*)(int, int, const char*, unsigned int, CS_SurfaceID))0x40CEB0;
-// GetFramePosition - 0x40F020
-static void (* const CS_GetFramePosition)(int *fx, int *fy) = (void(*)(int*, int*))0x40F020;
 
-// Shooting Weapon Code
 
-//Snake
-static void (* const CS_ShootBullet_Frontia1)(int level) = (void(*)(int))0x41DBD0;
-//Polar Star
-static void (* const CS_ShootBullet_PoleStar)(int level) = (void(*)(int))0x41DE60;
-//Fireball
-static void (* const CS_ShootBullet_FireBall)(int level) = (void(*)(int))0x41E110;
-//Machine Gun
-static void (* const CS_ShootBullet_Machinegun1)(int level) = (void(*)(int))0x41E3D0;
-//Missile
-static void (* const CS_ShootBullet_Missile)(int level, BOOL bSuper) = (void(*)(int, BOOL))0x41E7B0;
-//Bubbler Lv1
-static void (* const CS_ShootBullet_Bubblin1)(void) = (void(*)(void))0x41EFD0;
-//Bubbler Lv2
-static void (* const CS_ShootBullet_Bubblin2)(int level) = (void(*)(int))0x41F280;
-//Blade
-static void (* const CS_ShootBullet_Sword)(int level) = (void(*)(int))0x41F580;
-//Nemesis
-static void (* const CS_ShootBullet_Nemesis)(int level) = (void(*)(int))0x41F710;
-// Reset Spur Charge
-static void (* const CS_ResetSpurCharge)(void) = (void(*)(void))0x41F9E0;
-//Spur
-static void (* const CS_ShootBullet_Spur)(int level) = (void(*)(int))0x41FA10;
-// Shoot Bullet
-static void (* const CS_ShootBullet)(void) = (void(*)(void))0x41FE70;
-// Init NPC / Skip flags
-static void (* const CS_InitFlags)(void) = (void(*)(void))0x40E850;
-static void (* const CS_InitSkipFlags)(void) = (void(*)(void))0x40E870;
-// NPC flags
-static void (* const CS_SetNPCFlag)(long a) = (void(*)(long))0x40E890;
-static void (* const CS_CutNPCFlag)(long a) = (void(*)(long))0x40E8E0;
-static BOOL (* const CS_GetNPCFlag)(long a) = (BOOL(*)(long))0x40E930;
-// Skip flags
-static void (* const CS_SetSkipFlag)(long a) = (void(*)(long))0x40E970;
-static void (* const CS_CutSkipFlag)(long a) = (void(*)(long))0x40E9C0;
-static BOOL(* const CS_GetSkipFlag)(long a) = (BOOL(*)(long))0x40EA10;
-// DeleteNpCharEvent
-static void (* const CS_DeleteNpCharEvent)(int code) = (void(*)(int))0x470250;
-// DeleteNpCharCode
-static void (* const CS_DeleteNpCharCode)(int code, BOOL bSmoke) = (void(*)(int, BOOL))0x4702D0;
-// LoseNpChar
-static void (* const CS_LoseNpChar)(CS_NPCHAR *npc, BOOL bVanish) = (void(*)(CS_NPCHAR*, BOOL))0x471B80;
+///////////////
+// Functions //
+///////////////
+
+
+
 // ClearArmsData
 static void (* const CS_ClearArmsData)(void) = (void(*)(void))0x401000;
 // ClearItemData
@@ -507,6 +438,1490 @@ static void (* const CS_ActCaret)(void) = (void(*)(void))0x40AB50;
 static void (* const CS_PutCaret)(int fx, int fy) = (void(*)(int, int))0x40ABC0;
 // SetCaret
 static void (* const CS_SetCaret)(int x, int y, int code, int dir) = (void(*)(int, int, int, int))0x40AC90;
+// LoadConfigData
+static BOOL (* const CS_LoadConfigData)(CS_ConfigData* config_memory) = (BOOL(*)(CS_ConfigData*))0x40AD60;
+// DefaultConfigData
+static void(* const CS_DefaultConfigData)(CS_ConfigData* config_memory) = (void(*)(CS_ConfigData*))0x40AE30;
+// VersionDialog
+
+// DebugMuteDialog
+
+// DebugSaveDialog
+
+// QuitDialog
+
+// SetClientOffset
+static void(* const CS_SetClientOffset)(int width, int height) = (void(*)(int, int))0x40B320;
+// Flip_SystemTask
+static BOOL (* const CS_Flip_SystemTask)(HWND hWnd) = (BOOL(*)(HWND))0x40B340;
+// StartDirectDraw
+static BOOL (* const CS_StartDirectDraw)(HWND hWnd, int lMagnification, int lColourDepth) = (BOOL(*)(HWND hWnd, int, int))0x40B340;
+// EndDirectDraw
+
+// ReleaseSurface
+static void (* const CS_ReleaseSurface)(int s) = (void(*)(int))0x40B7A0;
+// MakeSurface_Resource
+
+// MakeSurface_File
+static BOOL(* const CS_MakeSurface_File)(const char* name, int surf_no) = (BOOL(*)(const char*, int))0x40BAC0;
+// ReloadBitmap_Resource
+
+// ReloadBitmap_File
+static BOOL(* const CS_ReloadBitmap_File)(const char* name, int surf_no) = (BOOL(*)(const char*, int))0x40BFD0;
+// MakeSurface_Generic
+static BOOL(* const CS_MakeSurface_Generic)(int bxsize, int bysize, int surf_no) = (BOOL(*)(int, int, int))0x40C1D0;
+// BackupSurface
+
+// PutBitmap3
+static void (* const CS_PutBitmap3)(const RECT*, int, int, const RECT*, CS_SurfaceID) = (void(*)(const RECT*, int, int, const RECT*, CS_SurfaceID))0x40C3C0;
+// PutBitmap4
+static void (* const CS_PutBitmap4)(const RECT*, int, int, const RECT*, CS_SurfaceID) = (void(*)(const RECT*, int, int, const RECT*, CS_SurfaceID))0x40C5B0;
+// Surface2Surface
+
+// GetCortBoxColor
+
+// CortBox
+static void (* const CS_CortBox)(RECT* dst_rect, int colour) = (void(*)(RECT*, int))0x40C9E0;
+// CortBox2
+static void (* const CS_CortBox2)(RECT* dst_rect, int colour, CS_SurfaceID surf_no) = (void(*)(RECT*, int, CS_SurfaceID))0x40CA80;
+// out
+
+// RestoreSurfaces
+static int (* const CS_RestoreSurfaces)(void) = (int(*)(void))0x40CB60;
+// InitTextObject
+
+// PutText
+static void (* const CS_PutText)(int x, int y, const char* text, unsigned int colour) = (void(*)(int, int, const char*, unsigned int))0x40CE00;
+// PutText2
+static void (* const CS_PutText2)(int x, int y, const char* text, unsigned int colour, CS_SurfaceID) = (void(*)(int, int, const char*, unsigned int, CS_SurfaceID))0x40CEB0;
+// EndTextObject
+
+// ActionStripper
+
+// PutStripper
+
+// SetStripper
+
+// RestoreStripper
+
+// ActionIllust
+
+// PutIllust
+
+// ReloadIllust
+
+// InitCreditScript
+
+// ReleaseCreditScript
+
+// StartCreditScript
+static BOOL(* const CS_StartCreditScript)(void) = (BOOL(*)(void))0x40D440;
+// ActionCredit
+
+// ActionCredit_Read
+
+// GetScriptNumber
+
+// SetCreditIllust
+
+// CutCreditIllust
+
+// Scene_DownIsland
+
+// Call_Escape
+
+// InitFade
+
+// SetFadeMask
+
+// ClearFade
+
+// StartFadeOut
+
+// StartFadeIn
+
+// ProcFade
+
+// PutFade
+
+// GetFadeActive
+
+// InitFlags
+static void (* const CS_InitFlags)(void) = (void(*)(void))0x40E850;
+// InitSkipFlags
+static void (* const CS_InitSkipFlags)(void) = (void(*)(void))0x40E870;
+// SetNPCFlag
+static void (* const CS_SetNPCFlag)(long a) = (void(*)(long))0x40E890;
+// CutNPCFlag
+static void (* const CS_CutNPCFlag)(long a) = (void(*)(long))0x40E8E0;
+// GetNPCFlag
+static BOOL(* const CS_GetNPCFlag)(long a) = (BOOL(*)(long))0x40E930;
+// SetSkipFlag
+static void (* const CS_SetSkipFlag)(long a) = (void(*)(long))0x40E970;
+// CutSkipFlag
+static void (* const CS_CutSkipFlag)(long a) = (void(*)(long))0x40E9C0;
+// GetSkipFlag
+static BOOL(* const CS_GetSkipFlag)(long a) = (BOOL(*)(long))0x40EA10;
+// InitFlash
+
+// SetFlash
+
+// ActFlash_Explosion
+
+// ActFlash_Flash
+
+// ActFlash
+
+// PutFlash
+
+// ResetFlash
+
+// MoveFrame3
+
+// GetFramePosition
+static void (* const CS_GetFramePosition)(int* fx, int* fy) = (void(*)(int*, int*))0x40F020;
+// SetFramePosition
+
+// SetFrameMyChar
+
+// SetFrameTargetMyChar
+
+// SetFrameTargetNpChar
+
+// SetFrameTargetBoss
+
+// SetQuake
+
+// SetQuake2
+
+// ResetQuake
+
+// Random
+static int (* const CS_Random)(int min, int max) = (int(*)(int, int))0x40F350;
+// PutNumber4
+static void (* const CS_PutNumber4)(int x, int y, int, int) = (void(*)(int, int, int, int))0x40F380;
+// Game
+
+// ModeOpening
+
+// ModeTitle
+
+// ModeAction
+
+// GetCompileDate
+
+// GetCompileVersion
+
+// OpenSoundVolume
+
+// DeleteLog
+
+// WriteLog
+
+// GetDateLimit
+
+// IsKeyFile
+
+// GetFileSizeLong
+
+// ErrorLog
+
+// IsShiftJIS
+
+// CenteringWindowByParent
+
+// LoadWindowRect
+
+// SaveWindowRect
+
+// IsEnableBitmap
+
+// LoadGenericData
+
+// ReleaseDirectInput
+
+// ActivateDirectInput
+
+// InitDirectInput
+
+// HookAllDirectInputDevices
+
+// EnumDevices_Callback
+
+// GetJoystickStatus
+
+// ResetJoystickStatus
+
+// GetTrg
+
+// SetWindowName
+
+// PutFramePerSecound
+
+// CountFramePerSecound
+
+// WinMain
+
+// InactiveWindow
+
+// ActiveWindow
+
+// DragAndDropHandler
+
+// WindowProcedure
+
+// SystemTask
+
+// JoystickProc
+
+// InitMapData2
+
+// LoadMapData2
+
+// LoadAttributeData
+
+// EndMapData
+
+// ReleasePartsImage
+
+// GetMapData
+
+// GetAttribute
+
+// DeleteMapParts
+
+// ShiftMapParts
+
+// ChangeMapParts
+
+// PutStage_Back
+
+// PutStage_Front
+
+// PutMapDataVector
+
+// ReadyMapName
+
+// PutMapName
+
+// StartMapName
+
+// RestoreMapName
+
+// WriteMinimMapLine
+
+// MiniMapLoop
+
+// IsMapping
+
+// StartMapping
+
+// SetMapping
+
+// InitMyChar
+
+// AnimationMyChar
+
+// ShowMyChar
+
+// PutMyChar
+static void (* const CS_PutMyChar)(int camera_x, int camera_y) = (void(*)(int, int))0x415250;
+// ActMyChar_Normal
+
+// ActMyChar_Stream
+
+// ActMyChar
+
+// AirProcess
+
+// GetMyCharPosition
+
+// SetMyCharPosition
+
+// MoveMyChar
+
+// ZeroMyCharXMove
+
+// GetUnitMyChar
+
+// SetMyCharDirect
+
+// ChangeMyUnit
+
+// PitMyChar
+
+// EquipItem
+
+// ResetCheck
+
+// SetNoise
+
+// CutNoise
+
+// ResetNoise
+
+// SleepNoise
+
+// ResetMyCharFlag
+
+// JudgeHitMyCharBlock
+
+// PutlittleStar
+
+// JudgeHitMyCharTriangleA
+
+// JudgeHitMyCharTriangleB
+
+// JudgeHitMyCharTriangleC
+
+// JudgeHitMyCharTriangleD
+
+// JudgeHitMyCharTriangleE
+
+// JudgeHitMyCharTriangleF
+
+// JudgeHitMyCharTriangleG
+
+// JudgeHitMyCharTriangleH
+
+// JudgeHitMyCharWater
+
+// JudgeHitMyCharDamage
+
+// JudgeHitMyCharDamageW
+
+// JudgeHitMyCharVectLeft
+
+// JudgeHitMyCharVectUp
+
+// JudgeHitMyCharVectRight
+
+// JudgeHitMyCharVectDown
+
+// HitMyCharMap
+
+// JudgeHitMyCharNPC
+
+// JudgeHitMyCharNPC3
+
+// JudgeHitMyCharNPC4
+
+// HitMyCharNpChar
+
+// HitMyCharBoss
+
+// AddExpMyChar
+
+// ZeroExpMyChar
+
+// IsMaxExpMyChar
+
+// DamageMyChar
+
+// ZeroArmsEnergy_All
+
+// AddBulletMyChar
+
+// AddLifeMyChar
+
+// AddMaxLifeMyChar
+
+// PutArmsEnergy
+
+// PutActiveArmsList
+
+// PutMyLife
+
+// PutMyAir
+static void (* const CS_PutMyAir)(int x, int y) = (void(*)(int, int))0x41A350;
+// PutTimeCounter
+
+// SaveTimeCounter
+
+// LoadTimeCounter
+
+// MakeSoundObject8
+
+// ChangeOrganFrequency
+
+// ChangeOrganPan
+
+// ChangeOrganVolume
+
+// PlayOrganObject
+
+// ReleaseOrganyaObject
+
+// InitWaveData100
+
+// MakeOrganyaWave
+
+// ChangeDramFrequency
+
+// ChangeDramPan
+
+// ChangeDramVolume
+
+// PlayDramObject
+
+// OrgData::OrgData
+
+// OrgData::InitOrgData
+
+// OrgData::SetMusicInfo
+
+// OrgData::NoteAlloc
+
+// OrgData::ReleaseNote
+
+// OrgData::InitMusicData
+
+// OrgData::GetMusicInfo
+
+// InitMMTimer
+
+// StartTimer
+
+// TimerProc
+
+// QuitMMTimer
+
+// OrgData::PlayData
+
+// OrgData::SetPlayerPointer
+
+// StartOrganya
+
+// LoadOrganya
+static void (* const CS_LoadOrganya)(const char*) = (void(*)(const char*))0x41C6F0;
+// SetOrganyaPosition
+static void (* const CS_SetOrganyaPosition)(int) = (void(*)(int))0x41C730;
+// GetOrganyaPosition
+static int (* const CS_GetOrganyaPosition)(void) = (int(*)(void))0x41C770;
+// PlayOrganyaMusic
+static void (* const CS_PlayOrganyaMusic)(void) = (void(*)(void))0x41C790;
+// ChangeOrganyaVolume
+static void (* const CS_ChangeOrganyaVolume)(int) = (void(*)(int))0x41C7C0;
+// StopOrganyaMusic
+static void (* const CS_StopOrganyaMusic)(void) = (void(*)(void))0x41C7F0;
+// SetOrganyaFadeout
+static void (* const CS_SetOrganyaFadeout)(void) = (void(*)(void))0x41C880;
+// EndOrganya
+
+// MakeWaveTables
+
+// MakePixelWaveData
+
+// IsProfile
+
+// SaveProfile
+
+// LoadProfile
+
+// InitializeGame
+
+// ClearPermitStage
+
+// AddPermitStage
+
+// SubPermitStage
+
+// MoveStageSelectCursor
+
+// PutStageSelectObject
+
+// StageSelectLoop
+
+// ShootBullet_Frontial
+static void (* const CS_ShootBullet_Frontia1)(int level) = (void(*)(int))0x41DBD0;
+// ShootBullet_PoleStar
+static void (* const CS_ShootBullet_PoleStar)(int level) = (void(*)(int))0x41DE60;
+// ShootBullet_FireBall
+static void (* const CS_ShootBullet_FireBall)(int level) = (void(*)(int))0x41E110;
+// ShootBullet_Machinegun1
+static void (* const CS_ShootBullet_Machinegun1)(int level) = (void(*)(int))0x41E3D0;
+// ShootBullet_Missile
+static void (* const CS_ShootBullet_Missile)(int level, BOOL bSuper) = (void(*)(int, BOOL))0x41E7B0;
+// ShootBullet_Bubblin1
+static void (* const CS_ShootBullet_Bubblin1)(void) = (void(*)(void))0x41EFD0;
+// ShootBullet_Bubblin2
+static void (* const CS_ShootBullet_Bubblin2)(int level) = (void(*)(int))0x41F280;
+// ShootBullet_Sword
+static void (* const CS_ShootBullet_Sword)(int level) = (void(*)(int))0x41F580;
+// ShootBullet_Nemesis
+static void (* const CS_ShootBullet_Nemesis)(int level) = (void(*)(int))0x41F710;
+// ShootBullet_ResetSpurCharge
+static void (* const CS_ResetSpurCharge)(void) = (void(*)(void))0x41F9E0;
+// ShootBullet_Spur
+static void (* const CS_ShootBullet_Spur)(int level) = (void(*)(int))0x41FA10;
+// ShootBullet
+static void (* const CS_ShootBullet)(void) = (void(*)(void))0x41FE70;
+// InitDirectSound
+
+// EndDirectSound
+
+// InitSoundObject
+
+// LoadSoundObject
+
+// PlaySoundObject
+
+// ChangeSoundFrequency
+
+// ChangeSoundVolume
+
+// ChangeSoundPan
+
+// MakePixToneObject
+
+// TransferStage
+
+// ChangeMusic
+static void (* const CS_ChangeMusic)(int music_id) = (void(*)(int))0x420EE0;
+// ReCallMusic
+static void (* const CS_ReCallMusic)(void) = (void(*)(void))0x420F50;
+// InitStar
+
+// ActStar
+
+// PutStar
+
+// InitTextScript2
+
+// EndTextScript
+
+// EncryptionBinaryData2
+
+// LoadTextScript2
+
+// LoadTextScript_Stage
+
+// GetTextScriptPath
+
+// GetTextScriptNo
+
+// StartTextScript
+
+// JumpTextScript
+
+// StopTextScript
+
+// CheckNewLine
+
+// SetNumberTextScript
+
+// ClearTextLine
+
+// PutTextScript
+
+// TextScriptProc
+static void (* const CS_TextScriptProc)(void) = (void(*)(void))0x422510;
+// RestoreTextScript
+
+// InitTriangleTable
+
+// GetSin
+
+// GetCos
+
+// GetArktan
+
+// ClearValueView
+
+// SetValueView
+
+// ActValueView
+
+// PutValueView
+
+// ActNpc000
+
+// ActNpc002
+
+// ActNpc003
+
+// ActNpc004
+
+// ActNpc005
+
+// ActNpc006
+
+// ActNpc007
+
+// ActNpc008
+
+// ActNpc009
+
+// ActNpc010
+
+// ActNpc011
+
+// ActNpc012
+
+// ActNpc013
+
+// ActNpc014
+
+// ActNpc015
+
+// ActNpc016
+
+// ActNpc017
+
+// ActNpc018
+
+// ActNpc019
+
+// ActNpc020
+
+// ActNpc021
+
+// ActNpc022
+
+// ActNpc023
+
+// ActNpc024
+
+// ActNpc025
+
+// ActNpc026
+
+// ActNpc027
+
+// ActNpc028
+
+// ActNpc029
+
+// ActNpc030
+
+// ActNpc031
+
+// ActNpc032
+
+// ActNpc033
+
+// ActNpc034
+
+// ActNpc035
+
+// ActNpc036
+
+// ActNpc037
+
+// ActNpc038
+
+// ActNpc039
+
+// ActNpc040
+
+// ActNpc041
+
+// ActNpc042
+
+// ActNpc043
+
+// ActNpc044
+
+// ActNpc045
+
+// ActNpc046
+
+// ActNpc047
+
+// ActNpc048
+
+// ActNpc049
+
+// ActNpc050
+
+// ActNpc051
+
+// ActNpc052
+
+// ActNpc053
+
+// ActNpc054
+
+// ActNpc055
+
+// ActNpc056
+
+// ActNpc057
+
+// ActNpc058
+
+// ActNpc059
+
+// ActNpc060
+
+// ActNpc061
+
+// ActNpc062
+
+// ActNpc063
+
+// ActNpc064
+
+// ActNpc065
+
+// ActNpc066
+
+// ActNpc067
+
+// ActNpc068
+
+// ActNpc069
+
+// ActNpc070
+
+// ActNpc071
+
+// ActNpc072
+
+// ActNpc073
+
+// ActNpc074
+
+// ActNpc075
+
+// ActNpc076
+
+// ActNpc077
+
+// ActNpc078
+
+// ActNpc079
+
+// ActNpc080
+
+// ActNpc081
+
+// ActNpc082
+
+// ActNpc083
+
+// ActNpc084
+
+// ActNpc085
+
+// ActNpc086
+
+// ActNpc087
+
+// ActNpc088
+
+// ActNpc089
+
+// ActNpc090
+
+// ActNpc091
+
+// ActNpc092
+
+// ActNpc093
+
+// ActNpc094
+
+// ActNpc095
+
+// ActNpc096
+
+// ActNpc097
+
+// ActNpc098
+
+// ActNpc099
+
+// ActNpc100
+
+// ActNpc101
+
+// ActNpc102
+
+// ActNpc103
+
+// ActNpc104
+
+// ActNpc105
+
+// ActNpc106
+
+// ActNpc107
+
+// ActNpc108
+
+// ActNpc109
+
+// ActNpc110
+
+// ActNpc111
+
+// ActNpc112
+
+// ActNpc113
+
+// ActNpc114
+
+// ActNpc115
+
+// ActNpc116
+
+// ActNpc117
+
+// ActNpc118
+
+// ActNpc119
+
+// ActNpc120
+
+// ActNpc121
+
+// ActNpc122
+
+// ActNpc123
+
+// ActNpc124
+
+// ActNpc125
+
+// ActNpc126
+
+// ActNpc127
+
+// ActNpc128
+
+// ActNpc129
+
+// ActNpc130
+
+// ActNpc131
+
+// ActNpc132
+
+// ActNpc133
+
+// ActNpc134
+
+// ActNpc135
+
+// ActNpc136
+
+// ActNpc137
+
+// ActNpc138
+
+// ActNpc139
+
+// ActNpc140
+
+// ActNpc141
+
+// ActNpc142
+
+// ActNpc143
+
+// ActNpc144
+
+// ActNpc145
+
+// ActNpc146
+
+// ActNpc147
+
+// ActNpc148
+
+// ActNpc149
+
+// ActNpc150
+
+// ActNpc151
+
+// ActNpc152
+
+// ActNpc153
+
+// ActNpc154
+
+// ActNpc155
+
+// ActNpc156
+
+// ActNpc157
+
+// ActNpc158
+
+// ActNpc159
+
+// ActNpc160
+
+// ActNpc161
+
+// ActNpc162
+
+// ActNpc163
+
+// ActNpc164
+
+// ActNpc165
+
+// ActNpc166
+
+// ActNpc167
+
+// ActNpc168
+
+// ActNpc169
+
+// ActNpc170
+
+// ActNpc171
+
+// ActNpc172
+
+// ActNpc173
+
+// ActNpc174
+
+// ActNpc175
+
+// ActNpc176
+
+// ActNpc177
+
+// ActNpc178
+
+// ActNpc179
+
+// ActNpc180
+
+// ActNpc181
+
+// ActNpc182
+
+// ActNpc183
+
+// ActNpc184
+
+// ActNpc185
+
+// ActNpc186
+
+// ActNpc187
+
+// ActNpc188
+
+// ActNpc189
+
+// ActNpc190
+
+// ActNpc191
+
+// ActNpc192
+
+// ActNpc193
+
+// ActNpc194
+
+// ActNpc195
+
+// ActNpc196
+
+// ActNpc197
+
+// ActNpc198
+
+// ActNpc199
+
+// ActNpc200
+
+// ActNpc201
+
+// ActNpc202
+
+// ActNpc203
+
+// ActNpc204
+
+// ActNpc205
+
+// ActNpc206
+
+// ActNpc207
+
+// ActNpc208
+
+// ActNpc209
+
+// ActNpc210
+
+// ActNpc211
+
+// ActNpc212
+
+// ActNpc213
+
+// ActNpc214
+
+// ActNpc215
+
+// ActNpc216
+
+// ActNpc217
+
+// ActNpc218
+
+// ActNpc219
+
+// ActNpc220
+
+// ActNpc221
+
+// ActNpc222
+
+// ActNpc223
+
+// ActNpc224
+
+// ActNpc225
+
+// ActNpc226
+
+// ActNpc227
+
+// ActNpc228
+
+// ActNpc229
+
+// ActNpc230
+
+// ActNpc231
+
+// ActNpc232
+
+// ActNpc233
+
+// ActNpc234
+
+// ActNpc235
+
+// ActNpc236
+
+// ActNpc237
+
+// ActNpc238
+
+// ActNpc239
+
+// ActNpc240
+
+// ActNpc241
+
+// ActNpc242
+
+// ActNpc243
+
+// ActNpc244
+
+// ActNpc245
+
+// ActNpc246
+
+// ActNpc247
+
+// ActNpc248
+
+// ActNpc249
+
+// ActNpc250
+
+// ActNpc251
+
+// ActNpc252
+
+// ActNpc253
+
+// ActNpc254
+
+// ActNpc255
+
+// ActNpc256
+
+// ActNpc257
+
+// ActNpc258
+
+// ActNpc259
+
+// ActNpc260
+
+// ActNpc261
+
+// ActNpc262
+
+// ActNpc263
+
+// ActNpc264
+
+// ActNpc265
+
+// ActNpc266
+
+// ActNpc267
+
+// ActNpc268
+
+// ActNpc269
+
+// ActNpc270
+
+// ActNpc271
+
+// ActNpc272
+
+// ActNpc273
+
+// ActNpc274
+
+// ActNpc275
+
+// ActNpc276
+
+// ActNpc277
+
+// ActNpc278
+
+// ActNpc279
+
+// ActNpc280
+
+// ActNpc281
+
+// ActNpc282
+
+// ActNpc283
+
+// ActNpc284
+
+// ActNpc285
+
+// ActNpc286
+
+// ActNpc287
+
+// ActNpc288
+
+// ActNpc289
+
+// ActNpc290
+
+// ActNpc291
+
+// ActNpc292
+
+// ActNpc293
+
+// ActNpc294
+
+// ActNpc295
+
+// ActNpc296
+
+// ActNpc297
+
+// ActNpc298
+
+// ActNpc299
+
+// ActNpc300
+
+// ActNpc301
+
+// ActNpc302
+
+// ActNpc303
+
+// ActNpc304
+
+// ActNpc305
+
+// ActNpc306
+
+// ActNpc307
+
+// ActNpc308
+
+// ActNpc309
+
+// ActNpc310
+
+// ActNpc311
+
+// ActNpc312
+
+// ActNpc313
+
+// ActNpc314
+
+// ActNpc315
+
+// ActNpc316
+
+// ActNpc317
+
+// ActNpc318
+
+// ActNpc319
+
+// ActNpc320
+
+// ActNpc321
+
+// ActNpc322
+
+// ActNpc323
+
+// ActNpc324
+
+// ActNpc325
+
+// ActNpc326
+
+// ActNpc327
+
+// ActNpc328
+
+// ActNpc329
+
+// ActNpc330
+
+// ActNpc331
+
+// ActNpc332
+
+// ActNpc333
+
+// ActNpc334
+
+// ActNpc335
+
+// ActNpc336
+
+// ActNpc337
+
+// ActNpc338
+
+// ActNpc339
+
+// ActNpc340
+
+// ActNpc341
+
+// ActNpc342
+
+// ActNpc343
+
+// ActNpc344
+
+// ActNpc345
+
+// ActNpc346
+
+// ActNpc347
+
+// ActNpc348
+
+// ActNpc349
+
+// ActNpc350
+
+// ActNpc351
+
+// ActNpc352
+
+// ActNpc353
+
+// ActNpc354
+
+// ActNpc355
+
+// ActNpc356
+
+// ActNpc357
+
+// ActNpc358
+
+// ActNpc359
+
+// ActNpc360
+
+// InitNpChar
+
+// LoadEvent
+
+// SetUniqueParameter
+
+// SetNpChar
+static void (* const CS_SetNpChar)(int object_ID, int x_pos, int y_pos, int a4, int a5, int facing_right, int a7, int object_RAM_index) = (void(*)(int, int, int, int, int, int, int, int))0x46EFD0;
+// SetDestroyNpChar
+static void (* const CS_SetDestroyNpChar)(int x, int y, signed int range, int count) = (void(*)(int, int, int, int))0x46F150;
+// SetDestroyNpCharUp
+
+// SetExpObjects
+
+// SetBulletObject
+
+// SetLifeObject
+
+// VanishNpChar
+
+// PutNpChar
+
+// ActNpChar
+static void (* const CS_ActNpChar)(void) = (void(*)(void))0x46FA00;
+// ChangeNpCharByEvent
+
+// ChangeCheckableNpCharByEvent
+
+// SetNpCharActionNo
+
+// MoveNpChar
+
+// BackStepMyChar
+
+// DeleteNpCharEvent
+static void (* const CS_DeleteNpCharEvent)(int code) = (void(*)(int))0x470250;
+// DeleteNpCharCode
+static void (* const CS_DeleteNpCharCode)(int code, BOOL bSmoke) = (void(*)(int, BOOL))0x4702D0;
+// GetNpCharPosition
+
+// IsNpCharCode
+
+// GetNpCharAlive
+
+// CountAliveNpChar
+
+// JadgeHitNpCharBlock
+
+// JudgeHitNpCharTriangleA
+
+// JudgeHitNpCharTriangleB
+
+// JudgeHitNpCharTriangleC
+
+// JudgeHitNpCharTriangleD
+
+// JudgeHitNpCharTriangleE
+
+// JudgeHitNpCharTriangleF
+
+// JudgeHitNpCharTriangleG
+
+// JudgeHitNpCharTriangleH
+
+// JudgeHitNpCharWater
+
+// HitNpCharMap
+
+// LoseNpChar
+static void (* const CS_LoseNpChar)(CS_NPCHAR* npc, BOOL bVanish) = (void(*)(CS_NPCHAR*, BOOL))0x471B80;
+// HitNpCharBullet
+
+// LoadNpcTable
+
+// ReleaseNpcTable
+
+// InitBossChar
+
+// PutBossChar
+
+// SetBossCharActNo
+
+// HitBossBullet
+
+// ActBossChar_0
+
+// ActBossChar
+
+// HitBossMap
+
+// ActBossChar_Core_Face
+
+// ActBossChar_Core_Tail
+
+// ActBossChar_Core_Mini
+
+// ActBossChar_Core_Hit
+
+// ActBossChar_Core
+
+// ActBossChar_Undead
+
+// ActBossCharA_Head
+
+// ActBossCharA_Tail
+
+// ActBossCharA_Face
+
+// ActBossCharA_Mini
+
+// ActBossCharA_Hit
+
+// ActBossChar_Ballos
+
+// ActBossChar_Eye
+
+// ActBossChar_Body
+
+// ActBossChar_HITAI
+
+// ActBossChar_HARA
+
+// ActBossChar_Frog
+
+// ActBossChar02_01
+
+// ActBossChar_Ironhead
+
+// InitBossLife
+
+// StartBossLife
+
+// StartBossLife2
+
+// PutBossLife
+
+// ActBossChar_Omega
+
+// ActBoss01_12
+
+// ActBoss01_34
+
+// ActBoss01_5
+
+// ActBossChar_Press
+
+// ActBossChar_Twin
+
+// ActBossCharT_DragonBody
+
+// ActBossCharT_DragonHead
+
+// ActBossChar_MonstX
+
+// ActBossChar_03_01
+
+// ActBossChar_03_02
+
+// ActBossChar_03_03
+
+// ActBossChar_03_04
+
+// ActBossChar_03_face
+
+
+
+
+
 
 // Hookspaces & Hookjumps
 
