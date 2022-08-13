@@ -911,45 +911,45 @@ static BOOL (* const CS_Flip_SystemTask)(HWND hWnd) = (BOOL(*)(HWND))0x40B340;
 // StartDirectDraw - 0x40B340
 static BOOL (* const CS_StartDirectDraw)(HWND hWnd, int lMagnification, int lColourDepth) = (BOOL(*)(HWND hWnd, int, int))0x40B340;
 // EndDirectDraw - 0x40B6C0
-
+static BOOL(* const CS_EndDirectDraw)(HWND hWnd) = (BOOL(*)(HWND))0x40B6C0;
 // ReleaseSurface - 0x40B7A0
 static void (* const CS_ReleaseSurface)(int s) = (void(*)(int))0x40B7A0;
 // MakeSurface_Resource - 0x40B800
-
+static BOOL(* const CS_MakeSurface_Resource)(const char *name, CS_SurfaceID surf_no) = (BOOL(*)(const char*, CS_SurfaceID))0x40B800;
 // MakeSurface_File - 0x40BAC0
 static BOOL(* const CS_MakeSurface_File)(const char* name, int surf_no) = (BOOL(*)(const char*, int))0x40BAC0;
 // ReloadBitmap_Resource - 0x40BE10
-
+static BOOL(* const CS_ReloadBitmap_Resource)(const char* name, CS_SurfaceID surf_no) = (BOOL(*)(const char*, CS_SurfaceID))0x40BE10;
 // ReloadBitmap_File - 0x40BFD0
 static BOOL(* const CS_ReloadBitmap_File)(const char* name, int surf_no) = (BOOL(*)(const char*, int))0x40BFD0;
 // MakeSurface_Generic - 0x40C1D0
 static BOOL(* const CS_MakeSurface_Generic)(int bxsize, int bysize, int surf_no) = (BOOL(*)(int, int, int))0x40C1D0;
 // BackupSurface - 0x40C320
-
+static void (* const CS_BackupSurface)(CS_SurfaceID surf_no, const RECT *rect) = (void(*)(CS_SurfaceID, const RECT*))0x40C320;
 // PutBitmap3 - 0x40C3C0
 static void (* const CS_PutBitmap3)(const RECT*, int, int, const RECT*, CS_SurfaceID) = (void(*)(const RECT*, int, int, const RECT*, CS_SurfaceID))0x40C3C0;
 // PutBitmap4 - 0x40C5B0
 static void (* const CS_PutBitmap4)(const RECT*, int, int, const RECT*, CS_SurfaceID) = (void(*)(const RECT*, int, int, const RECT*, CS_SurfaceID))0x40C5B0;
 // Surface2Surface - 0x40C7A0
-
+static void (* const CS_Surface2Surface)(int x, int y, const RECT *rect, CS_SurfaceID to, CS_SurfaceID from) = (void(*)(int, int, const RECT*, CS_SurfaceID, CS_SurfaceID))0x40C7A0;
 // GetCortBoxColor - 0x40C8B0
-
+static unsigned long (* const CS_GetCortBoxColor)(COLORREF col) = (unsigned long(*)(COLORREF))0x40C8B0;
 // CortBox - 0x40C9E0
 static void (* const CS_CortBox)(RECT* dst_rect, int colour) = (void(*)(RECT*, int))0x40C9E0;
 // CortBox2 - 0x40CA80
 static void (* const CS_CortBox2)(RECT* dst_rect, int colour, CS_SurfaceID surf_no) = (void(*)(RECT*, int, CS_SurfaceID))0x40CA80;
 // out - 0x40CB30
-
+static BOOL(* const CS_out)(char surface_identifier) = (BOOL(*)(char))0x40CB30;
 // RestoreSurfaces - 0x40CB60
 static int (* const CS_RestoreSurfaces)(void) = (int(*)(void))0x40CB60;
 // InitTextObject - 0x40CD50
-
+static void(* const CS_InitTextObject)(const char *name) = (void(*)(const char*))0x40CD50;
 // PutText - 0x40CE00
 static void (* const CS_PutText)(int x, int y, const char* text, unsigned int colour) = (void(*)(int, int, const char*, unsigned int))0x40CE00;
 // PutText2 - 0x40CEB0
 static void (* const CS_PutText2)(int x, int y, const char* text, unsigned int colour, CS_SurfaceID) = (void(*)(int, int, const char*, unsigned int, CS_SurfaceID))0x40CEB0;
 // EndTextObject - 0x40CF70
-
+static void (* const CS_EndTextObject)(void) = (void(*)(void))0x40CF70;
 // ActionStripper - 0x40CF90
 
 // PutStripper - 0x40D010
