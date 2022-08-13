@@ -1499,727 +1499,727 @@ static void (* const CS_ActValueView)(void) = (void(*)(void))0x426360;
 // PutValueView - 0x426430
 static void (* const CS_PutValueView)(int flx, int fly) = (void(*)(int, int))0x426430;
 // ActNpc000 - 0x426530
-static void (* const ActNpc000)(CS_NPCHAR *npc) = (void(*)(CS_NPCHAR*))0x426530;
+static void (* const ActNpc000)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x426530;
 // ActNpc001 - 0x4265B0
-
+static void (* const ActNpc001)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4265B0;
 // ActNpc002 - 0x426AF0
-
+static void (* const ActNpc002)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x426AF0;
 // ActNpc003 - 0x426FD0
-
+static void (* const ActNpc003)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x426FD0;
 // ActNpc004 - 0x427040
-
+static void (* const ActNpc004)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x427040;
 // ActNpc005 - 0x427480
-
+static void (* const ActNpc005)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x427480;
 // ActNpc006 - 0x427820
-
+static void (* const ActNpc006)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x427820;
 // ActNpc007 - 0x427C60
-
+static void (* const ActNpc007)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x427C60;
 // ActNpc008 - 0x427F00
-
+static void (* const ActNpc008)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x427F00;
 // ActNpc009 - 0x428260
-
+static void (* const ActNpc009)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x428260;
 // ActNpc010 - 0x428540
-
+static void (* const ActNpc010)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x428540;
 // ActNpc011 - 0x4289B0
-
+static void (* const ActNpc011)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4289B0;
 // ActNpc012 - 0x428B10
-
+static void (* const ActNpc012)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x428B10;
 // ActNpc013 - 0x429940
-
+static void (* const ActNpc013)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x429940;
 // ActNpc014 - 0x429A30
-
+static void (* const ActNpc014)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x429A30;
 // ActNpc015 - 0x429BF0
-
+static void (* const ActNpc015)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x429BF0;
 // ActNpc016 - 0x429E00
-
+static void (* const ActNpc016)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x429E00;
 // ActNpc017 - 0x42A0B0
-
+static void (* const ActNpc017)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42A0B0;
 // ActNpc018 - 0x42A360
-
+static void (* const ActNpc018)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42A360;
 // ActNpc019 - 0x42A490
-
+static void (* const ActNpc019)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42A490;
 // ActNpc020 - 0x42A830
-
+static void (* const ActNpc020)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42A830;
 // ActNpc021 - 0x42A940
-
+static void (* const ActNpc021)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42A940;
 // ActNpc022 - 0x42A9C0
-
+static void (* const ActNpc022)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42A9C0;
 // ActNpc023 - 0x42AA70
-
+static void (* const ActNpc023)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42AA70;
 // ActNpc024 - 0x42ABD0
-
+static void (* const ActNpc024)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42ABD0;
 // ActNpc025 - 0x42B280
-
+static void (* const ActNpc025)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42B280;
 // ActNpc026 - 0x42B5E0
-
+static void (* const ActNpc026)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42B5E0;
 // ActNpc027 - 0x42BA90
-
+static void (* const ActNpc027)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42BA90;
 // ActNpc028 - 0x42BAE0
-
+static void (* const ActNpc028)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42BAE0;
 // ActNpc029 - 0x42C1A0
-
+static void (* const ActNpc029)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42C1A0;
 // ActNpc030 - 0x42C320
-
+static void (* const ActNpc030)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42C320;
 // ActNpc031 - 0x42C4C0
-
+static void (* const ActNpc031)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42C4C0;
 // ActNpc032 - 0x42CA10
-
+static void (* const ActNpc032)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42CA10;
 // ActNpc033 - 0x42CAC0
-
+static void (* const ActNpc033)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42CAC0;
 // ActNpc034 - 0x42CC20
-
+static void (* const ActNpc034)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42CC20;
 // ActNpc035 - 0x42CCB0
-
+static void (* const ActNpc035)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42CCB0;
 // ActNpc036 - 0x42D010
-
+static void (* const ActNpc036)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42D010;
 // ActNpc037 - 0x42D760
-
+static void (* const ActNpc037)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42D760;
 // ActNpc038 - 0x42D810
-
+static void (* const ActNpc038)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42D810;
 // ActNpc039 - 0x42D960
-
+static void (* const ActNpc039)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42D960;
 // ActNpc040 - 0x42D9F0
-
+static void (* const ActNpc040)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42D9F0;
 // ActNpc041 - 0x42DE00
-
+static void (* const ActNpc041)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42DE00;
 // ActNpc042 - 0x42DE70
-
+static void (* const ActNpc042)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42DE70;
 // ActNpc043 - 0x42E9F0
-
+static void (* const ActNpc043)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42E9F0;
 // ActNpc044 - 0x42EAB0
-
+static void (* const ActNpc044)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42EAB0;
 // ActNpc045 - 0x42F060
-
+static void (* const ActNpc045)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42F060;
 // ActNpc046 - 0x42F320
-
+static void (* const ActNpc046)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42F320;
 // ActNpc047 - 0x42F3F0
-
+static void (* const ActNpc047)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42F3F0;
 // ActNpc048 - 0x42F780
-
+static void (* const ActNpc048)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42F780;
 // ActNpc049 - 0x42F9E0
-
+static void (* const ActNpc049)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42F9E0;
 // ActNpc050 - 0x42FEC0
-
+static void (* const ActNpc050)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x42FEC0;
 // ActNpc051 - 0x4301B0
-
+static void (* const ActNpc051)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4301B0;
 // ActNpc052 - 0x430780
-
+static void (* const ActNpc052)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x430780;
 // ActNpc053 - 0x4307D0
-
+static void (* const ActNpc053)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4307D0;
 // ActNpc054 - 0x430B00
-
+static void (* const ActNpc054)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x430B00;
 // ActNpc055 - 0x430EB0
-
+static void (* const ActNpc055)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x430EB0;
 // ActNpc056 - 0x4311D0
-
+static void (* const ActNpc056)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4311D0;
 // ActNpc057 - 0x4315E0
-
+static void (* const ActNpc057)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4315E0;
 // ActNpc058 - 0x431C20
-
+static void (* const ActNpc058)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x431C20;
 // ActNpc059 - 0x4321F0
-
+static void (* const ActNpc059)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4321F0;
 // ActNpc060 - 0x432460
-
+static void (* const ActNpc060)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x432460;
 // ActNpc061 - 0x432B50
-
+static void (* const ActNpc061)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x432B50;
 // ActNpc062 - 0x4334C0
-
+static void (* const ActNpc062)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4334C0;
 // ActNpc063 - 0x4336C0
-
+static void (* const ActNpc063)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4336C0;
 // ActNpc064 - 0x433C00
-
+static void (* const ActNpc064)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x433C00;
 // ActNpc065 - 0x433FC0
-
+static void (* const ActNpc065)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x433FC0;
 // ActNpc066 - 0x4342B0
-
+static void (* const ActNpc066)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4342B0;
 // ActNpc067 - 0x4345E0
-
+static void (* const ActNpc067)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4345E0;
 // ActNpc068 - 0x434D10
-
+static void (* const ActNpc068)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x434D10;
 // ActNpc069 - 0x4355F0
-
+static void (* const ActNpc069)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4355F0;
 // ActNpc070 - 0x435AB0
-
+static void (* const ActNpc070)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x435AB0;
 // ActNpc071 - 0x435BA0
-
+static void (* const ActNpc071)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x435BA0;
 // ActNpc072 - 0x435DE0
-
+static void (* const ActNpc072)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x435DE0;
 // ActNpc073 - 0x435FC0
-
+static void (* const ActNpc073)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x435FC0;
 // ActNpc074 - 0x436180
-
+static void (* const ActNpc074)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x436180;
 // ActNpc075 - 0x436540
-
+static void (* const ActNpc075)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x436540;
 // ActNpc076 - 0x436650
-
+static void (* const ActNpc076)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x436650;
 // ActNpc077 - 0x436690
-
+static void (* const ActNpc077)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x436690;
 // ActNpc078 - 0x4367E0
-
+static void (* const ActNpc078)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4367E0;
 // ActNpc079 - 0x436870
-
+static void (* const ActNpc079)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x436870;
 // ActNpc080 - 0x436AE0
-
+static void (* const ActNpc080)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x436AE0;
 // ActNpc081 - 0x4370F0
-
+static void (* const ActNpc081)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4370F0;
 // ActNpc082 - 0x4375E0
-
+static void (* const ActNpc082)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4375E0;
 // ActNpc083 - 0x437D90
-
+static void (* const ActNpc083)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x437D90;
 // ActNpc084 - 0x438250
-
+static void (* const ActNpc084)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x438250;
 // ActNpc085 - 0x4383D0
-
+static void (* const ActNpc085)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4383D0;
 // ActNpc086 - 0x438590
-
+static void (* const ActNpc086)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x438590;
 // ActNpc087 - 0x438850
-
+static void (* const ActNpc087)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x438850;
 // ActNpc088 - 0x438B10
-
+static void (* const ActNpc088)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x438B10;
 // ActNpc089 - 0x439580
-
+static void (* const ActNpc089)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x439580;
 // ActNpc090 - 0x439B00
-
+static void (* const ActNpc090)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x439B00;
 // ActNpc091 - 0x439B50
-
+static void (* const ActNpc091)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x439B50;
 // ActNpc092 - 0x439BC0
-
+static void (* const ActNpc092)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x439BC0;
 // ActNpc093 - 0x439DC0
-
+static void (* const ActNpc093)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x439DC0;
 // ActNpc094 - 0x43A220
-
+static void (* const ActNpc094)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43A220;
 // ActNpc095 - 0x43A680
-
+static void (* const ActNpc095)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43A680;
 // ActNpc096 - 0x43AAF0
-
+static void (* const ActNpc096)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43AAF0;
 // ActNpc097 - 0x43AD10
-
+static void (* const ActNpc097)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43AD10;
 // ActNpc098 - 0x43AF20
-
+static void (* const ActNpc098)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43AF20;
 // ActNpc099 - 0x43B140
-
+static void (* const ActNpc099)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43B140;
 // ActNpc100 - 0x43B350
-
+static void (* const ActNpc100)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43B350;
 // ActNpc101 - 0x43B410
-
+static void (* const ActNpc101)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43B410;
 // ActNpc102 - 0x43B4E0
-
+static void (* const ActNpc102)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43B4E0;
 // ActNpc103 - 0x43B5F0
-
+static void (* const ActNpc103)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43B5F0;
 // ActNpc104 - 0x43B7F0
-
+static void (* const ActNpc104)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43B7F0;
 // ActNpc105 - 0x43BD00
-
+static void (* const ActNpc105)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43BD00;
 // ActNpc106 - 0x43BDB0
-
+static void (* const ActNpc106)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43BDB0;
 // ActNpc107 - 0x43BE00
-
+static void (* const ActNpc107)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43BE00;
 // ActNpc108 - 0x43C4B0
-
+static void (* const ActNpc108)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43C4B0;
 // ActNpc109 - 0x43C610
-
+static void (* const ActNpc109)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43C610;
 // ActNpc110 - 0x43C8E0
-
+static void (* const ActNpc110)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43C8E0;
 // ActNpc111 - 0x43CDE0
-
+static void (* const ActNpc111)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43CDE0;
 // ActNpc112 - 0x43D0A0
-
+static void (* const ActNpc112)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43D0A0;
 // ActNpc113 - 0x43D320
-
+static void (* const ActNpc113)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43D320;
 // ActNpc114 - 0x43D860
-
+static void (* const ActNpc114)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43D860;
 // ActNpc115 - 0x43DAE0
-
+static void (* const ActNpc115)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43DAE0;
 // ActNpc116 - 0x43E190
-
+static void (* const ActNpc116)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43E190;
 // ActNpc117 - 0x43E1E0
-
+static void (* const ActNpc117)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43E1E0;
 // ActNpc118 - 0x43E9B0
-
+static void (* const ActNpc118)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43E9B0;
 // ActNpc119 - 0x43F230
-
+static void (* const ActNpc119)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43F230;
 // ActNpc120 - 0x43F280
-
+static void (* const ActNpc120)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43F280;
 // ActNpc121 - 0x43F310
-
+static void (* const ActNpc121)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43F310;
 // ActNpc122 - 0x43F4A0
-
+static void (* const ActNpc122)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43F4A0;
 // ActNpc123 - 0x43FC70
-
+static void (* const ActNpc123)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43FC70;
 // ActNpc124 - 0x43FEF0
-
+static void (* const ActNpc124)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x43FEF0;
 // ActNpc125 - 0x4400D0
-
+static void (* const ActNpc125)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4400D0;
 // ActNpc126 - 0x4401F0
-
+static void (* const ActNpc126)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4401F0;
 // ActNpc127 - 0x440760
-
+static void (* const ActNpc127)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x440760;
 // ActNpc128 - 0x4408B0
-
+static void (* const ActNpc128)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4408B0;
 // ActNpc129 - 0x440CF0
-
+static void (* const ActNpc129)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x440CF0;
 // ActNpc130 - 0x441000
-
+static void (* const ActNpc130)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x441000;
 // ActNpc131 - 0x441360
-
+static void (* const ActNpc131)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x441360;
 // ActNpc132 - 0x441440
-
+static void (* const ActNpc132)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x441440;
 // ActNpc133 - 0x4419B0
-
+static void (* const ActNpc133)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4419B0;
 // ActNpc134 - 0x441B20
-
+static void (* const ActNpc134)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x441B20;
 // ActNpc135 - 0x441EC0
-
+static void (* const ActNpc135)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x441EC0;
 // ActNpc136 - 0x442340
-
+static void (* const ActNpc136)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x442340;
 // ActNpc137 - 0x442540
-
+static void (* const ActNpc137)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x442540;
 // ActNpc138 - 0x442590
-
+static void (* const ActNpc138)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x442590;
 // ActNpc139 - 0x442790
-
+static void (* const ActNpc139)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x442790;
 // ActNpc140 - 0x442BF0
-
+static void (* const ActNpc140)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x442BF0;
 // ActNpc141 - 0x443AC0
-
+static void (* const ActNpc141)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x443AC0;
 // ActNpc142 - 0x443EC0
-
+static void (* const ActNpc142)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x443EC0;
 // ActNpc143 - 0x444190
-
+static void (* const ActNpc143)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x444190;
 // ActNpc144 - 0x444230
-
+static void (* const ActNpc144)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x444230;
 // ActNpc145 - 0x444620
-
+static void (* const ActNpc145)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x444620;
 // ActNpc146 - 0x444780
-
+static void (* const ActNpc146)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x444780;
 // ActNpc147 - 0x444930
-
+static void (* const ActNpc147)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x444930;
 // ActNpc148 - 0x445050
-
+static void (* const ActNpc148)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x445050;
 // ActNpc149 - 0x445170
-
+static void (* const ActNpc149)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x445170;
 // ActNpc150 - 0x445660
-
+static void (* const ActNpc150)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x445660;
 // ActNpc151 - 0x445E30
-
+static void (* const ActNpc151)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x445E30;
 // ActNpc152 - 0x445FA0
-
+static void (* const ActNpc152)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x445FA0;
 // ActNpc153 - 0x446020
-
+static void (* const ActNpc153)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x446020;
 // ActNpc154 - 0x446500
-
+static void (* const ActNpc154)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x446500;
 // ActNpc155 - 0x446710
-
+static void (* const ActNpc155)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x446710;
 // ActNpc156 - 0x446B60
-
+static void (* const ActNpc156)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x446B60;
 // ActNpc157 - 0x446CA0
-
+static void (* const ActNpc157)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x446CA0;
 // ActNpc158 - 0x447180
-
+static void (* const ActNpc158)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x447180;
 // ActNpc159 - 0x4474C0
-
+static void (* const ActNpc159)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4474C0;
 // ActNpc160 - 0x447700
-
+static void (* const ActNpc160)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x447700;
 // ActNpc161 - 0x447CB0
-
+static void (* const ActNpc161)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x447CB0;
 // ActNpc162 - 0x447E90
-
+static void (* const ActNpc162)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x447E90;
 // ActNpc163 - 0x4482A0
-
+static void (* const ActNpc163)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4482A0;
 // ActNpc164 - 0x448410
-
+static void (* const ActNpc164)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x448410;
 // ActNpc165 - 0x448580
-
+static void (* const ActNpc165)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x448580;
 // ActNpc166 - 0x4486E0
-
+static void (* const ActNpc166)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4486E0;
 // ActNpc167 - 0x4487F0
-
+static void (* const ActNpc167)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4487F0;
 // ActNpc168 - 0x448A10
-
+static void (* const ActNpc168)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x448A10;
 // ActNpc169 - 0x448BE0
-
+static void (* const ActNpc169)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x448BE0;
 // ActNpc170 - 0x4495A0
-
+static void (* const ActNpc170)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4495A0;
 // ActNpc171 - 0x4498C0
-
+static void (* const ActNpc171)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4498C0;
 // ActNpc172 - 0x449C10
-
+static void (* const ActNpc172)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x449C10;
 // ActNpc173 - 0x449D70
-
+static void (* const ActNpc173)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x449D70;
 // ActNpc174 - 0x44A3C0
-
+static void (* const ActNpc174)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44A3C0;
 // ActNpc175 - 0x44A610
-
+static void (* const ActNpc175)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44A610;
 // ActNpc176 - 0x44A7D0
-
+static void (* const ActNpc176)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44A7D0;
 // ActNpc177 - 0x44ABB0
-
+static void (* const ActNpc177)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44ABB0;
 // ActNpc178 - 0x44AEE0
-
+static void (* const ActNpc178)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44AEE0;
 // ActNpc179 - 0x44B080
-
+static void (* const ActNpc179)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44B080;
 // ActNpc180 - 0x44B210
-
+static void (* const ActNpc180)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44B210;
 // ActNpc181 - 0x44BE10
-
+static void (* const ActNpc181)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44BE10;
 // ActNpc182 - 0x44C220
-
+static void (* const ActNpc182)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44C220;
 // ActNpc183 - 0x44C630
-
+static void (* const ActNpc183)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44C630;
 // ActNpc184 - 0x44C7A0
-
+static void (* const ActNpc184)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44C7A0;
 // ActNpc185 - 0x44CA60
-
+static void (* const ActNpc185)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44CA60;
 // ActNpc186 - 0x44CBE0
-
+static void (* const ActNpc186)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44CBE0;
 // ActNpc187 - 0x44CDB0
-
+static void (* const ActNpc187)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44CDB0;
 // ActNpc188 - 0x44D070
-
+static void (* const ActNpc188)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44D070;
 // ActNpc189 - 0x44D3A0
-
+static void (* const ActNpc189)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44D3A0;
 // ActNpc190 - 0x44D5E0
-
+static void (* const ActNpc190)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44D5E0;
 // ActNpc191 - 0x44D740
-
+static void (* const ActNpc191)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44D740;
 // ActNpc192 - 0x44DA00
-
+static void (* const ActNpc192)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44DA00;
 // ActNpc193 - 0x44DE20
-
+static void (* const ActNpc193)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44DE20;
 // ActNpc194 - 0x44DEA0
-
+static void (* const ActNpc194)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44DEA0;
 // ActNpc195 - 0x44DF10
-
+static void (* const ActNpc195)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44DF10;
 // ActNpc196 - 0x44DF60
-
+static void (* const ActNpc196)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44DF60;
 // ActNpc197 - 0x44E020
-
+static void (* const ActNpc197)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44E020;
 // ActNpc198 - 0x44E260
-
+static void (* const ActNpc198)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44E260;
 // ActNpc199 - 0x44E400
-
+static void (* const ActNpc199)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44E400;
 // ActNpc200 - 0x44E5F0
-
+static void (* const ActNpc200)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44E5F0;
 // ActNpc201 - 0x44EC40
-
+static void (* const ActNpc201)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44EC40;
 // ActNpc202 - 0x44ECE0
-
+static void (* const ActNpc202)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44ECE0;
 // ActNpc203 - 0x44EE40
-
+static void (* const ActNpc203)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44EE40;
 // ActNpc204 - 0x44F1F0
-
+static void (* const ActNpc204)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44F1F0;
 // ActNpc205 - 0x44F3E0
-
+static void (* const ActNpc205)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44F3E0;
 // ActNpc206 - 0x44F6D0
-
+static void (* const ActNpc206)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44F6D0;
 // ActNpc207 - 0x44FB40
-
+static void (* const ActNpc207)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44FB40;
 // ActNpc208 - 0x44FCB0
-
+static void (* const ActNpc208)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x44FCB0;
 // ActNpc209 - 0x450280
-
+static void (* const ActNpc209)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x450280;
 // ActNpc210 - 0x450400
-
+static void (* const ActNpc210)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x450400;
 // ActNpc211 - 0x450760
-
+static void (* const ActNpc211)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x450760;
 // ActNpc212 - 0x450810
-
+static void (* const ActNpc212)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x450810;
 // ActNpc213 - 0x450BF0
-
+static void (* const ActNpc213)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x450BF0;
 // ActNpc214 - 0x4512A0
-
+static void (* const ActNpc214)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4512A0;
 // ActNpc215 - 0x451430
-
+static void (* const ActNpc215)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x451430;
 // ActNpc216 - 0x4517F0
-
+static void (* const ActNpc216)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4517F0;
 // ActNpc217 - 0x451840
-
+static void (* const ActNpc217)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x451840;
 // ActNpc218 - 0x451CA0
-
+static void (* const ActNpc218)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x451CA0;
 // ActNpc219 - 0x451DA0
-
+static void (* const ActNpc219)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x451DA0;
 // ActNpc220 - 0x451E90
-
+static void (* const ActNpc220)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x451E90;
 // ActNpc221 - 0x452000
-
+static void (* const ActNpc221)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x452000;
 // ActNpc222 - 0x452470
-
+static void (* const ActNpc222)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x452470;
 // ActNpc223 - 0x4524E0
-
+static void (* const ActNpc223)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4524E0;
 // ActNpc224 - 0x452700
-
+static void (* const ActNpc224)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x452700;
 // ActNpc225 - 0x4528D0
-
+static void (* const ActNpc225)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4528D0;
 // ActNpc226 - 0x452A50
-
+static void (* const ActNpc226)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x452A50;
 // ActNpc227 - 0x452D10
-
+static void (* const ActNpc227)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x452D10;
 // ActNpc228 - 0x452D60
-
+static void (* const ActNpc228)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x452D60;
 // ActNpc229 - 0x4530D0
-
+static void (* const ActNpc229)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4530D0;
 // ActNpc230 - 0x453190
-
+static void (* const ActNpc230)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x453190;
 // ActNpc231 - 0x453260
-
+static void (* const ActNpc231)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x453260;
 // ActNpc232 - 0x4536F0
-
+static void (* const ActNpc232)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4536F0;
 // ActNpc233 - 0x4539B0
-
+static void (* const ActNpc233)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4539B0;
 // ActNpc234 - 0x453E60
-
+static void (* const ActNpc234)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x453E60;
 // ActNpc235 - 0x453F20
-
+static void (* const ActNpc235)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x453F20;
 // ActNpc236 - 0x454310
-
+static void (* const ActNpc236)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x454310;
 // ActNpc237 - 0x4548B0
-
+static void (* const ActNpc237)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4548B0;
 // ActNpc238 - 0x454A00
-
+static void (* const ActNpc238)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x454A00;
 // ActNpc239 - 0x454DF0
-
+static void (* const ActNpc239)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x454DF0;
 // ActNpc240 - 0x454F00
-
+static void (* const ActNpc240)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x454F00;
 // ActNpc241 - 0x455370
-
+static void (* const ActNpc241)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x455370;
 // ActNpc242 - 0x455710
-
+static void (* const ActNpc242)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x455710;
 // ActNpc243 - 0x455A10
-
+static void (* const ActNpc243)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x455A10;
 // ActNpc244 - 0x455AB0
-
+static void (* const ActNpc244)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x455AB0;
 // ActNpc245 - 0x455C10
-
+static void (* const ActNpc245)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x455C10;
 // ActNpc246 - 0x455E00
-
+static void (* const ActNpc246)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x455E00;
 // ActNpc247 - 0x456110
-
+static void (* const ActNpc247)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x456110;
 // ActNpc248 - 0x456F50
-
+static void (* const ActNpc248)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x456F50;
 // ActNpc249 - 0x4570B0
-
+static void (* const ActNpc249)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4570B0;
 // ActNpc250 - 0x457180
-
+static void (* const ActNpc250)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x457180;
 // ActNpc251 - 0x457470
-
+static void (* const ActNpc251)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x457470;
 // ActNpc252 - 0x457570
-
+static void (* const ActNpc252)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x457570;
 // ActNpc253 - 0x4579D0
-
+static void (* const ActNpc253)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4579D0;
 // ActNpc254 - 0x457B00
-
+static void (* const ActNpc254)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x457B00;
 // ActNpc255 - 0x457D70
-
+static void (* const ActNpc255)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x457D70;
 // ActNpc256 - 0x458010
-
+static void (* const ActNpc256)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x458010;
 // ActNpc257 - 0x458360
-
+static void (* const ActNpc257)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x458360;
 // ActNpc258 - 0x4585A0
-
+static void (* const ActNpc258)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4585A0;
 // ActNpc259 - 0x4585F0
-
+static void (* const ActNpc259)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4585F0;
 // ActNpc260 - 0x458810
-
+static void (* const ActNpc260)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x458810;
 // ActNpc261 - 0x458A70
-
+static void (* const ActNpc261)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x458A70;
 // ActNpc262 - 0x458C30
-
+static void (* const ActNpc262)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x458C30;
 // ActNpc263 - 0x458DF0
-
+static void (* const ActNpc263)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x458DF0;
 // ActNpc264 - 0x459950
-
+static void (* const ActNpc264)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x459950;
 // ActNpc265 - 0x459B30
-
+static void (* const ActNpc265)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x459B30;
 // ActNpc266 - 0x459C00
-
+static void (* const ActNpc266)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x459C00;
 // ActNpc267 - 0x459D80
-
+static void (* const ActNpc267)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x459D80;
 // ActNpc268 - 0x45B3D0
-
+static void (* const ActNpc268)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x45B3D0;
 // ActNpc269 - 0x45BCB0
-
+static void (* const ActNpc269)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x45BCB0;
 // ActNpc270 - 0x45BF10
-
+static void (* const ActNpc270)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x45BF10;
 // ActNpc271 - 0x45C230
-
+static void (* const ActNpc271)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x45C230;
 // ActNpc272 - 0x45C500
-
+static void (* const ActNpc272)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x45C500;
 // ActNpc273 - 0x45C5A0
-
+static void (* const ActNpc273)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x45C5A0;
 // ActNpc274 - 0x45C750
-
+static void (* const ActNpc274)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x45C750;
 // ActNpc275 - 0x45CC80
-
+static void (* const ActNpc275)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x45CC80;
 // ActNpc276 - 0x45CEA0
-
+static void (* const ActNpc276)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x45CEA0;
 // ActNpc277 - 0x45D780
-
+static void (* const ActNpc277)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x45D780;
 // ActNpc278 - 0x45D930
-
+static void (* const ActNpc278)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x45D930;
 // ActNpc279 - 0x45DCF0
-
+static void (* const ActNpc279)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x45DCF0;
 // ActNpc280 - 0x45E110
-
+static void (* const ActNpc280)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x45E110;
 // ActNpc281 - 0x45E360
-
+static void (* const ActNpc281)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x45E360;
 // ActNpc282 - 0x45E4C0
-
+static void (* const ActNpc282)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x45E4C0;
 // ActNpc283 - 0x45E950
-
+static void (* const ActNpc283)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x45E950;
 // ActNpc284 - 0x45F910
-
+static void (* const ActNpc284)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x45F910;
 // ActNpc285 - 0x460910
-
+static void (* const ActNpc285)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x460910;
 // ActNpc286 - 0x460AE0
-
+static void (* const ActNpc286)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x460AE0;
 // ActNpc287 - 0x460BB0
-
+static void (* const ActNpc287)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x460BB0;
 // ActNpc288 - 0x460D70
-
+static void (* const ActNpc288)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x460D70;
 // ActNpc289 - 0x4610D0
-
+static void (* const ActNpc289)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4610D0;
 // ActNpc290 - 0x4614A0
-
+static void (* const ActNpc290)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4614A0;
 // ActNpc291 - 0x461800
-
+static void (* const ActNpc291)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x461800;
 // ActNpc292 - 0x4618B0
-
+static void (* const ActNpc292)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4618B0;
 // ActNpc293 - 0x4618C0
-
+static void (* const ActNpc293)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4618C0;
 // ActNpc294 - 0x4619E0
-
+static void (* const ActNpc294)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4619E0;
 // ActNpc295 - 0x461B90
-
+static void (* const ActNpc295)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x461B90;
 // ActNpc296 - 0x461E40
-
+static void (* const ActNpc296)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x461E40;
 // ActNpc297 - 0x461FD0
-
+static void (* const ActNpc297)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x461FD0;
 // ActNpc298 - 0x462050
-
+static void (* const ActNpc298)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x462050;
 // ActNpc299 - 0x4623D0
-
+static void (* const ActNpc299)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4623D0;
 // ActNpc300 - 0x4624E0
-
+static void (* const ActNpc300)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4624E0;
 // ActNpc301 - 0x4625A0
-
+static void (* const ActNpc301)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4625A0;
 // ActNpc302 - 0x462890
-
+static void (* const ActNpc302)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x462890;
 // ActNpc303 - 0x462AF0
-
+static void (* const ActNpc303)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x462AF0;
 // ActNpc304 - 0x462C80
-
+static void (* const ActNpc304)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x462C80;
 // ActNpc305 - 0x462E00
-
+static void (* const ActNpc305)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x462E00;
 // ActNpc306 - 0x462F60
-
+static void (* const ActNpc306)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x462F60;
 // ActNpc307 - 0x4630F0
-
+static void (* const ActNpc307)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4630F0;
 // ActNpc308 - 0x4632B0
-
+static void (* const ActNpc308)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4632B0;
 // ActNpc309 - 0x463710
-
+static void (* const ActNpc309)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x463710;
 // ActNpc310 - 0x463AC0
-
+static void (* const ActNpc310)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x463AC0;
 // ActNpc311 - 0x464090
-
+static void (* const ActNpc311)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x464090;
 // ActNpc312 - 0x464740
-
+static void (* const ActNpc312)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x464740;
 // ActNpc313 - 0x464BB0
-
+static void (* const ActNpc313)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x464BB0;
 // ActNpc314 - 0x465CC0
-
+static void (* const ActNpc314)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x465CC0;
 // ActNpc315 - 0x465F60
-
+static void (* const ActNpc315)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x465F60;
 // ActNpc316 - 0x4664B0
-
+static void (* const ActNpc316)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4664B0;
 // ActNpc317 - 0x466790
-
+static void (* const ActNpc317)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x466790;
 // ActNpc318 - 0x466B80
-
+static void (* const ActNpc318)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x466B80;
 // ActNpc319 - 0x466E50
-
+static void (* const ActNpc319)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x466E50;
 // ActNpc320 - 0x4670C0
-
+static void (* const ActNpc320)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4670C0;
 // ActNpc321 - 0x4673F0
-
+static void (* const ActNpc321)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4673F0;
 // ActNpc322 - 0x4676D0
-
+static void (* const ActNpc322)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4676D0;
 // ActNpc323 - 0x467C60
-
+static void (* const ActNpc323)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x467C60;
 // ActNpc324 - 0x467F40
-
+static void (* const ActNpc324)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x467F40;
 // ActNpc325 - 0x467FE0
-
+static void (* const ActNpc325)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x467FE0;
 // ActNpc326 - 0x468230
-
+static void (* const ActNpc326)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x468230;
 // ActNpc327 - 0x468830
-
+static void (* const ActNpc327)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x468830;
 // ActNpc328 - 0x468990
-
+static void (* const ActNpc328)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x468990;
 // ActNpc329 - 0x4689E0
-
+static void (* const ActNpc329)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4689E0;
 // ActNpc330 - 0x468A90
-
+static void (* const ActNpc330)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x468A90;
 // ActNpc331 - 0x468D70
-
+static void (* const ActNpc331)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x468D70;
 // ActNpc332 - 0x468F50
-
+static void (* const ActNpc332)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x468F50;
 // ActNpc333 - 0x469140
-
+static void (* const ActNpc333)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x469140;
 // ActNpc334 - 0x469290
-
+static void (* const ActNpc334)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x469290;
 // ActNpc335 - 0x469430
-
+static void (* const ActNpc335)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x469430;
 // ActNpc336 - 0x469610
-
+static void (* const ActNpc336)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x469610;
 // ActNpc337 - 0x4696B0
-
+static void (* const ActNpc337)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4696B0;
 // ActNpc338 - 0x469800
-
+static void (* const ActNpc338)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x469800;
 // ActNpc339 - 0x469AA0
-
+static void (* const ActNpc339)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x469AA0;
 // ActNpc340 - 0x469B40
-
+static void (* const ActNpc340)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x469B40;
 // ActNpc341 - 0x46B240
-
+static void (* const ActNpc341)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x46B240;
 // ActNpc342 - 0x46B340
-
+static void (* const ActNpc342)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x46B340;
 // ActNpc343 - 0x46BD80
-
+static void (* const ActNpc343)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x46BD80;
 // ActNpc344 - 0x46BE10
-
+static void (* const ActNpc344)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x46BE10;
 // ActNpc345 - 0x46BF00
-
+static void (* const ActNpc345)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x46BF00;
 // ActNpc346 - 0x46C1D0
-
+static void (* const ActNpc346)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x46C1D0;
 // ActNpc347 - 0x46C710
-
+static void (* const ActNpc347)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x46C710;
 // ActNpc348 - 0x46C9B0
-
+static void (* const ActNpc348)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x46C9B0;
 // ActNpc349 - 0x46CAC0
-
+static void (* const ActNpc349)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x46CAC0;
 // ActNpc350 - 0x46CB50
-
+static void (* const ActNpc350)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x46CB50;
 // ActNpc351 - 0x46D340
-
+static void (* const ActNpc351)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x46D340;
 // ActNpc352 - 0x46D5D0
-
+static void (* const ActNpc352)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x46D5D0;
 // ActNpc353 - 0x46DBE0
-
+static void (* const ActNpc353)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x46DBE0;
 // ActNpc354 - 0x46E110
-
+static void (* const ActNpc354)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x46E110;
 // ActNpc355 - 0x46E280
-
+static void (* const ActNpc355)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x46E280;
 // ActNpc356 - 0x46E480
-
+static void (* const ActNpc356)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x46E480;
 // ActNpc357 - 0x46E730
-
+static void (* const ActNpc357)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x46E730;
 // ActNpc358 - 0x46E870
-
+static void (* const ActNpc358)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x46E870;
 // ActNpc359 - 0x46E9E0
-
+static void (* const ActNpc359)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x46E9E0;
 // ActNpc360 - 0x46EA90
-
+static void (* const ActNpc360)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x46EA90;
 // InitNpChar - 0x46EB30
 static void (* const CS_InitNpChar)(void) = (void(*)(void))0x46EB30;
 // LoadEvent - 0x46EB50
