@@ -985,21 +985,21 @@ static int (* const CS_Scene_DownIsland)(HWND hWnd, int mode) = (int(*)(HWND, in
 // Call_Escape - 0x40DD70
 static int (* const CS_Call_Escape)(HWND hWnd) = (int(*)(HWND))0x40DD70;
 // InitFade - 0x40DE60
-
+static void (* const CS_InitFade)(void) = (void(*)(void))0x40DE60;
 // SetFadeMask - 0x40DE90
-
+static void (* const CS_SetFadeMask)(void) = (void(*)(void))0x40DE90;
 // ClearFade - 0x40DEA0
-
+static void (* const CS_ClearFade)(void) = (void(*)(void))0x40DEA0;
 // StartFadeOut - 0x40DEC0
-
+static void (* const CS_StartFadeOut)(signed char dir) = (void(*)(signed char))0x40DEC0;
 // StartFadeIn - 0x40DF50
-
+static void (* const CS_StartFadeIn)(signed char dir) = (void(*)(signed char))0x40DF50;
 // ProcFade - 0x40DFE0
-
+static void (* const CS_ProcFade)(void) = (void(*)(void))0x40DFE0;
 // PutFade - 0x40E770
-
+static void (* const CS_PutFade)(void) = (void(*)(void))0x40E770;
 // GetFadeActive - 0x40E830
-
+static BOOL(* const CS_GetFadeActive)(void) = (BOOL(*)(void))0x40E830;
 // InitFlags - 0x40E850
 static void (* const CS_InitFlags)(void) = (void(*)(void))0x40E850;
 // InitSkipFlags - 0x40E870
