@@ -2221,51 +2221,51 @@ static void (* const CS_PutValueView)(int flx, int fly) = (void(*)(int, int))0x4
 // ActNpc360 - 0x46EA90
 
 // InitNpChar - 0x46EB30
-
+static void (* const CS_InitNpChar)(void) = (void(*)(void))0x46EB30;
 // LoadEvent - 0x46EB50
-
+static BOOL (* const CS_LoadEvent)(const char *path_event) = (BOOL(*)(const char*))0x46EB50;
 // SetUniqueParameter - 0x46EE50
-
+static void (* const CS_SetUniqueParameter)(CS_NPCHAR *npc) = (void(*)(CS_NPCHAR*))0x46EE50;
 // SetNpChar - 0x46EFD0
 static void (* const CS_SetNpChar)(int object_ID, int x_pos, int y_pos, int a4, int a5, int facing_right, int a7, int object_RAM_index) = (void(*)(int, int, int, int, int, int, int, int))0x46EFD0;
 // SetDestroyNpChar - 0x46F150
-static void (* const CS_SetDestroyNpChar)(int x, int y, signed int range, int count) = (void(*)(int, int, int, int))0x46F150;
+static void (* const CS_SetDestroyNpChar)(int x, int y, signed int w, int num) = (void(*)(int, int, int, int))0x46F150;
 // SetDestroyNpCharUp - 0x46F200
-
+static void (* const CS_SetDestroyNpCharUp)(int x, int y, signed int w, int num) = (void(*)(int, int, int, int))0x46F200;
 // SetExpObjects - 0x46F2B0
-
+static void (* const CS_SetExpObjects)(int x, int y, int exp) = (void(*)(int, int, int))0x46F2B0;
 // SetBulletObject - 0x46F430
-
+static BOOL(* const CS_SetBulletObject)(int x, int y, int val) = (BOOL(*)(int, int, int))0x46F430;
 // SetLifeObject - 0x46F630
-
+static BOOL(* const CS_SetLifeObject)(int x, int y, int val) = (BOOL(*)(int, int, int))0x46F630;
 // VanishNpChar - 0x46F760
-
+static void (* const CS_VanishNpChar)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x46F760;
 // PutNpChar - 0x46F810
-
+static void (* const CS_PutNpChar)(int fx, int fy) = (void(*)(int, int))0x46F810;
 // ActNpChar - 0x46FA00
 static void (* const CS_ActNpChar)(void) = (void(*)(void))0x46FA00;
 // ChangeNpCharByEvent - 0x46FAB0
-
+static void (* const CS_ChangeNpCharByEvent)(int code_event, int code_char, int dir) = (void(*)(int, int, int))0x46FAB0;
 // ChangeCheckableNpCharByEvent - 0x46FD10
-
+static void (* const CS_ChangeCheckableNpCharByEvent)(int code_event, int code_char, int dir) = (void(*)(int, int, int))0x46FD10;
 // SetNpCharActionNo - 0x46FF90
-
+static void (* const CS_SetNpCharActionNo)(int code_event, int code_char, int dir) = (void(*)(int, int, int))0x46FF90;
 // MoveNpChar - 0x470060
-
+static void (* const CS_MoveNpChar)(int code_event, int x, int y, int dir) = (void(*)(int, int, int, int))0x470060;
 // BackStepMyChar - 0x470150
-
+static void (* const CS_BackStepMyChar)(int code_event) = (void(*)(int))0x470150;
 // DeleteNpCharEvent - 0x470250
 static void (* const CS_DeleteNpCharEvent)(int code) = (void(*)(int))0x470250;
 // DeleteNpCharCode - 0x4702D0
 static void (* const CS_DeleteNpCharCode)(int code, BOOL bSmoke) = (void(*)(int, BOOL))0x4702D0;
 // GetNpCharPosition - 0x470460
-
+static void (* const CS_GetNpCharPosition)(int *x, int *y, int i) = (void(*)(int*, int*, int))0x470460;
 // IsNpCharCode - 0x470490
-
+static BOOL (* const CS_IsNpCharCode)(int code) = (BOOL(*)(int))0x470490;
 // GetNpCharAlive - 0x4704F0
-
+static BOOL (* const CS_GetNpCharAlive)(int code_event) = (BOOL(*)(int))0x4704F0;
 // CountAliveNpChar - 0x470560
-
+static int (* const CS_CountAliveNpChar)(void) = (int(*)(void))0x470560;
 // JadgeHitNpCharBlock - 0x4705C0
 
 // JudgeHitNpCharTriangleA - 0x470870
