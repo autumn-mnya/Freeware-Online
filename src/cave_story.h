@@ -266,181 +266,181 @@ struct CS_EVENT
 
 
 
-// ClearArmsData
+// ClearArmsData - 0x401000
 static void (* const CS_ClearArmsData)(void) = (void(*)(void))0x401000;
-// ClearItemData
+// ClearItemData - 0x401030
 static void (* const CS_ClearItemData)(void) = (void(*)(void))0x401030;
-// AddArmsData
+// AddArmsData - 0x401050
 static BOOL(* const CS_AddArmsData)(long code, long max_num) = (BOOL(*)(long, long))0x401050;
-// SubArmsData
+// SubArmsData - 0x401160
 static BOOL(* const CS_SubArmsData)(long code) = (BOOL(*)(long))0x401160;
-// TradeArms
+// TradeArms - 0x401220
 static BOOL(* const CS_TradeArms)(long code, long code2, long max_num) = (BOOL(*)(long, long, long))0x401220;
-// AddItemData
+// AddItemData - 0x4012D0
 static BOOL(* const CS_AddItemData)(long code) = (BOOL(*)(long))0x4012D0;
-// SubItemData
+// SubItemData - 0x401330
 static BOOL(* const CS_SubItemData)(long code) = (BOOL(*)(long))0x401330;
-// MoveCampCursor
+// MoveCampCursor - 0x4013C0
 static void (* const CS_MoveCampCursor)(void) = (void(*)(void))0x4013C0;
-// PutCampObject
+// PutCampObject - 0x4016F0
 static void (* const CS_PutCampObject)(void) = (void(*)(void))0x4016F0;
-// CampLoop
+// CampLoop - 0x401D10
 static void (* const CS_CampLoop)(void) = (void(*)(void))0x401D10;
-// CheckItem
+// CheckItem - 0x401F20
 static BOOL(* const CS_CheckItem)(long a) = (BOOL(*)(long))0x401F20;
-// CheckArms
+// CheckArms - 0x401F60
 static BOOL(* const CS_CheckArms)(long a) = (BOOL(*)(long))0x401F60;
-// UseArmsEnergy
+// UseArmsEnergy - 0x401FA0
 static BOOL(* const CS_UseArmsEnergy)(long num) = (BOOL(*)(long))0x401FA0;
-// ChangeArmsEnergy
+// ChangeArmsEnergy - 0x402020
 static BOOL(* const CS_ChangeArmsEnergy)(long num) = (BOOL(*)(long))0x402020;
-// FullArmsEnergy
+// FullArmsEnergy - 0x402090
 static void (* const CS_FullArmsEnergy)(void) = (void(*)(void))0x402090;
-// RotationArms
+// RotationArms - 0x4020E0
 static int (* const CS_RotationArms)(void) = (int(*)(void))0x4020E0;
-// RotationArmsRev
+// RotationArmsRev - 0x402190
 static int (* const CS_RotationArmsRev)(void) = (int(*)(void))0x402190;
-// ChangeToFirstArms
+// ChangeToFirstArms - 0x402240
 static void (* const CS_ChangeToFirstArms)(void) = (void(*)(void))0x402240;
-// InitBack
+// InitBack - 0x402270
 static void (* const CS_InitBack)(const char* background_filename, int background_type) = (void(*)(const char*, int))0x402270;
-// ActBack
+// ActBack - 0x402370
 static void (* const CS_ActBack)(void) = (void (*)(void))0x402370;
-// PutBack
+// PutBack - 0x4023D0
 static void (* const CS_PutBack)(int camera_x_pos, int camera_y_pos) = (void(*)(int, int))0x4023D0;
-// PutFront
+// PutFront - 0x402830
 static void (* const CS_PutFront)(int x_pos, int y_pos) = (void(*)(int, int))0x402830;
-// JudgeHitBulletBlock
+// JudgeHitBulletBlock - 0x4029B0
 static int (* const CS_JudgeHitBulletBlock)(int x, int y, CS_BULLET *bul) = (int(*)(int, int, CS_BULLET*))0x4029B0;
-// JudgeHitBulletBlock2
+// JudgeHitBulletBlock2 - 0x402B30
 static int (* const CS_JudgeHitBulletBlock2)(int x, int y, unsigned char *atrb, CS_BULLET* bul) = (int(*)(int, int, unsigned char*, CS_BULLET*))0x402B30;
-// JudgeHitBulletTriangleA
+// JudgeHitBulletTriangleA - 0x402FC0
 static int (* const CS_JudgeHitBulletTriangleA)(int x, int y, CS_BULLET* bul) = (int(*)(int, int, CS_BULLET*))0x402FC0;
-// JudgeHitBulletTriangleB
+// JudgeHitBulletTriangleB - 0x4030B0
 static int (* const CS_JudgeHitBulletTriangleB)(int x, int y, CS_BULLET* bul) = (int(*)(int, int, CS_BULLET*))0x4030B0;
-// JudgeHitBulletTriangleC
+// JudgeHitBulletTriangleC - 0x4031A0
 static int (* const CS_JudgeHitBulletTriangleC)(int x, int y, CS_BULLET* bul) = (int(*)(int, int, CS_BULLET*))0x4031A0;
-// JudgeHitBulletTriangleD
+// JudgeHitBulletTriangleD - 0x403290
 static int (* const CS_JudgeHitBulletTriangleD)(int x, int y, CS_BULLET* bul) = (int(*)(int, int, CS_BULLET*))0x403290;
-// JudgeHitBulletTriangleE
+// JudgeHitBulletTriangleE - 0x403380
 static int (* const CS_JudgeHitBulletTriangleE)(int x, int y, CS_BULLET* bul) = (int(*)(int, int, CS_BULLET*))0x403380;
-// JudgeHitBulletTriangleF
+// JudgeHitBulletTriangleF - 0x403470
 static int (* const CS_JudgeHitBulletTriangleF)(int x, int y, CS_BULLET* bul) = (int(*)(int, int, CS_BULLET*))0x403470;
-// JudgeHitBulletTriangleG
+// JudgeHitBulletTriangleG - 0x403560
 static int (* const CS_JudgeHitBulletTriangleG)(int x, int y, CS_BULLET* bul) = (int(*)(int, int, CS_BULLET*))0x403560;
-// JudgeHitBulletTriangleH
+// JudgeHitBulletTriangleH - 0x403650
 static int (* const CS_JudgeHitBulletTriangleH)(int x, int y, CS_BULLET* bul) = (int(*)(int, int, CS_BULLET*))0x403650;
-// HitBulletMap
+// HitBulletMap - 0x403740
 static void (* const CS_HitBulletMap)(void) = (void(*)(void))0x403740;
-// InitBullet
+// InitBullet - 0x403C00
 static void (* const CS_InitBullet)(void) = (void(*)(void))0x403C00;
-// CountArmsBullet
+// CountArmsBullet - 0x403C40
 static int (* const CS_CountArmsBullet)(int arms_code) = (int(*)(int))0x403C40;
-// CountBulletNum
+// CountBulletNum - 0x403CB0
 static int (* const CS_CountBulletNum)(int bullet_code) = (int(*)(int))0x403CB0;
-// DeleteBullet
+// DeleteBullet - 0x403D10
 static void (* const CS_DeleteBullet)(int code) = (void(*)(int))0x403D10;
-// ClearBullet
+// ClearBullet - 0x403D80
 static void (* const CS_ClearBullet)(void) = (void(*)(void))0x403D80;
-// PutBullet
+// PutBullet - 0x403DC0
 static void (* const CS_PutBullet)(int fx, int fy) = (void(*)(int, int))0x403DC0;
-// SetBullet
+// SetBullet - 0x403F80
 static void (* const CS_SetBullet)(int no, int x, int y, int dir) = (void(*)(int, int, int, int))0x403F80;
-// ActBullet_Frontia1
+// ActBullet_Frontia1 - 0x404160
 static void (* const CS_ActBullet_Frontia1)(CS_BULLET *bul) = (void(*)(CS_BULLET*))0x404160;
-// ActBullet_Frontia2
+// ActBullet_Frontia2 - 0x4043F0
 static void (* const CS_ActBullet_Frontia2)(CS_BULLET* bul, int level) = (void(*)(CS_BULLET*, int))0x4043F0;
-// ActBullet_PoleStar
+// ActBullet_PoleStar - 0x4047B0
 static void (* const CS_ActBullet_PoleStar)(CS_BULLET* bul, int level) = (void(*)(CS_BULLET*, int))0x4047B0;
-// ActBullet_FireBall
+// ActBullet_FireBall - 0x404B30
 static void (* const CS_ActBullet_FireBall)(CS_BULLET* bul, int level) = (void(*)(CS_BULLET*, int))0x404B30;
-// ActBullet_MachineGun
+// ActBullet_MachineGun - 0x405120
 static void (* const CS_ActBullet_MachineGun)(CS_BULLET* bul, int level) = (void(*)(CS_BULLET*, int))0x405120;
-// ActBullet_Missile
+// ActBullet_Missile - 0x4055A0
 static void (* const CS_ActBullet_Missile)(CS_BULLET* bul, int level) = (void(*)(CS_BULLET*, int))0x4055A0;
-// ActBullet_Bom
+// ActBullet_Bom - 0x405D80
 static void (* const CS_ActBullet_Bom)(CS_BULLET* bul, int level) = (void(*)(CS_BULLET*, int))0x405D80;
-// ActBullet_Bubblin1
+// ActBullet_Bubblin1 - 0x405F30
 static void (* const CS_ActBullet_Bubblin1)(CS_BULLET* bul) = (void(*)(CS_BULLET*))0x405F30;
-// ActBullet_Bubblin2
+// ActBullet_Bubblin2 - 0x406190
 static void (* const CS_ActBullet_Bubblin2)(CS_BULLET* bul) = (void(*)(CS_BULLET*))0x406190;
-// ActBullet_Bubblin3
+// ActBullet_Bubblin3 - 0x4064D0
 static void (* const CS_ActBullet_Bubblin3)(CS_BULLET* bul) = (void(*)(CS_BULLET*))0x4064D0;
-// ActBullet_Spine
+// ActBullet_Spine - 0x4068B0
 static void (* const CS_ActBullet_Spine)(CS_BULLET* bul) = (void(*)(CS_BULLET*))0x4068B0;
-// ActBullet_Sword1
+// ActBullet_Sword1 - 0x406BB0
 static void (* const CS_ActBullet_Sword1)(CS_BULLET* bul) = (void(*)(CS_BULLET*))0x406BB0;
-// ActBullet_Sword2
+// ActBullet_Sword2 - 0x406E60
 static void (* const CS_ActBullet_Sword2)(CS_BULLET* bul) = (void(*)(CS_BULLET*))0x406E60;
-// ActBullet_Sword3
+// ActBullet_Sword3 - 0x407110
 static void (* const CS_ActBullet_Sword3)(CS_BULLET* bul) = (void(*)(CS_BULLET*))0x407110;
-// ActBullet_Edge
+// ActBullet_Edge - 0x4075E0
 static void (* const CS_ActBullet_Edge)(CS_BULLET* bul) = (void(*)(CS_BULLET*))0x4075E0;
-// ActBullet_Drop
+// ActBullet_Drop - 0x4078A0
 static void (* const CS_ActBullet_Drop)(CS_BULLET* bul) = (void(*)(CS_BULLET*))0x4078A0;
-// ActBullet_SuperMissile
+// ActBullet_SuperMissile - 0x407910
 static void (* const CS_ActBullet_SuperMissile)(CS_BULLET* bul, int level) = (void(*)(CS_BULLET*, int))0x407910;
-// ActBullet_SuperBom
+// ActBullet_SuperBom - 0x408080
 static void (* const CS_ActBullet_SuperBom)(CS_BULLET* bul, int level) = (void(*)(CS_BULLET*, int))0x408080;
-// ActBullet_Nemesis
+// ActBullet_Nemesis - 0x408230
 static void (* const CS_ActBullet_Nemesis)(CS_BULLET* bul, int level) = (void(*)(CS_BULLET*, int))0x408230;
-// ActBullet_Spur
+// ActBullet_Spur - 0x408710
 static void (* const CS_ActBullet_Spur)(CS_BULLET* bul, int level) = (void(*)(CS_BULLET*, int))0x408710;
-// ActBullet_SpurTail
+// ActBullet_SpurTail - 0x408AE0
 static void (* const CS_ActBullet_SpurTail)(CS_BULLET* bul, int level) = (void(*)(CS_BULLET*, int))0x408AE0;
-// ActBullet_EnemyClear
+// ActBullet_EnemyClear - 0x408F40
 static void (* const CS_ActBullet_EnemyClear)(CS_BULLET* bul) = (void(*)(CS_BULLET*))0x408F40;
-// ActBullet_Star
+// ActBullet_Star - 0x408F90
 static void (* const CS_ActBullet_Star)(CS_BULLET* bul) = (void(*)(CS_BULLET*))0x408F90;
-// ActBullet
+// ActBullet - 0x408FC0
 static void (* const CS_ActBullet)(void) = (void(*)(void))0x408FC0;
-// IsSomeActiveBullet
+// IsSomeActiveBullet - 0x4095C0
 static BOOL (* const CS_IsSomeActiveBullet)(void) = (BOOL(*)(void))0x4095C0;
-// InitCaret
+// InitCaret - 0x409650
 static void (* const CS_InitCaret)(void) = (void(*)(void))0x409650;
-// ActCaret00
+// ActCaret00 - 0x409670
 static void (* const CS_ActCaret00)(CS_CARET *crt) = (void(*)(CS_CARET*))0x409670;
-// ActCaret01
+// ActCaret01 - 0x409680
 static void (* const CS_ActCaret01)(CS_CARET* crt) = (void(*)(CS_CARET*))0x409680;
-// ActCaret02
+// ActCaret02 - 0x409880
 static void (* const CS_ActCaret02)(CS_CARET* crt) = (void(*)(CS_CARET*))0x409880;
-// ActCaret03
+// ActCaret03 - 0x409B80
 static void (* const CS_ActCaret03)(CS_CARET* crt) = (void(*)(CS_CARET*))0x409B80;
-// ActCaret04
+// ActCaret04 - 0x409C70
 static void (* const CS_ActCaret04)(CS_CARET* crt) = (void(*)(CS_CARET*))0x409C70;
-// ActCaret05
+// ActCaret05 - 0x409E00
 static void (* const CS_ActCaret05)(CS_CARET* crt) = (void(*)(CS_CARET*))0x409E00;
-// ActCaret07
+// ActCaret07 - 0x409F60
 static void (* const CS_ActCaret07)(CS_CARET* crt) = (void(*)(CS_CARET*))0x409F60;
-// ActCaret08
+// ActCaret08 - 0x40A120
 static void (* const CS_ActCaret08)(CS_CARET* crt) = (void(*)(CS_CARET*))0x40A120;
-// ActCaret09
+// ActCaret09 - 0x40A1B0
 static void (* const CS_ActCaret09)(CS_CARET* crt) = (void(*)(CS_CARET*))0x40A1B0;
-// ActCaret10
+// ActCaret10 - 0x40A280
 static void (* const CS_ActCaret10)(CS_CARET* crt) = (void(*)(CS_CARET*))0x40A280;
-// ActCaret11
+// ActCaret11 - 0x40A3F0
 static void (* const CS_ActCaret11)(CS_CARET* crt) = (void(*)(CS_CARET*))0x40A3F0;
-// ActCaret12
+// ActCaret12 - 0x40A5A0
 static void (* const CS_ActCaret12)(CS_CARET* crt) = (void(*)(CS_CARET*))0x40A5A0;
-// ActCaret13
+// ActCaret13 - 0x40A650
 static void (* const CS_ActCaret13)(CS_CARET* crt) = (void(*)(CS_CARET*))0x40A650;
-// ActCaret14
+// ActCaret14 - 0x40A7E0
 static void (* const CS_ActCaret14)(CS_CARET* crt) = (void(*)(CS_CARET*))0x40A7E0;
-// ActCaret15
+// ActCaret15 - 0x40A8F0
 static void (* const CS_ActCaret15)(CS_CARET* crt) = (void(*)(CS_CARET*))0x40A8F0;
-// ActCaret16
+// ActCaret16 - 0x40A9E0
 static void (* const CS_ActCaret16)(CS_CARET* crt) = (void(*)(CS_CARET*))0x40A9E0;
-// ActCaret17
+// ActCaret17 - 0x40AAA0
 static void (* const CS_ActCaret17)(CS_CARET* crt) = (void(*)(CS_CARET*))0x40AAA0;
-// ActCaret
+// ActCaret - 0x40AB50
 static void (* const CS_ActCaret)(void) = (void(*)(void))0x40AB50;
-// PutCaret
+// PutCaret - 0x40ABC0
 static void (* const CS_PutCaret)(int fx, int fy) = (void(*)(int, int))0x40ABC0;
-// SetCaret
+// SetCaret - 0x40AC90
 static void (* const CS_SetCaret)(int x, int y, int code, int dir) = (void(*)(int, int, int, int))0x40AC90;
-// LoadConfigData
+// LoadConfigData - 0x40AD60
 static BOOL (* const CS_LoadConfigData)(CS_ConfigData* config_memory) = (BOOL(*)(CS_ConfigData*))0x40AD60;
-// DefaultConfigData
+// DefaultConfigData - 0x40AE30
 static void(* const CS_DefaultConfigData)(CS_ConfigData* config_memory) = (void(*)(CS_ConfigData*))0x40AE30;
 // VersionDialog
 
@@ -450,49 +450,49 @@ static void(* const CS_DefaultConfigData)(CS_ConfigData* config_memory) = (void(
 
 // QuitDialog
 
-// SetClientOffset
+// SetClientOffset - 0x40B320
 static void(* const CS_SetClientOffset)(int width, int height) = (void(*)(int, int))0x40B320;
-// Flip_SystemTask
+// Flip_SystemTask - 0x40B340
 static BOOL (* const CS_Flip_SystemTask)(HWND hWnd) = (BOOL(*)(HWND))0x40B340;
-// StartDirectDraw
+// StartDirectDraw - 0x40B340
 static BOOL (* const CS_StartDirectDraw)(HWND hWnd, int lMagnification, int lColourDepth) = (BOOL(*)(HWND hWnd, int, int))0x40B340;
 // EndDirectDraw
 
-// ReleaseSurface
+// ReleaseSurface - 0x40B7A0
 static void (* const CS_ReleaseSurface)(int s) = (void(*)(int))0x40B7A0;
 // MakeSurface_Resource
 
-// MakeSurface_File
+// MakeSurface_File - 0x40BAC0
 static BOOL(* const CS_MakeSurface_File)(const char* name, int surf_no) = (BOOL(*)(const char*, int))0x40BAC0;
 // ReloadBitmap_Resource
 
-// ReloadBitmap_File
+// ReloadBitmap_File - 0x40BFD0
 static BOOL(* const CS_ReloadBitmap_File)(const char* name, int surf_no) = (BOOL(*)(const char*, int))0x40BFD0;
-// MakeSurface_Generic
+// MakeSurface_Generic - 0x40C1D0
 static BOOL(* const CS_MakeSurface_Generic)(int bxsize, int bysize, int surf_no) = (BOOL(*)(int, int, int))0x40C1D0;
 // BackupSurface
 
-// PutBitmap3
+// PutBitmap3 - 0x40C3C0
 static void (* const CS_PutBitmap3)(const RECT*, int, int, const RECT*, CS_SurfaceID) = (void(*)(const RECT*, int, int, const RECT*, CS_SurfaceID))0x40C3C0;
-// PutBitmap4
+// PutBitmap4 - 0x40C5B0
 static void (* const CS_PutBitmap4)(const RECT*, int, int, const RECT*, CS_SurfaceID) = (void(*)(const RECT*, int, int, const RECT*, CS_SurfaceID))0x40C5B0;
 // Surface2Surface
 
 // GetCortBoxColor
 
-// CortBox
+// CortBox - 0x40C9E0
 static void (* const CS_CortBox)(RECT* dst_rect, int colour) = (void(*)(RECT*, int))0x40C9E0;
-// CortBox2
+// CortBox2 - 0x40CA80
 static void (* const CS_CortBox2)(RECT* dst_rect, int colour, CS_SurfaceID surf_no) = (void(*)(RECT*, int, CS_SurfaceID))0x40CA80;
 // out
 
-// RestoreSurfaces
+// RestoreSurfaces - 0x40CB60
 static int (* const CS_RestoreSurfaces)(void) = (int(*)(void))0x40CB60;
 // InitTextObject
 
-// PutText
+// PutText - 0x40CE00
 static void (* const CS_PutText)(int x, int y, const char* text, unsigned int colour) = (void(*)(int, int, const char*, unsigned int))0x40CE00;
-// PutText2
+// PutText2 - 0x40CEB0
 static void (* const CS_PutText2)(int x, int y, const char* text, unsigned int colour, CS_SurfaceID) = (void(*)(int, int, const char*, unsigned int, CS_SurfaceID))0x40CEB0;
 // EndTextObject
 
@@ -514,7 +514,7 @@ static void (* const CS_PutText2)(int x, int y, const char* text, unsigned int c
 
 // ReleaseCreditScript
 
-// StartCreditScript
+// StartCreditScript - 0x40D440
 static BOOL(* const CS_StartCreditScript)(void) = (BOOL(*)(void))0x40D440;
 // ActionCredit
 
@@ -546,21 +546,21 @@ static BOOL(* const CS_StartCreditScript)(void) = (BOOL(*)(void))0x40D440;
 
 // GetFadeActive
 
-// InitFlags
+// InitFlags - 0x40E850
 static void (* const CS_InitFlags)(void) = (void(*)(void))0x40E850;
-// InitSkipFlags
+// InitSkipFlags - 0x40E870
 static void (* const CS_InitSkipFlags)(void) = (void(*)(void))0x40E870;
-// SetNPCFlag
+// SetNPCFlag - 0x40E890
 static void (* const CS_SetNPCFlag)(long a) = (void(*)(long))0x40E890;
-// CutNPCFlag
+// CutNPCFlag - 0x40E8E0
 static void (* const CS_CutNPCFlag)(long a) = (void(*)(long))0x40E8E0;
-// GetNPCFlag
+// GetNPCFlag - 0x40E930
 static BOOL(* const CS_GetNPCFlag)(long a) = (BOOL(*)(long))0x40E930;
-// SetSkipFlag
+// SetSkipFlag - 0x40E970
 static void (* const CS_SetSkipFlag)(long a) = (void(*)(long))0x40E970;
-// CutSkipFlag
+// CutSkipFlag - 0x40E9C0
 static void (* const CS_CutSkipFlag)(long a) = (void(*)(long))0x40E9C0;
-// GetSkipFlag
+// GetSkipFlag - 0x40EA10
 static BOOL(* const CS_GetSkipFlag)(long a) = (BOOL(*)(long))0x40EA10;
 // InitFlash
 
@@ -578,7 +578,7 @@ static BOOL(* const CS_GetSkipFlag)(long a) = (BOOL(*)(long))0x40EA10;
 
 // MoveFrame3
 
-// GetFramePosition
+// GetFramePosition - 0x40F020
 static void (* const CS_GetFramePosition)(int* fx, int* fy) = (void(*)(int*, int*))0x40F020;
 // SetFramePosition
 
@@ -596,9 +596,9 @@ static void (* const CS_GetFramePosition)(int* fx, int* fy) = (void(*)(int*, int
 
 // ResetQuake
 
-// Random
+// Random - 0x40F350
 static int (* const CS_Random)(int min, int max) = (int(*)(int, int))0x40F350;
-// PutNumber4
+// PutNumber4 - 0x40F380
 static void (* const CS_PutNumber4)(int x, int y, int, int) = (void(*)(int, int, int, int))0x40F380;
 // Game
 
@@ -724,7 +724,7 @@ static void (* const CS_PutNumber4)(int x, int y, int, int) = (void(*)(int, int,
 
 // ShowMyChar
 
-// PutMyChar
+// PutMyChar - 0x415250
 static void (* const CS_PutMyChar)(int camera_x, int camera_y) = (void(*)(int, int))0x415250;
 // ActMyChar_Normal
 
@@ -832,7 +832,7 @@ static void (* const CS_PutMyChar)(int camera_x, int camera_y) = (void(*)(int, i
 
 // PutMyLife
 
-// PutMyAir
+// PutMyAir - 0x41A350
 static void (* const CS_PutMyAir)(int x, int y) = (void(*)(int, int))0x41A350;
 // PutTimeCounter
 
@@ -892,19 +892,19 @@ static void (* const CS_PutMyAir)(int x, int y) = (void(*)(int, int))0x41A350;
 
 // StartOrganya
 
-// LoadOrganya
+// LoadOrganya - 0x41C6F0
 static void (* const CS_LoadOrganya)(const char*) = (void(*)(const char*))0x41C6F0;
-// SetOrganyaPosition
+// SetOrganyaPosition - 0x41C730
 static void (* const CS_SetOrganyaPosition)(int) = (void(*)(int))0x41C730;
-// GetOrganyaPosition
+// GetOrganyaPosition - 0x41C770
 static int (* const CS_GetOrganyaPosition)(void) = (int(*)(void))0x41C770;
-// PlayOrganyaMusic
+// PlayOrganyaMusic - 0x41C790
 static void (* const CS_PlayOrganyaMusic)(void) = (void(*)(void))0x41C790;
-// ChangeOrganyaVolume
+// ChangeOrganyaVolume - 0x41C7C0
 static void (* const CS_ChangeOrganyaVolume)(int) = (void(*)(int))0x41C7C0;
-// StopOrganyaMusic
+// StopOrganyaMusic - 0x41C7F0
 static void (* const CS_StopOrganyaMusic)(void) = (void(*)(void))0x41C7F0;
-// SetOrganyaFadeout
+// SetOrganyaFadeout - 0x41C880
 static void (* const CS_SetOrganyaFadeout)(void) = (void(*)(void))0x41C880;
 // EndOrganya
 
@@ -932,29 +932,29 @@ static void (* const CS_SetOrganyaFadeout)(void) = (void(*)(void))0x41C880;
 
 // StageSelectLoop
 
-// ShootBullet_Frontial
+// ShootBullet_Frontial - 0x41DBD0
 static void (* const CS_ShootBullet_Frontia1)(int level) = (void(*)(int))0x41DBD0;
-// ShootBullet_PoleStar
+// ShootBullet_PoleStar - 0x41DE60
 static void (* const CS_ShootBullet_PoleStar)(int level) = (void(*)(int))0x41DE60;
-// ShootBullet_FireBall
+// ShootBullet_FireBall - 0x41E110
 static void (* const CS_ShootBullet_FireBall)(int level) = (void(*)(int))0x41E110;
-// ShootBullet_Machinegun1
+// ShootBullet_Machinegun1 - 0x41E3D0
 static void (* const CS_ShootBullet_Machinegun1)(int level) = (void(*)(int))0x41E3D0;
-// ShootBullet_Missile
+// ShootBullet_Missile - 0x41E7B0
 static void (* const CS_ShootBullet_Missile)(int level, BOOL bSuper) = (void(*)(int, BOOL))0x41E7B0;
-// ShootBullet_Bubblin1
+// ShootBullet_Bubblin1 - 0x41EFD0
 static void (* const CS_ShootBullet_Bubblin1)(void) = (void(*)(void))0x41EFD0;
-// ShootBullet_Bubblin2
+// ShootBullet_Bubblin2 - 0x41F280
 static void (* const CS_ShootBullet_Bubblin2)(int level) = (void(*)(int))0x41F280;
-// ShootBullet_Sword
+// ShootBullet_Sword - 0x41F580
 static void (* const CS_ShootBullet_Sword)(int level) = (void(*)(int))0x41F580;
-// ShootBullet_Nemesis
+// ShootBullet_Nemesis - 0x41F710
 static void (* const CS_ShootBullet_Nemesis)(int level) = (void(*)(int))0x41F710;
-// ShootBullet_ResetSpurCharge
+// ShootBullet_ResetSpurCharge - 0x41F9E0
 static void (* const CS_ResetSpurCharge)(void) = (void(*)(void))0x41F9E0;
-// ShootBullet_Spur
+// ShootBullet_Spur - 0x41FA10
 static void (* const CS_ShootBullet_Spur)(int level) = (void(*)(int))0x41FA10;
-// ShootBullet
+// ShootBullet - 0x41FE70
 static void (* const CS_ShootBullet)(void) = (void(*)(void))0x41FE70;
 // InitDirectSound
 
@@ -976,9 +976,9 @@ static void (* const CS_ShootBullet)(void) = (void(*)(void))0x41FE70;
 
 // TransferStage
 
-// ChangeMusic
+// ChangeMusic - 0x420EE0
 static void (* const CS_ChangeMusic)(int music_id) = (void(*)(int))0x420EE0;
-// ReCallMusic
+// ReCallMusic - 0x420F50
 static void (* const CS_ReCallMusic)(void) = (void(*)(void))0x420F50;
 // InitStar
 
@@ -1014,7 +1014,7 @@ static void (* const CS_ReCallMusic)(void) = (void(*)(void))0x420F50;
 
 // PutTextScript
 
-// TextScriptProc
+// TextScriptProc - 0x422510
 static void (* const CS_TextScriptProc)(void) = (void(*)(void))0x422510;
 // RestoreTextScript
 
@@ -1760,9 +1760,9 @@ static void (* const CS_TextScriptProc)(void) = (void(*)(void))0x422510;
 
 // SetUniqueParameter
 
-// SetNpChar
+// SetNpChar - 0x46EFD0
 static void (* const CS_SetNpChar)(int object_ID, int x_pos, int y_pos, int a4, int a5, int facing_right, int a7, int object_RAM_index) = (void(*)(int, int, int, int, int, int, int, int))0x46EFD0;
-// SetDestroyNpChar
+// SetDestroyNpChar - 0x46F150
 static void (* const CS_SetDestroyNpChar)(int x, int y, signed int range, int count) = (void(*)(int, int, int, int))0x46F150;
 // SetDestroyNpCharUp
 
@@ -1776,7 +1776,7 @@ static void (* const CS_SetDestroyNpChar)(int x, int y, signed int range, int co
 
 // PutNpChar
 
-// ActNpChar
+// ActNpChar - 0x46FA00
 static void (* const CS_ActNpChar)(void) = (void(*)(void))0x46FA00;
 // ChangeNpCharByEvent
 
@@ -1788,9 +1788,9 @@ static void (* const CS_ActNpChar)(void) = (void(*)(void))0x46FA00;
 
 // BackStepMyChar
 
-// DeleteNpCharEvent
+// DeleteNpCharEvent - 0x470250
 static void (* const CS_DeleteNpCharEvent)(int code) = (void(*)(int))0x470250;
-// DeleteNpCharCode
+// DeleteNpCharCode - 0x4702D0
 static void (* const CS_DeleteNpCharCode)(int code, BOOL bSmoke) = (void(*)(int, BOOL))0x4702D0;
 // GetNpCharPosition
 
@@ -1822,7 +1822,7 @@ static void (* const CS_DeleteNpCharCode)(int code, BOOL bSmoke) = (void(*)(int,
 
 // HitNpCharMap
 
-// LoseNpChar
+// LoseNpChar - 0x471B80
 static void (* const CS_LoseNpChar)(CS_NPCHAR* npc, BOOL bVanish) = (void(*)(CS_NPCHAR*, BOOL))0x471B80;
 // HitNpCharBullet
 
