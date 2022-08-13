@@ -1950,86 +1950,54 @@ static void (* const CS_ActBossChar_0)(void) = (void(*)(void))0x472FF0;
 static void (* const CS_ActBossChar)(void) = (void(*)(void))0x473000;
 // HitBossMap - 0x473080
 static void (* const CS_HitBossMap)(void) = (void(*)(void))0x473080;
-// ActBossChar_Core_Face - 0x4739B0
+// Core boss
 static void (* const CS_ActBossChar_Core_Face)(CS_NPCHAR *npc) = (void(*)(CS_NPCHAR*))0x4739B0;
-// ActBossChar_Core_Tail - 0x473BD0
 static void (* const CS_ActBossChar_Core_Tail)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x473BD0;
-// ActBossChar_Core_Mini - 0x473DE0
 static void (* const CS_ActBossChar_Core_Mini)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x473DE0;
-// ActBossChar_Core_Hit - 0x474340
 static void (* const CS_ActBossChar_Core_Hit)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x474340;
-// ActBossChar_Core - 0x474400
 static void (* const CS_ActBossChar_Core)(void) = (void(*)(void))0x474400;
-// ActBossChar_Undead - 0x4753D0
+// Undead Core boss
 static void (* const CS_ActBossChar_Undead)(void) = (void(*)(void))0x4753D0;
-// ActBossCharA_Head - 0x476790
 static void (* const CS_ActBossCharA_Head)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x476790;
-// ActBossCharA_Tail - 0x4769A0
 static void (* const CS_ActBossCharA_Tail)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4769A0;
-// ActBossCharA_Face - 0x476B90
 static void (* const CS_ActBossCharA_Face)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x476B90;
-// ActBossCharA_Mini - 0x476E50
 static void (* const CS_ActBossCharA_Mini)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x476E50;
-// ActBossCharA_Hit - 0x477230
 static void (* const CS_ActBossCharA_Hit)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x477230;
-// ActBossChar_Ballos - 0x4772F0
+// Ballos boss
 static void (* const CS_ActBossChar_Ballos)(void) = (void(*)(void))0x4772F0;
-// ActBossChar_Eye - 0x478AA0
 static void (* const CS_ActBossCharA_Eye)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x478AA0;
-// ActBossChar_Body - 0x478F20
 static void (* const CS_ActBossCharA_Body)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x478F20;
-// ActBossChar_HITAI - 0x478FE0
 static void (* const CS_ActBossCharA_HITAI)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x478FE0;
-// ActBossChar_HARA - 0x479010
 static void (* const CS_ActBossCharA_HARA)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x479010;
-// ActBossChar_Frog - 0x479030
+// Balfrog boss
 static void (* const CS_ActBossChar_Frog)(void) = (void(*)(void))0x479030;
-// ActBossChar02_01 - 0x47A6A0
 static void (* const CS_ActBossChar02_01)(void) = (void(*)(void))0x47A6A0;
-// ActBossChar02_02 - 0x47A800
 static void (* const CS_ActBossChar02_02)(void) = (void(*)(void))0x47A800;
-// ActBossChar_Ironhead - 0x47A8A0
+// Ironhead boss
 static void (* const CS_ActBossChar_Ironhead)(void) = (void(*)(void))0x47A8A0;
-// InitBossLife - 0x47B450
+// Boss Life functions
 static void (* const CS_InitBossLife)(void) = (void(*)(void))0x47B450;
-// StartBossLife - 0x47B460
 static BOOL (* const CS_StartBossLife)(int code_event) = (BOOL(*)(int))0x47B460;
-// StartBossLife2 - 0x47B500
 static BOOL(* const CS_StartBossLife2)(void) = (BOOL(*)(void))0x47B500;
-// PutBossLife - 0x47B540
 static void (* const CS_PutBossLife)(void) = (void(*)(void))0x47B540;
-// ActBossChar_Omega - 0x47B6F0
+// Omega boss
 static void (* const CS_ActBossChar_Omega)(void) = (void(*)(void))0x47B6F0;
-// ActBoss01_12 - 0x47C380
 static void (* const CS_ActBoss01_12)(void) = (void(*)(void))0x47C380;
-// ActBoss01_34 - 0x47C4E0
 static void (* const CS_ActBoss01_34)(void) = (void(*)(void))0x47C4E0;
-// ActBoss01_5 - 0x47C7A0
 static void (* const CS_ActBoss01_5)(void) = (void(*)(void))0x47C7A0;
-// ActBossChar_Press - 0x47C820
+// Heavy Press boss
 static void (* const CS_ActBossChar_Press)(void) = (void(*)(void))0x47C820;
-// ActBossChar_Twin - 0x47D170
+// The Sisters boss
 static void (* const CS_ActBossChar_Twin)(void) = (void(*)(void))0x47D170;
-// ActBossCharT_DragonBody - 0x47DAA0
 static void (* const CS_ActBossCharT_DragonBody)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x47DAA0;
-// ActBossCharT_DragonHead - 0x47DF10
 static void (* const CS_ActBossCharT_DragonHead)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x47DF10;
-// ActBossChar_MonstX - 0x47E6F0
+// Monster X boss
 static void (* const CS_ActBossChar_MonstX)(void) = (void(*)(void))0x47E6F0;
-// ActBossChar_03_01 - 0x47F710
 static void (* const CS_ActBossChar_03_01)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x47F710;
-// ActBossChar_03_02 - 0x480090
 static void (* const CS_ActBossChar_03_02)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x480090;
-// ActBossChar_03_03 - 0x4802A0
 static void (* const CS_ActBossChar_03_03)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4802A0;
-// ActBossChar_03_04 - 0x480550
 static void (* const CS_ActBossChar_03_04)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x480550;
-// ActBossChar_03_face - 0x4808C0
 static void (* const CS_ActBossChar_03_face)(CS_NPCHAR* npc) = (void(*)(CS_NPCHAR*))0x4808C0;
-
-
-
-
 
 // Hookspaces & Hookjumps
 
