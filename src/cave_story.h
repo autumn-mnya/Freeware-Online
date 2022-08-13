@@ -951,39 +951,39 @@ static void (* const CS_PutText2)(int x, int y, const char* text, unsigned int c
 // EndTextObject - 0x40CF70
 static void (* const CS_EndTextObject)(void) = (void(*)(void))0x40CF70;
 // ActionStripper - 0x40CF90
-
+static void (* const CS_ActionStripper)(void) = (void(*)(void))0x40CF90;
 // PutStripper - 0x40D010
-
+static void (* const CS_PutStripper)(void) = (void(*)(void))0x40D010;
 // SetStripper - 0x40D150
-
+static void (* const CS_SetStripper)(int x, int y, const char *text, int cast) = (void(*)(int, int, const char*, int))0x40D150;
 // RestoreStripper - 0x40D240
-
+static void (* const CS_RestoreStripper)(void) = (void(*)(void))0x40D240;
 // ActionIllust - 0x40D2D0
-
+static void (* const CS_ActionIllust)(void) = (void(*)(void))0x40D2D0;
 // PutIllust - 0x40D350
-
+static void (* const CS_PutIllust)(void) = (void(*)(void))0x40D350;
 // ReloadIllust - 0x40D3A0
-
+static void (* const CS_ReloadIllust)(int a) = (void(*)(int))0x40D3A0;
 // InitCreditScript - 0x40D3E0
-
+static void (* const CS_InitCreditScript)(void) = (void(*)(void))0x40D3E0;
 // ReleaseCreditScript - 0x40D410
-
+static void (* const CS_ReleaseCreditScript)(void) = (void(*)(void))0x40D410;
 // StartCreditScript - 0x40D440
 static BOOL(* const CS_StartCreditScript)(void) = (BOOL(*)(void))0x40D440;
 // ActionCredit - 0x40D5C0
-
+static void (* const CS_ActionCredit)(void) = (void(*)(void))0x40D5C0;
 // ActionCredit_Read - 0x40D620
-
+static void (* const CS_ActionCredit_Read)(void) = (void(*)(void))0x40D620;
 // GetScriptNumber - 0x40DB00
-
+static int (* const CS_GetScriptNumber)(const char *text) = (int(*)(const char*))0x40DB00;
 // SetCreditIllust - 0x40DB40
-
+static void (* const CS_SetCreditIllust)(int a) = (void(*)(int))0x40DB40;
 // CutCreditIllust - 0x40DB60
-
+static void (* const CS_CutCreditIllust)(void) = (void(*)(void))0x40DB60;
 // Scene_DownIsland - 0x40DB70
-
+static int (* const CS_Scene_DownIsland)(HWND hWnd, int mode) = (int(*)(HWND, int))0x40DB70;
 // Call_Escape - 0x40DD70
-
+static int (* const CS_Call_Escape)(HWND hWnd) = (int(*)(HWND))0x40DD70;
 // InitFade - 0x40DE60
 
 // SetFadeMask - 0x40DE90
