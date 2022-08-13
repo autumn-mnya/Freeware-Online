@@ -1017,39 +1017,39 @@ static void (* const CS_CutSkipFlag)(long a) = (void(*)(long))0x40E9C0;
 // GetSkipFlag - 0x40EA10
 static BOOL(* const CS_GetSkipFlag)(long a) = (BOOL(*)(long))0x40EA10;
 // InitFlash - 0x40EA50
-
+static void (* const CS_InitFlash)(void) = (void(*)(void))0x40EA50;
 // SetFlash - 0x40EA70
-
+static void (* const CS_SetFlash)(int x, int y, CS_FlashMode mode) = (void(*)(int, int, CS_FlashMode))0x40EA70;
 // ActFlash_Explosion - 0x40EAC0
-
+static void (* const CS_ActFlash_Explosion)(int flx, int fly) = (void(*)(int, int))0x40EAC0;
 // ActFlash_Flash - 0x40ED20
-
+static void (* const CS_ActFlash_Flash)(void) = (void(*)(void))0x40ED20;
 // ActFlash - 0x40EDE0
-
+static void (* const CS_ActFlash)(int flx, int fly) = (void(*)(int, int))0x40EDE0;
 // PutFlash - 0x40EE20
-
+static void (* const CS_PutFlash)(void) = (void(*)(void))0x40EE20;
 // ResetFlash - 0x40EE60
-
+static void (* const CS_ResetFlash)(void) = (void(*)(void))0x40EE60;
 // MoveFrame3 - 0x40EE70
-
+static void (* const CS_MoveFrame3)(void) = (void(*)(void))0x40EE70;
 // GetFramePosition - 0x40F020
 static void (* const CS_GetFramePosition)(int* fx, int* fy) = (void(*)(int*, int*))0x40F020;
 // SetFramePosition - 0x40F040
-
+static void (* const CS_SetFramePosition)(int fx, int fy) = (void(*)(int, int))0x40F040;
 // SetFrameMyChar - 0x40F130
-
+static void (* const CS_SetFrameMyChar)(void) = (void(*)(void))0x40F130;
 // SetFrameTargetMyChar - 0x40F220
-
+static void (* const CS_SetFrameTargetMyChar)(int wait) = (void(*)(int))0x40F220;
 // SetFrameTargetNpChar - 0x40F250
-
+static void (* const CS_SetFrameTargetNpChar)(int event, int wait) = (void(*)(int, int))0x40F250;
 // SetFrameTargetBoss - 0x40F2D0
-
+static void (* const CS_SetFrameTargetBoss)(int no, int wait) = (void(*)(int, int))0x40F2D0;
 // SetQuake - 0x40F310
-
+static void (* const CS_SetQuake)(int time) = (void(*)(int))0x40F310;
 // SetQuake2 - 0x40F320
-
+static void (* const CS_SetQuake2)(int time) = (void(*)(int))0x40F320;
 // ResetQuake - 0x40F330
-
+static void (* const CS_ResetQuake)(void) = (void(*)(void))0x40F330;
 // Random - 0x40F350
 static int (* const CS_Random)(int min, int max) = (int(*)(int, int))0x40F350;
 // PutNumber4 - 0x40F380
