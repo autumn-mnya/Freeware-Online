@@ -108,7 +108,6 @@ void PutFlash(void)
 		KillClient();
 	}
 
-	PutVirtualPlayers(frame_x, frame_y);
 	PutServer();
 }
 
@@ -122,11 +121,12 @@ void InitMod(void)
 	ModLoader_WriteJump((void*)0x40AE30, (void*)DefaultConfigData);
 	// ModLoader_WriteJump((void*)0x412320, (void*)SetWindowName);
 	ModLoader_WriteJump((void*)0x412BC0, (void*)InactiveWindow);
-	/*
+	
+	//Hooking into the end of PutBullet
 	ModLoader_WriteByte((void*)0x403F65, 0xC9); //write LEAVE
-	ModLoader_WriteWord((void*)0x403F66, 0xEB11); //write short JMP to get past the switch table
-	ModLoader_WriteJump((void*)0x403F79, (void*)PutVirtualPlayers);
-	*/
+	ModLoader_WriteWordBE((void*)0x403F66, 0xEB11); //write short JMP to get past the switch table
+	ModLoader_WriteJump((void*)0x403F79, (void*)PutVirtualPlayers); //JMP to PutVirtualPlayers instead of returning
+	
 	// ModLoader_WriteJump((void*)0x421040, (void*)ActStar);
 	ModLoader_WriteJump((void*)0x40EE20, (void*)PutFlash);
 }
