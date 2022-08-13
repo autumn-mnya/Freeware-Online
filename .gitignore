@@ -3,3 +3,10 @@
 /Debug
 /Release
 netplay.vcxproj.user
+
+CaveStory/fps
+CaveStory/mute
+CaveStory/Config.dat
+CaveStory/Profile.dat
+CaveStory/window.rect
+CaveStory/mods/netplay
