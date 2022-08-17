@@ -1,4 +1,3 @@
-// Quote movement function base mod for Freeware Cave Story
 // Copyright © 2017 Clownacy
 // Copyright © 2019 Cucky
 

@@ -2013,3 +2013,12 @@ static void (* const CS_ActBossChar_03_face)(CS_NPCHAR* npc) = (void(*)(CS_NPCHA
 #define CSH_tsc_end (void*) 0x425244, 12
 // Aka 4252A7, or "ParserEnd", but minus some indirection.
 #define CSJ_tsc_done 0x4225CB
+
+// I literally have no idea what i'm doing?? Does this hook into the <MIM function or not??
+// TSC part of <MIM
+#define MIM_tsc_start (void*) 0x4225ED
+#define MIM_tsc_end (void*) 0x422679
+
+// MyChar part of <MIM
+#define MIM_mychar_start (void*) 0x4154b8
+#define MIM_mychar_end (void*) 0x4154C6

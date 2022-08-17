@@ -288,10 +288,10 @@ void HandleClient()
 							
 							if (strcmp(prevName, gVirtualPlayers[i].name))
 							{
-								// RECT rcUsername = {0, i * 16, CS_window_surface_width, i * 16 + 16};
-								// CS_DrawColourFill2(&rcUsername, 0x000000, CS_SURFACE_ID_UNKNOWN_23);
-								// CS_PutText2(((CS_window_surface_width / 2) - strlen(gVirtualPlayers[i].name) * 5) / 2, i * 16 + 2 + 1, gVirtualPlayers[i].name, 0x110022, CS_SURFACE_ID_UNKNOWN_23);
-								// CS_PutText2(((CS_window_surface_width / 2) - strlen(gVirtualPlayers[i].name) * 5) / 2, i * 16 + 2, gVirtualPlayers[i].name, 0xFFFFFE, CS_SURFACE_ID_UNKNOWN_23);
+								/*
+								CS_PutText(((CS_WINDOW_WIDTH / 2) - strlen(gVirtualPlayers[i].name) * 5) / 2, i * 16 + 2 + 1, gVirtualPlayers[i].name, 0x110022);
+								CS_PutText(((CS_WINDOW_WIDTH / 2) - strlen(gVirtualPlayers[i].name) * 5) / 2, i * 16 + 2, gVirtualPlayers[i].name, 0xFFFFFE);
+								*/
 							}
 							
 							//Update variables
@@ -332,6 +332,7 @@ void HandleClient()
 							}
 							break;
 							
+							// was used for skins in CSE2 online, but i dont know if we can do that very easily in freeware
 						case PACKETCODE_SKIN:
 							/*
 							i = SDL_ReadLE32(packetData);
@@ -508,9 +509,7 @@ void PutVirtualPlayers(int fx, int fy)
 						CS_PutBitmap3(&CS_clip_rect_common, drawY / 0x200 - 12 - fx / 0x200, gVirtualPlayers[i].y / 0x200 - 12 - fy / 0x200, &rcBubble[(gVirtualPlayers[i].bubble >> 1) & 1], CS_SURFACE_ID_UNKNOWN_19);
 				}
 				
-				//Draw username
-				// RECT rcUsername = {0, i * 16, CS_window_surface_width, i * 16 + 16};
-				// CS_DrawSprite_WithTransparency(&CS_clip_rect_common, drawX / 0x200 - fx / 0x200 - CS_window_surface_width / 2, drawY / 0x200 - fy / 0x200 - 22, &rcUsername, CS_SURFACE_ID_UNKNOWN_4);
+				CS_PutText(drawX / 0x200 - fx / 0x200 - CS_window_surface_width / 2, drawY / 0x200 - fy / 0x200 - 22, gVirtualPlayers[i].name, 0xFFFFFF);
 			}
 		}
 	}
