@@ -15,7 +15,6 @@ const char* gameIp;
 const char* gamePort;
 const char* gamePlyrName;
 
-
 int* gKKey = (int*)0x49E210;
 
 void ServerDisconnect()
@@ -78,6 +77,7 @@ void ActStar()
 */
 
 int networkStarted = 0;
+RECT rcDrownedChar = { 32, 80, 48, 96 };
 
 // Puts the players because idk how to shove this above PutMyChar
 void PutFlash(void)

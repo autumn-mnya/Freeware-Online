@@ -4,10 +4,10 @@
 #define MAX_NAME 0x14
 #define NAME_MIN 2
 
-#define NET_VERSION 5
+#define NET_VERSION 6
 
 #define TICKRATE 60
-#define MAX_CLIENTS 0x40
+#define MAX_CLIENTS 0x80
 #define VIRTUAL_PLAYER_TIMEOUT 2000
 
 #define PACKET_DATA 0x1000

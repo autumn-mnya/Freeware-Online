@@ -288,10 +288,6 @@ void HandleClient()
 							
 							if (strcmp(prevName, gVirtualPlayers[i].name))
 							{
-								/*
-								CS_PutText(((CS_WINDOW_WIDTH / 2) - strlen(gVirtualPlayers[i].name) * 5) / 2, i * 16 + 2 + 1, gVirtualPlayers[i].name, 0x110022);
-								CS_PutText(((CS_WINDOW_WIDTH / 2) - strlen(gVirtualPlayers[i].name) * 5) / 2, i * 16 + 2, gVirtualPlayers[i].name, 0xFFFFFE);
-								*/
 							}
 							
 							//Update variables
@@ -509,7 +505,7 @@ void PutVirtualPlayers(int fx, int fy)
 						CS_PutBitmap3(&CS_clip_rect_common, drawY / 0x200 - 12 - fx / 0x200, gVirtualPlayers[i].y / 0x200 - 12 - fy / 0x200, &rcBubble[(gVirtualPlayers[i].bubble >> 1) & 1], CS_SURFACE_ID_UNKNOWN_19);
 				}
 				
-				CS_PutText(drawX / 0x200 - fx / 0x200 - CS_window_surface_width / 2, drawY / 0x200 - fy / 0x200 - 22, gVirtualPlayers[i].name, 0xFFFFFF);
+				CS_PutText((drawX / 0x200 - fx / 0x200) - (strlen(gVirtualPlayers[i].name) * 3), drawY / 0x200 - fy / 0x200 - 22, gVirtualPlayers[i].name, 0xFFFFFF);
 			}
 		}
 	}
@@ -619,8 +615,8 @@ void PutServer()
 		}
 		
 		//Draw actual playerlist
-		int playerPerLine = CS_window_surface_width / nameWidth;
-		int offX = (CS_window_surface_width - (nameWidth * playerPerLine)) / 2;
+		int playerPerLine = 320 / nameWidth;
+		int offX = (320 - (nameWidth * playerPerLine)) / 2;
 		
 		int player_i = 0;
 		for (int i = 0; i < MAX_CLIENTS; i++)
@@ -640,14 +636,12 @@ void PutServer()
 				CS_PutBitmap3(&rcBack, x, y + 2, &rcSkin, CS_SURFACE_ID_MY_CHAR);
 				// CS_SURFACE_ID_UNKNOWN_23
 				//Draw username
-				/*
-				RECT rcUsername = {0, i * 16, CS_window_surface_width, i * 16 + 16};
-				CS_DrawSprite_WithTransparency(&rcBack, x + nameWidth / 2 - CS_window_surface_width / 2, y - 1, &rcUsername, CS_SURFACE_ID_UNKNOWN_23);
+
+
+				CS_PutText((x + nameWidth / 2) - 42, y - 1, gVirtualPlayers[i].name, 0xFFFFFF);
 				
 				//Draw mapname
-				RECT rcMapName = { CS_window_surface_width, i * 16, CS_window_surface_width * 2, i * 16 + 16};
-				CS_DrawSprite_WithTransparency(&rcBack, x + nameWidth / 2 - CS_window_surface_width / 2, y + 9, &rcMapName, CS_SURFACE_ID_UNKNOWN_23);
-				*/
+				CS_PutText((x + nameWidth / 2) - 42, y + 9, "Cave Story", 0xFFFFFF);
 			}
 		}
 	}

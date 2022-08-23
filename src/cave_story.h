@@ -11,6 +11,7 @@
 // Variables
 #define CS_window_upscale (*(int*)0x48F914) // mag
 #define CS_clip_rect_common (*(RECT*)0x48F91C) // grcGame
+#define CS_clip_rect_full (*(RECT*)0x48F92C) // grcFull
 #define CS_down_key_mapping (*(int*)0x49363C)
 #define CS_background_tile_width (*(int*)0x499C78)
 #define CS_background_tile_height (*(int*)0x499C7C)
