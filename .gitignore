@@ -2,6 +2,7 @@
 /.vs
 /Debug
 /Release
+/CaveStory/release
 netplay.vcxproj.user
 
 CaveStory/fps
