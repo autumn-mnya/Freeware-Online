@@ -5,6 +5,8 @@
 #include <dinput.h>
 #include <windows.h>
 
+#define ARMS_MAX 8
+#define ITEM_MAX 32
 #define BULLET_MAX 0x40
 #define CARET_MAX 0x40
 
@@ -130,6 +132,9 @@ typedef struct CS_ITEM
 {
 	int code;
 } CS_ITEM;
+
+extern CS_ARMS gArmsData[ARMS_MAX];
+extern CS_ITEM gItemData[ITEM_MAX];
 
 // background
 
@@ -1480,7 +1485,7 @@ static void (* const CS_ClearTextLine)(void) = (void(*)(void))0x421E90;
 // PutTextScript - 0x421F10
 static void (* const CS_PutTextScript)(void) = (void(*)(void))0x421F10;
 // TextScriptProc - 0x422510
-static void (* const CS_TextScriptProc)(void) = (void(*)(void))0x422510;
+static int (* const CS_TextScriptProc)(void) = (int(*)(void))0x422510;
 // RestoreTextScript - 0x425790
 static void (* const CS_RestoreTextScript)(void) = (void(*)(void))0x425790;
 // InitTriangleTable - 0x4257F0
