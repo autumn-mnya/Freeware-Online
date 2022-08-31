@@ -1,5 +1,5 @@
-// Copyright © 2017 Clownacy
-// Copyright © 2019 Cucky
+ï»¿// Copyright Â© 2017 Clownacy
+// Copyright Â© 2019 Cucky
 
 #include <windows.h>
 
@@ -14,6 +14,7 @@
 const char* gameIp;
 const char* gamePort;
 const char* gamePlyrName;
+bool japanese;
 
 int* gKKey = (int*)0x49E210;
 
@@ -79,9 +80,29 @@ void ActStar()
 int networkStarted = 0;
 RECT rcDrownedChar = { 32, 80, 48, 96 };
 
+const char* EngDisconnectedText = "Disconnected from Server.";
+const char* EngPressPeriodText = "Press period to reconnect! (.)";
+
+const char* JpnDisconnectedText = "\x83\x58\x83\x5E\x81\x5B\x83\x67\x92\x6E\x93\x5F";
+const char* JpnPressPeriodText = "\x8D\xC5\x8F\x89\x82\xCC\x93\xB4\x8C\x41";
+
+const char* DisconnectedText;
+const char* PressPeriodText;
+
 // Puts the players because idk how to shove this above PutMyChar
 void PutFlash(void)
 {
+	if (japanese != true)
+	{
+		DisconnectedText = EngDisconnectedText;
+		PressPeriodText = EngPressPeriodText;
+	}
+	else
+	{
+		DisconnectedText = JpnDisconnectedText;
+		PressPeriodText = JpnPressPeriodText;
+	}
+
 	if (networkStarted == 1 && !InServer())
 	{
 		// Period key pressed, reset network state.
@@ -93,7 +114,17 @@ void PutFlash(void)
 	{
 		InitNetworking();
 		JoinServer(gameIp, gamePort, gamePlyrName);
-		networkStarted = 1;
+		if (InServer())
+			networkStarted = 1;
+	}
+
+	if (!InServer())
+	{
+		CS_PutText(0, 1, DisconnectedText, 0x000010);
+		CS_PutText(0, 1 - 1, DisconnectedText, 0xFFFFFF);
+
+		CS_PutText(0, 9, PressPeriodText, 0x000010);
+		CS_PutText(0, 9 - 1, PressPeriodText, 0xFFFFFF);
 	}
 
 	CS_GetFramePosition(&frame_x, &frame_y);
@@ -116,6 +147,7 @@ void InitMod(void)
 	gameIp = ModLoader_GetSettingString("IP", "127.0.0.1");
 	gamePort = ModLoader_GetSettingString("PORT", "25565");
 	gamePlyrName = ModLoader_GetSettingString("PLAYER_NAME", "Player");
+	japanese = ModLoader_GetSettingBool("JAPANESE", false);
 
 	ModLoader_WriteJump((void*)0x40AE30, (void*)DefaultConfigData);
 	// ModLoader_WriteJump((void*)0x412320, (void*)SetWindowName);

@@ -9,12 +9,14 @@
 #include <string>
 #include <SDL.h>
 
+#include "File.h"
 #include "Networking.h"
 #include "Server.h"
 #include "player.h"
 #include "cave_story.h"
 #include "cs.h"
 #include "mod_loader.h"
+#include "Stage.h"
 
 ENetHost *client;
 ENetAddress clientAddress;
@@ -505,6 +507,7 @@ void PutVirtualPlayers(int fx, int fy)
 						CS_PutBitmap3(&CS_clip_rect_common, drawY / 0x200 - 12 - fx / 0x200, gVirtualPlayers[i].y / 0x200 - 12 - fy / 0x200, &rcBubble[(gVirtualPlayers[i].bubble >> 1) & 1], CS_SURFACE_ID_UNKNOWN_19);
 				}
 				
+				CS_PutText((drawX / 0x200 - fx / 0x200) - (strlen(gVirtualPlayers[i].name) * 3), drawY / 0x200 - fy / 0x200 - 21, gVirtualPlayers[i].name, 0x000010);
 				CS_PutText((drawX / 0x200 - fx / 0x200) - (strlen(gVirtualPlayers[i].name) * 3), drawY / 0x200 - fy / 0x200 - 22, gVirtualPlayers[i].name, 0xFFFFFF);
 			}
 		}
@@ -599,7 +602,6 @@ void PutServer()
 	if (SDL_GetTicks() < gLastChatMessage + 8000)
 		CS_DrawSprite_WithTransparency(&CS_clip_rect_common, 0, WINDOW_HEIGHT / 2, &rcChat, CS_SURFACE_ID_UNKNOWN_3);
 	*/
-	
 
 	if (*gKey & 0x10000)
 	{
@@ -634,14 +636,14 @@ void PutServer()
 				//Draw skin
 				RECT rcSkin = {0, 0, 16, 16};
 				CS_PutBitmap3(&rcBack, x, y + 2, &rcSkin, CS_SURFACE_ID_MY_CHAR);
-				// CS_SURFACE_ID_UNKNOWN_23
+
+				// 'Comma menu' Text.
+
 				//Draw username
-
-
-				CS_PutText((x + nameWidth / 2) - 42, y - 1, gVirtualPlayers[i].name, 0xFFFFFF);
+				CS_PutText((x + nameWidth / 2) - 42, y, gVirtualPlayers[i].name, 0xFFFFFF);
 				
 				//Draw mapname
-				CS_PutText((x + nameWidth / 2) - 42, y + 9, "Cave Story", 0xFFFFFF);
+				CS_PutText((x + nameWidth / 2) - 42, y + 9, StageTbl[gVirtualPlayers[i].stage].name, 0xFFFFFF);
 			}
 		}
 	}

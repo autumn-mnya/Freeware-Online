@@ -85,13 +85,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\File.cpp" />
     <ClCompile Include="src\\main.cpp" />
     <ClCompile Include="src\\mod_loader.cpp" />
     <ClCompile Include="src\\Networking.cpp" />
     <ClCompile Include="src\\Server.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\File.h" />
     <ClInclude Include="src\playermain.h" />
+    <ClInclude Include="src\Stage.h" />
     <ClInclude Include="src\\cave_story.h" />
     <ClInclude Include="src\\cs.h" />
     <ClInclude Include="src\\mod_loader.h" />
