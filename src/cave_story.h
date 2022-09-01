@@ -6,6 +6,7 @@
 #include <windows.h>
 
 extern int mim_compatibility;
+extern int show_player_names;
 
 #define ARMS_MAX 8
 #define ITEM_MAX 32

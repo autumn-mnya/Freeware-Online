@@ -31,6 +31,7 @@ VIRTUAL_PLAYER gVirtualPlayers[MAX_CLIENTS];
 unsigned int gLastChatMessage = 0;
 
 const char *skinFilename = "Skin";
+const char *playerName = "Player";
 
 //Handle ENet
 bool InitNetworking()
@@ -528,8 +529,24 @@ void PutVirtualPlayers(int fx, int fy)
 						CS_PutBitmap3(&CS_clip_rect_common, drawY / 0x200 - 12 - fx / 0x200, gVirtualPlayers[i].y / 0x200 - 12 - fy / 0x200, &rcBubble[(gVirtualPlayers[i].bubble >> 1) & 1], CS_SURFACE_ID_UNKNOWN_19);
 				}
 
-				CS_PutText((drawX / 0x200 - fx / 0x200) - (strlen(gVirtualPlayers[i].name) * 3), drawY / 0x200 - fy / 0x200 - 19, gVirtualPlayers[i].name, 0x000010);
-				CS_PutText((drawX / 0x200 - fx / 0x200) - (strlen(gVirtualPlayers[i].name) * 3), drawY / 0x200 - fy / 0x200 - 20, gVirtualPlayers[i].name, 0xFFFFFF);
+				// Draw player names
+				switch (show_player_names)
+				{
+					default:
+						CS_PutText((drawX / 0x200 - fx / 0x200) - (strlen(gVirtualPlayers[i].name) * 3), drawY / 0x200 - fy / 0x200 - 19, gVirtualPlayers[i].name, 0x000010);
+						CS_PutText((drawX / 0x200 - fx / 0x200) - (strlen(gVirtualPlayers[i].name) * 3), drawY / 0x200 - fy / 0x200 - 20, gVirtualPlayers[i].name, 0xFFFFFF);
+						break;
+
+					// Don't show names
+					case 1:
+						break;
+
+					// Show "Player #"
+					case 2:
+						CS_PutText((drawX / 0x200 - fx / 0x200) - (strlen(playerName) * 3), drawY / 0x200 - fy / 0x200 - 19, (std::string(playerName) + " " + std::to_string(i)).c_str(), 0x000010);
+						CS_PutText((drawX / 0x200 - fx / 0x200) - (strlen(playerName) * 3), drawY / 0x200 - fy / 0x200 - 20, (std::string(playerName) + " " + std::to_string(i)).c_str(), 0xFFFFFF);
+						break;
+				}
 			}
 		}
 	}
@@ -656,15 +673,41 @@ void PutServer()
 				
 				//Draw skin
 				RECT rcSkin = {0, 0, 16, 16};
+
+				// <MIM / Mimiga Mask (Equip 0x40)
+				rcSkin.top += 32 * gVirtualPlayers[i].mim;
+				rcSkin.bottom += 32 * gVirtualPlayers[i].mim;
+
+				if (gVirtualPlayers[i].equip & 0x40)
+				{
+					rcSkin.top += 32;
+					rcSkin.bottom += 32;
+				}
+
 				CS_PutBitmap3(&rcBack, x, y + 2, &rcSkin, CS_SURFACE_ID_MY_CHAR);
 
 				// 'Comma menu' Text.
 
 				//Draw username
-				CS_PutText((x + nameWidth / 2) - 42, y, gVirtualPlayers[i].name, 0xFFFFFF);
+				switch (show_player_names)
+				{
+					default:
+						CS_PutText((x + nameWidth / 2) - 42, y, gVirtualPlayers[i].name, 0xFFFFFF);
+						break;
+
+					case 1:
+						break;
+
+					case 2:
+						CS_PutText((x + nameWidth / 2) - 42, y, (std::string(playerName) + " " + std::to_string(i)).c_str(), 0xFFFFFF);
+						break;
+				}
 				
 				//Draw mapname
-				CS_PutText((x + nameWidth / 2) - 42, y + 9, StageTbl[gVirtualPlayers[i].stage].name, 0xFFFFFF);
+				if (show_player_names == 1)
+					CS_PutText((x + nameWidth / 2) - 42, y + 4, MySuperAwesomeTable2[gVirtualPlayers[i].stage].name, 0xFFFFFF);
+				else
+					CS_PutText((x + nameWidth / 2) - 42, y + 9, MySuperAwesomeTable2[gVirtualPlayers[i].stage].name, 0xFFFFFF);
 			}
 		}
 	}

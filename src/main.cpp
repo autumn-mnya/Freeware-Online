@@ -109,7 +109,7 @@ void InitMod(void)
 	gamePlyrName = ModLoader_GetSettingString("PLAYER_NAME", "Player");
 	japanese = ModLoader_GetSettingBool("JAPANESE", false);
 	mim_compatibility = ModLoader_GetSettingInt("MIM_Compatibility", 0);
-	show_player_names = ModLoader_GetSettingInt("Player Names", 0);
+	show_player_names = ModLoader_GetSettingInt("NAME_DISPLAY", 0);
 
 	ModLoader_WriteJump((void*)0x412BC0, (void*)InactiveWindow);
 	
@@ -118,6 +118,5 @@ void InitMod(void)
 	ModLoader_WriteWordBE((void*)0x403F66, 0xEB11); //write short JMP to get past the switch table
 	ModLoader_WriteJump((void*)0x403F79, (void*)PutVirtualPlayers); //JMP to PutVirtualPlayers instead of returning
 	
-	// ModLoader_WriteJump((void*)0x421040, (void*)ActStar);
 	ModLoader_WriteJump((void*)0x40EE20, (void*)PutFlash);
 }
