@@ -23,6 +23,7 @@ ENetAddress clientAddress;
 ENetPeer *toServer;
 bool clientConnected;
 char username[MAX_NAME];
+
 CS_ARMS gArmsData[ARMS_MAX];
 CS_ITEM gItemData[ITEM_MAX];
 
@@ -161,13 +162,14 @@ void HandleClient()
 		
 		//Set attributes
 		SDL_WriteLE32(packetData, Player2->cond);
+		SDL_WriteLE32(packetData, Player2->cond);
 		SDL_WriteLE32(packetData, Player2->unit);
 		SDL_WriteLE32(packetData, Player2->flag);
 		SDL_WriteLE32(packetData, Player2->x);
 		SDL_WriteLE32(packetData, Player2->y);
 		SDL_WriteLE32(packetData, Player2->up);
 		SDL_WriteLE32(packetData, Player2->down);
-		SDL_WriteLE32(packetData, gArmsData[CS_quote_weapon_selected].code);
+		SDL_WriteLE32(packetData, CS_quote_weapon_selected);
 		SDL_WriteLE32(packetData, Player2->equip);
 		SDL_WriteLE32(packetData, Player2->ani_no);
 		SDL_WriteLE32(packetData, Player2->direct);
