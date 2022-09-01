@@ -5,6 +5,8 @@
 #include <dinput.h>
 #include <windows.h>
 
+extern int mim_compatibility;
+
 #define ARMS_MAX 8
 #define ITEM_MAX 32
 #define BULLET_MAX 0x40
@@ -55,6 +57,10 @@
 #define CS_current_music (*(int*)0x4A57F4) // gMusicNo
 #define CS_previous_song_last_position (*(int*)0x4A57F8)
 #define CS_previous_music (*(int*)0x4A57FC)
+
+// <MIM Compatibility
+#define CSM_MIM_unobstructive (*(unsigned int*)0x49E184)
+#define CSM_MIM_tsc_plus  (*(int*)0x49E09C)
 
 // String array
 #define CS_org_playlist (*(char*(*)[42])0x4981E8)

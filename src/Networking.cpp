@@ -172,6 +172,22 @@ void HandleClient()
 		SDL_WriteLE32(packetData, Player2->direct);
 		SDL_WriteLE32(packetData, Player2->shock);
 		SDL_WriteLE32(packetData, CS_current_room);
+
+		// <MIM patch location
+		switch(mim_compatibility)
+		{
+			default:
+				SDL_WriteLE32(packetData, CSM_MIM_unobstructive);
+				break;
+
+			case 0:
+				SDL_WriteLE32(packetData, CSM_MIM_unobstructive);
+				break;
+
+			case 1:
+				SDL_WriteLE32(packetData, CSM_MIM_tsc_plus);
+				break;
+		}
 		
 		//Send packet
 		definePacket = enet_packet_create(packet, 0x100, 0);
@@ -323,13 +339,8 @@ void HandleClient()
 							static int lastStage;
 							lastStage = gVirtualPlayers[i].stage;
 							gVirtualPlayers[i].stage = SDL_ReadLE32(packetData);
-							
-							if (lastStage != gVirtualPlayers[i].stage)
-							{
-								// RECT rcMapName = {CS_window_surface_width, i * 16, CS_window_surface_height * 2, i * 16 + 16};
-								// CortBox2(&rcMapName, 0x000000, SURFACE_ID_USERNAME);
-								// PutText2(WINDOW_WIDTH + (WINDOW_WIDTH - strlen(gTMT[gVirtualPlayers[i].stage].name) * 5) / 2, i * 16 + 2, gTMT[gVirtualPlayers[i].stage].name, 0xFFFFFE, SURFACE_ID_USERNAME);
-							}
+							gVirtualPlayers[i].mim = SDL_ReadLE32(packetData);
+
 							break;
 							
 							// was used for skins in CSE2 online, but i dont know if we can do that very easily in freeware
@@ -488,6 +499,9 @@ void PutVirtualPlayers(int fx, int fy)
 					else
 						rect = rcLeft[gVirtualPlayers[i].ani_no];
 					
+					rect.top += 32 * gVirtualPlayers[i].mim;
+					rect.bottom += 32 * gVirtualPlayers[i].mim;
+
 					if (gVirtualPlayers[i].equip & 0x40)
 					{
 						rect.top += 32;

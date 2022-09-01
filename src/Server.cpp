@@ -179,6 +179,7 @@ void HandleServerEvent(ENetEvent event)
 								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//direct
 								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//shock
 								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//stage
+								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//mim
 								SDL_RWclose(repPacketData);
 								
 								for (int v = 0; v < MAX_CLIENTS; v++)

@@ -15,6 +15,7 @@ const char* gameIp;
 const char* gamePort;
 const char* gamePlyrName;
 bool japanese;
+int mim_compatibility;
 
 int* gKKey = (int*)0x49E210;
 
@@ -148,6 +149,7 @@ void InitMod(void)
 	gamePort = ModLoader_GetSettingString("PORT", "25565");
 	gamePlyrName = ModLoader_GetSettingString("PLAYER_NAME", "Player");
 	japanese = ModLoader_GetSettingBool("JAPANESE", false);
+	mim_compatibility = ModLoader_GetSettingInt("MIM_Compatibility", 0);
 
 	ModLoader_WriteJump((void*)0x40AE30, (void*)DefaultConfigData);
 	// ModLoader_WriteJump((void*)0x412320, (void*)SetWindowName);

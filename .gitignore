@@ -1,3 +1,4 @@
+
 /.git
 /.vs
 /Debug
@@ -5,6 +6,7 @@
 /CaveStory/release
 netplay.vcxproj.user
 
+CaveStory/mod/
 CaveStory/fps
 CaveStory/mute
 CaveStory/Config.dat

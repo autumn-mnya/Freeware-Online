@@ -4,7 +4,7 @@
 #define MAX_NAME 0x14
 #define NAME_MIN 2
 
-#define NET_VERSION 6
+#define NET_VERSION 7
 
 #define TICKRATE 60
 #define MAX_CLIENTS 0x80
@@ -59,6 +59,7 @@ struct VIRTUAL_PLAYER
 	int shockT;
 	int bubble;
 	int stage;
+	unsigned int mim;
 };
 
 struct PACKET
