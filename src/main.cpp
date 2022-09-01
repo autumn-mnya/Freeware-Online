@@ -18,14 +18,6 @@ bool japanese;
 int mim_compatibility;
 int show_player_names;
 
-void ServerDisconnect()
-{
-	if (IsHosting())
-		KillServer();
-	if (InServer())
-		KillClient();
-}
-
 int frame_x = 0;
 int frame_y = 0;
 
@@ -46,6 +38,12 @@ const char* JpnPressPeriodText = "\x83\x73\x83\x8A\x83\x49\x83\x68\x83\x4C\x81\x
 
 const char* DisconnectedText;
 const char* PressPeriodText;
+
+void ServerDisconnect()
+{
+	if (InServer())
+		KillClient();
+}
 
 // Puts the players because idk how to shove this above PutMyChar
 void PutFlash(void)
@@ -87,14 +85,11 @@ void PutFlash(void)
 
 	CS_GetFramePosition(&frame_x, &frame_y);
 
+	//Handle server
 	if (InServer())
-	{
 		HandleClient();
-	}
-	else
-	{
-		KillClient();
-	}
+	if (!(InServer()))
+		ServerDisconnect();
 
 	PutServer();
 }
