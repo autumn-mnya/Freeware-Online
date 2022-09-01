@@ -21,6 +21,14 @@ int show_player_names;
 int frame_x = 0;
 int frame_y = 0;
 
+void ServerHandler()
+{
+	if (InServer())
+		HandleClient();
+	else
+		KillClient();
+}
+
 // ok but actually this is nice
 void InactiveWindow()
 {
@@ -79,11 +87,7 @@ void PutFlash(void)
 
 	CS_GetFramePosition(&frame_x, &frame_y);
 
-	if (InServer())
-		HandleClient();
-	else
-		KillClient();
-
+	ServerHandler();
 	PutServer();
 }
 
