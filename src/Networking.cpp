@@ -522,9 +522,9 @@ void PutVirtualPlayers(int fx, int fy)
 					++gVirtualPlayers[i].bubble;
 					
 					if (gVirtualPlayers[i].equip & 0x10 && gVirtualPlayers[i].flag & 0x100)
-						CS_PutBitmap3(&CS_clip_rect_common, drawX / 0x200 - 12 - fx / 0x200, gVirtualPlayers[i].y / 0x200 - 12 - fy / 0x200, &rcBubble[(gVirtualPlayers[i].bubble >> 1) & 1], CS_SURFACE_ID_UNKNOWN_19);
+						CS_PutBitmap3(&CS_clip_rect_common, drawX / 0x200 - 12 - fx / 0x200, gVirtualPlayers[i].y / 0x200 - 12 - fy / 0x200, &rcBubble[(gVirtualPlayers[i].bubble >> 1) & 1], CS_SURFACE_ID_CARET);
 					else if (gVirtualPlayers[i].unit == 1)
-						CS_PutBitmap3(&CS_clip_rect_common, drawY / 0x200 - 12 - fx / 0x200, gVirtualPlayers[i].y / 0x200 - 12 - fy / 0x200, &rcBubble[(gVirtualPlayers[i].bubble >> 1) & 1], CS_SURFACE_ID_UNKNOWN_19);
+						CS_PutBitmap3(&CS_clip_rect_common, drawY / 0x200 - 12 - fx / 0x200, gVirtualPlayers[i].y / 0x200 - 12 - fy / 0x200, &rcBubble[(gVirtualPlayers[i].bubble >> 1) & 1], CS_SURFACE_ID_CARET);
 				}
 
 				// Draw player names
