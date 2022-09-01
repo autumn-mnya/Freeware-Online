@@ -15,6 +15,27 @@ extern int show_player_names;
 #define BULLET_MAX 0x40
 #define CARET_MAX 0x40
 
+#define gKey (*(int*)0x49E210)
+#define gKeyTrg (*(int*)0x49E214)
+
+#define gKeyArms (*(int*)0x493618)
+#define gKeyArmsRev (*(int*)0x49361C)
+#define gKeyItem (*(int*)0x493620)
+#define gKeyMap (*(int*)0x493624)
+#define gKeyJump (*(int*)0x493628)
+#define gKeyShot (*(int*)0x49362C)
+#define gKeyLeft (*(int*)0x493630)
+#define gKeyUp (*(int*)0x493634)
+#define gKeyRight (*(int*)0x493638)
+#define gKeyDown (*(int*)0x49363C)
+#define KEY_ALT_LEFT 0x10000
+#define KEY_ALT_DOWN 0x20000
+#define KEY_ALT_RIGHT 0x40000
+#define KEY_ALT_UP 0x180000
+#define KEY_L 0x80000
+#define KEY_PLUS 0x100000
+
+
 // Variables
 #define CS_window_upscale (*(int*)0x48F914) // mag
 #define CS_clip_rect_common (*(RECT*)0x48F91C) // grcGame

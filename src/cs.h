@@ -70,35 +70,6 @@ CSrandom* random = (CSrandom*)0x40F350;
 typedef void CSexplosion(const int x, const int y, const int range, const int num_smoke);
 CSexplosion* explosion = (CSexplosion*)0x46F150;
 
-int *gKey = (int*)0x49E210;
-int *gKeyTrg = (int*)0x49E214;
-
-/*
-ShootKey=[493614]
-JumpKey=[493610]
-NextWepKey=[493618]
-PrevWepKey=[49361C]
-MenuKey=[493620]
-MapKey=[493624]
-LeftKey=[493630]
-RightKey=[493638]
-JumpKey=[493628]
-UpKey=[493634]
-DownKey=[49363C]
-ShootKey=[49362C]
-*/
-
-int *gKeyArms = (int*)0x493618;
-int *gKeyArmsRev = (int*)0x49361C;
-int *gKeyMenu = (int*)0x493620;
-int *gKeyMap = (int*)0x493624;
-int *gKeyJump = (int*)0x493628;
-int *gKeyShot = (int*)0x49362C;
-int *gKeyLeft = (int*)0x493630;
-int *gKeyUp = (int*)0x493634;
-int *gKeyRight = (int*)0x493638;
-int *gKeyDown = (int*)0x49363C;
-
 //player variables
 struct player
 {

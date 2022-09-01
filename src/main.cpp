@@ -18,8 +18,6 @@ bool japanese;
 int mim_compatibility;
 int show_player_names;
 
-int* gKKey = (int*)0x49E210;
-
 void ServerDisconnect()
 {
 	if (IsHosting())
@@ -66,7 +64,7 @@ void PutFlash(void)
 	if (networkStarted == 1 && !InServer())
 	{
 		// Period key pressed, reset network state.
-		if (*gKKey & 0x20000)
+		if (gKey & KEY_ALT_DOWN)
 			networkStarted = 0;
 	}
 

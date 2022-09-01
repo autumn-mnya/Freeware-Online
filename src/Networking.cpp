@@ -168,7 +168,7 @@ void HandleClient()
 		SDL_WriteLE32(packetData, Player2->y);
 		SDL_WriteLE32(packetData, Player2->up);
 		SDL_WriteLE32(packetData, Player2->down);
-		SDL_WriteLE32(packetData, gArmsData[CS_quote_weapon_selected].code);
+		SDL_WriteLE32(packetData, CS_quote_weapon_selected);
 		SDL_WriteLE32(packetData, Player2->equip);
 		SDL_WriteLE32(packetData, Player2->ani_no);
 		SDL_WriteLE32(packetData, Player2->direct);
@@ -642,7 +642,7 @@ void PutServer()
 		CS_DrawSprite_WithTransparency(&CS_clip_rect_common, 0, WINDOW_HEIGHT / 2, &rcChat, CS_SURFACE_ID_UNKNOWN_3);
 	*/
 
-	if (*gKey & 0x10000)
+	if (gKey & KEY_ALT_LEFT)
 	{
 		//Draw player-list
 		const int nameWidth = ((MAX_NAME * 5) + 8 + 16);
