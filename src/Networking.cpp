@@ -175,7 +175,7 @@ void HandleClient()
 		SDL_WriteLE32(packetData, Player2->shock);
 		SDL_WriteLE32(packetData, Player2->life);
 		SDL_WriteLE32(packetData, Player2->max_life);
-		SDL_WriteLE32(packetData, CS_current_room);
+		SDL_WriteLE32(packetData, gStageNo);
 
 		// <MIM patch location
 		switch(mim_compatibility)
@@ -404,7 +404,7 @@ void PutVirtualPlayers(int fx, int fy)
 	
 	for (int i = 0; i < MAX_CLIENTS; i++)
 	{
-		if (gVirtualPlayers[i].timeout && gVirtualPlayers[i].stage == CS_current_room)
+		if (gVirtualPlayers[i].timeout && gVirtualPlayers[i].stage == gStageNo)
 		{
 			//Get position
 			int drawX = gVirtualPlayers[i].lerpX + (gVirtualPlayers[i].x - gVirtualPlayers[i].lerpX) * gVirtualPlayers[i].lerpTick / TICKRATE;

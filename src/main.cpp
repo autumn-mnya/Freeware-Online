@@ -50,6 +50,9 @@ const char* PressPeriodText;
 // Puts the players because idk how to shove this above PutMyChar
 void PutFlash(void)
 {
+	if (gKeyTrg & KEY_ALT_RIGHT)
+		CS_TransferStage(gStageNo + 1, 0, 10, 8);
+
 	if (japanese != true)
 	{
 		DisconnectedText = EngDisconnectedText;

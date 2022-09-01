@@ -58,8 +58,6 @@ extern int show_player_names;
 #define CS_camera_x_destination (*(signed int*)0x49E1D0)
 #define CS_camera_y_destination (*(signed int*)0x49E1D4)
 #define CS_gamemode_flags (*(unsigned int*)0x49E1E8)
-#define CS_input_bitfield_held (*(int*)0x49E210)
-#define CS_input_bitfield_newly_pressed (*(int*)0x49E214)
 #define CS_tsc_buffer (*(char**)0x4A5AD8)
 #define CS_tsc_offset (*(unsigned int*)0x4A5AE0)
 #define CS_pxm_buffer (*(unsigned char**)0x49E480)
@@ -70,15 +68,15 @@ extern int show_player_names;
 #define CS_level_height (*(unsigned short*)0x49E588)
 #define CS_quote_display_flags (*(char*)0x49E638)
 #define CS_quote_facing_right (*(BOOL*)0x49E640)
-#define CS_quote_x_pos (*(int*)0x49E654) // gMC.x
-#define CS_quote_y_pos (*(int*)0x49E658) // gMC.y
-#define CS_quote_frame_id (*(int*)0x49E678) // gMC.ani_no
+#define gMC_x (*(int*)0x49E654) // gMC.x
+#define gMC_y (*(int*)0x49E658) // gMC.y
+#define gMC_ani_no (*(int*)0x49E678) // gMC.ani_no
 #define CS_quote_sprite_half_width (*(int*)0x49E68C)
 #define CS_quote_sprite_half_height (*(int*)0x49E690)
 #define CS_quote_weapon_selected (*(int*)0x499C68)
 #define CS_music_fade_flag (*(int*)0x4A4E10)
-#define CS_current_room (*(int*)0x4A57F0) // gStageNo
-#define CS_current_music (*(int*)0x4A57F4) // gMusicNo
+#define gStageNo (*(int*)0x4A57F0) // gStageNo
+#define gMusicNo (*(int*)0x4A57F4) // gMusicNo
 #define CS_previous_song_last_position (*(int*)0x4A57F8)
 #define CS_previous_music (*(int*)0x4A57FC)
 
