@@ -705,9 +705,9 @@ void PutServer()
 				
 				//Draw mapname
 				if (show_player_names == 1)
-					CS_PutText((x + nameWidth / 2) - 42, y + 4, MySuperAwesomeTable2[gVirtualPlayers[i].stage].name, 0xFFFFFF);
+					CS_PutText((x + nameWidth / 2) - 42, y + 4, StageTbl[gVirtualPlayers[i].stage].name, 0xFFFFFF);
 				else
-					CS_PutText((x + nameWidth / 2) - 42, y + 9, MySuperAwesomeTable2[gVirtualPlayers[i].stage].name, 0xFFFFFF);
+					CS_PutText((x + nameWidth / 2) - 42, y + 9, StageTbl[gVirtualPlayers[i].stage].name, 0xFFFFFF);
 			}
 		}
 	}
