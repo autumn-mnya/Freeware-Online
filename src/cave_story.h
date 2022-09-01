@@ -73,7 +73,7 @@ extern int show_player_names;
 #define gMC_ani_no (*(int*)0x49E678) // gMC.ani_no
 #define CS_quote_sprite_half_width (*(int*)0x49E68C)
 #define CS_quote_sprite_half_height (*(int*)0x49E690)
-#define CS_quote_weapon_selected (*(int*)0x499C68)
+#define gSelectedArms (*(int*)0x499C68)
 #define CS_music_fade_flag (*(int*)0x4A4E10)
 #define gStageNo (*(int*)0x4A57F0) // gStageNo
 #define gMusicNo (*(int*)0x4A57F4) // gMusicNo
@@ -160,9 +160,6 @@ typedef struct CS_ITEM
 {
 	int code;
 } CS_ITEM;
-
-extern CS_ARMS gArmsData[ARMS_MAX];
-extern CS_ITEM gItemData[ITEM_MAX];
 
 // background
 

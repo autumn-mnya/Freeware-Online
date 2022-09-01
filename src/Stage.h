@@ -13,3 +13,18 @@ struct stageTbl
 };
 
 stageTbl* StageTbl = (stageTbl*)(*(unsigned*)0x420c2f);
+
+typedef struct armsData
+{
+	int code;
+
+	int level;
+
+	int exp;
+
+	int max_num;
+
+	int num;
+} armsData;
+
+armsData* gArmsData = (armsData*)0x499BC8;
