@@ -95,7 +95,7 @@ bool JoinServer(const char *ip, const char *port, const char *name)
 	//Set port
 	if (!VerifyPort(port))
 		return false;
-	clientAddress.port = std::stoi(gamePort), 0, 10;
+	clientAddress.port = 28000, 0, 10;
 	
 	//Create client
 	clientConnected = false;
