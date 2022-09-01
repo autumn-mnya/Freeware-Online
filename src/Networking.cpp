@@ -171,6 +171,8 @@ void HandleClient()
 		SDL_WriteLE32(packetData, Player2->ani_no);
 		SDL_WriteLE32(packetData, Player2->direct);
 		SDL_WriteLE32(packetData, Player2->shock);
+		SDL_WriteLE32(packetData, Player2->life);
+		SDL_WriteLE32(packetData, Player2->max_life);
 		SDL_WriteLE32(packetData, CS_current_room);
 
 		// <MIM patch location
@@ -335,7 +337,10 @@ void HandleClient()
 							gVirtualPlayers[i].ani_no = SDL_ReadLE32(packetData);
 							gVirtualPlayers[i].direct = SDL_ReadLE32(packetData);
 							gVirtualPlayers[i].shock = SDL_ReadLE32(packetData);
-							
+							gVirtualPlayers[i].life = SDL_ReadLE32(packetData);
+							gVirtualPlayers[i].max_life = SDL_ReadLE32(packetData);
+
+
 							static int lastStage;
 							lastStage = gVirtualPlayers[i].stage;
 							gVirtualPlayers[i].stage = SDL_ReadLE32(packetData);
@@ -522,9 +527,9 @@ void PutVirtualPlayers(int fx, int fy)
 					else if (gVirtualPlayers[i].unit == 1)
 						CS_PutBitmap3(&CS_clip_rect_common, drawY / 0x200 - 12 - fx / 0x200, gVirtualPlayers[i].y / 0x200 - 12 - fy / 0x200, &rcBubble[(gVirtualPlayers[i].bubble >> 1) & 1], CS_SURFACE_ID_UNKNOWN_19);
 				}
-				
-				CS_PutText((drawX / 0x200 - fx / 0x200) - (strlen(gVirtualPlayers[i].name) * 3), drawY / 0x200 - fy / 0x200 - 21, gVirtualPlayers[i].name, 0x000010);
-				CS_PutText((drawX / 0x200 - fx / 0x200) - (strlen(gVirtualPlayers[i].name) * 3), drawY / 0x200 - fy / 0x200 - 22, gVirtualPlayers[i].name, 0xFFFFFF);
+
+				CS_PutText((drawX / 0x200 - fx / 0x200) - (strlen(gVirtualPlayers[i].name) * 3), drawY / 0x200 - fy / 0x200 - 19, gVirtualPlayers[i].name, 0x000010);
+				CS_PutText((drawX / 0x200 - fx / 0x200) - (strlen(gVirtualPlayers[i].name) * 3), drawY / 0x200 - fy / 0x200 - 20, gVirtualPlayers[i].name, 0xFFFFFF);
 			}
 		}
 	}

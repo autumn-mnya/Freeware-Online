@@ -178,6 +178,8 @@ void HandleServerEvent(ENetEvent event)
 								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//ani_no
 								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//direct
 								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//shock
+								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//life
+								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//max life
 								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//stage
 								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//mim
 								SDL_RWclose(repPacketData);

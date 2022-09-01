@@ -58,6 +58,8 @@ struct VIRTUAL_PLAYER
 	int shock;
 	int shockT;
 	int bubble;
+	short life;
+	short max_life;
 	int stage;
 	unsigned int mim;
 };
