@@ -105,7 +105,7 @@ void PutFlash(void)
 void InitMod(void)
 {
 	gameIp = ModLoader_GetSettingString("IP", "127.0.0.1");
-	gamePort = ModLoader_GetSettingString("PORT", "25565");
+	gamePort = ModLoader_GetSettingString("PORT", "28000");
 	gamePlyrName = ModLoader_GetSettingString("PLAYER_NAME", "Player");
 	japanese = ModLoader_GetSettingBool("JAPANESE", false);
 	mim_compatibility = ModLoader_GetSettingInt("MIM_Compatibility", 0);

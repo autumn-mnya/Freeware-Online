@@ -5,6 +5,8 @@
 #include <dinput.h>
 #include <windows.h>
 
+extern const char* gameIp;
+extern const char* gamePort;
 extern int mim_compatibility;
 extern int show_player_names;
 
