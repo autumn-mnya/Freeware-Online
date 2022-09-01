@@ -95,7 +95,7 @@ bool JoinServer(const char *ip, const char *port, const char *name)
 	//Set port
 	if (!VerifyPort(port))
 		return false;
-	clientAddress.port = 28000, 0, 10;
+	clientAddress.port = std::stoi(gamePort), 0, 10;
 	
 	//Create client
 	clientConnected = false;
@@ -161,7 +161,6 @@ void HandleClient()
 		SDL_WriteLE32(packetData, PACKETCODE_REPLICATE_PLAYER);
 		
 		//Set attributes
-		SDL_WriteLE32(packetData, Player2->cond);
 		SDL_WriteLE32(packetData, Player2->cond);
 		SDL_WriteLE32(packetData, Player2->unit);
 		SDL_WriteLE32(packetData, Player2->flag);
