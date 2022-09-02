@@ -5,7 +5,7 @@
 #define MAX_NAME 0x14
 #define NAME_MIN 2
 
-#define NET_VERSION 7
+#define NET_VERSION 8
 
 const std::chrono::milliseconds TICKRATE = std::chrono::milliseconds(60);
 #define MAX_CLIENTS 0x80
