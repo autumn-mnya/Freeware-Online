@@ -135,12 +135,62 @@ void KillClient()
 	client = NULL;
 }
 
+class ByteStream
+{
+	uint8_t* Stream;
+	uint8_t* End;
+
+public:
+	ByteStream(uint8_t* stream, size_t size) : Stream(stream), End(stream + size)
+	{
+	}
+
+	void WriteLE32(uint32_t i)
+	{
+		if (sizeof(uint32_t) <= End - Stream)
+		{
+			*((uint32_t*)Stream) = i;
+			//memcpy(Stream, &i, sizeof(uint32_t));
+			Stream += sizeof(uint32_t);
+		}
+	}
+	uint32_t ReadLE32()
+	{
+		uint32_t val = -1;
+		if (sizeof(uint32_t) <= End - Stream)
+		{
+			val = *((uint32_t*)Stream);
+			Stream += sizeof(uint32_t);
+		}
+		return val;
+	}
+	void Write(const void* data, size_t size, size_t num)
+	{
+		if (size*num <= End - Stream)
+		{
+			memcpy(Stream, data, size*num);
+			Stream += size*num;
+		}
+	}
+	void Read(void* ptr, size_t size, size_t maximum)
+	{
+		size_t s = size;
+		if (s > maximum)
+			s = maximum;
+		if (End - Stream <= s)
+		{
+			memcpy(ptr, Stream, s);
+			Stream += s;
+		}
+	}
+};
+
 //Handle client
 void HandleClient()
 {
 	ENetEvent event;
 	
-	SDL_RWops *packetData;
+	ByteStream *packetData;
 	ENetPacket *definePacket;
 	
 	static unsigned int lastPlayerTick = 0;
@@ -153,40 +203,40 @@ void HandleClient()
 		//Setup packet
 		uint8_t packet[0x100];
 		memset(packet, 0, 0x100);
-		packetData = SDL_RWFromMem(packet, 0x100);
-		SDL_WriteLE32(packetData, NET_VERSION);
-		SDL_WriteLE32(packetData, PACKETCODE_REPLICATE_PLAYER);
+		packetData = new ByteStream(packet, 0x100);
+		packetData->WriteLE32(NET_VERSION);
+		packetData->WriteLE32(PACKETCODE_REPLICATE_PLAYER);
 		
 		//Set attributes
-		SDL_WriteLE32(packetData, Player2->cond);
-		SDL_WriteLE32(packetData, Player2->unit);
-		SDL_WriteLE32(packetData, Player2->flag);
-		SDL_WriteLE32(packetData, Player2->x);
-		SDL_WriteLE32(packetData, Player2->y);
-		SDL_WriteLE32(packetData, Player2->up);
-		SDL_WriteLE32(packetData, Player2->down);
-		SDL_WriteLE32(packetData, gArmsData[gSelectedArms].code);
-		SDL_WriteLE32(packetData, Player2->equip);
-		SDL_WriteLE32(packetData, Player2->ani_no);
-		SDL_WriteLE32(packetData, Player2->direct);
-		SDL_WriteLE32(packetData, Player2->shock);
-		SDL_WriteLE32(packetData, Player2->life);
-		SDL_WriteLE32(packetData, Player2->max_life);
-		SDL_WriteLE32(packetData, gStageNo);
+		packetData->WriteLE32(Player2->cond);
+		packetData->WriteLE32(Player2->unit);
+		packetData->WriteLE32(Player2->flag);
+		packetData->WriteLE32(Player2->x);
+		packetData->WriteLE32(Player2->y);
+		packetData->WriteLE32(Player2->up);
+		packetData->WriteLE32(Player2->down);
+		packetData->WriteLE32(gArmsData[gSelectedArms].code);
+		packetData->WriteLE32(Player2->equip);
+		packetData->WriteLE32(Player2->ani_no);
+		packetData->WriteLE32(Player2->direct);
+		packetData->WriteLE32(Player2->shock);
+		packetData->WriteLE32(Player2->life);
+		packetData->WriteLE32(Player2->max_life);
+		packetData->WriteLE32(gStageNo);
 
 		// <MIM patch location
 		switch(mim_compatibility)
 		{
 			default:
-				SDL_WriteLE32(packetData, CSM_MIM_unobstructive);
+				packetData->WriteLE32(CSM_MIM_unobstructive);
 				break;
 
 			case 0:
-				SDL_WriteLE32(packetData, CSM_MIM_unobstructive);
+				packetData->WriteLE32(CSM_MIM_unobstructive);
 				break;
 
 			case 1:
-				SDL_WriteLE32(packetData, CSM_MIM_tsc_plus);
+				packetData->WriteLE32(CSM_MIM_tsc_plus);
 				break;
 		}
 		
@@ -220,15 +270,15 @@ void HandleClient()
 				packet = (uint8_t*)malloc(packetSize);
 				memset(packet, 0, packetSize);
 				
-				packetData = SDL_RWFromMem(packet, packetSize);
+				packetData = new ByteStream(packet, packetSize);
 				
-				SDL_WriteLE32(packetData, NET_VERSION);
-				SDL_WriteLE32(packetData, PACKETCODE_DEFINE_PLAYER);
-				SDL_RWwrite(packetData, username, 1, MAX_NAME);
+				packetData->WriteLE32(NET_VERSION);
+				packetData->WriteLE32(PACKETCODE_DEFINE_PLAYER);
+				packetData->Write(username, 1, MAX_NAME);
 				
 				//Send packet
 				definePacket = enet_packet_create(packet, packetSize, ENET_PACKET_FLAG_RELIABLE);
-				SDL_RWclose(packetData);
+				delete packetData;
 				free(packet);
 
 				if (enet_peer_send(toServer, 0, definePacket) < 0)
@@ -254,7 +304,7 @@ void HandleClient()
 					if (temp)
 					{
 						printf("Sending skin\n");
-						
+						/*
 						packetSize = (8 + SDL_RWsize(temp));
 						packet = (uint8_t*)malloc(packetSize);
 						memset(packet, 0, packetSize);
@@ -269,7 +319,7 @@ void HandleClient()
 						//Send packet
 						definePacket = enet_packet_create(packet, packetSize, ENET_PACKET_FLAG_RELIABLE);
 						free(packet);
-						
+						*/
 						enet_peer_send(toServer, 0, definePacket);
 					}
 				}
@@ -283,29 +333,29 @@ void HandleClient()
 				
 			case ENET_EVENT_TYPE_RECEIVE:
 				//Handle packet data
-				packetData = SDL_RWFromConstMem(event.packet->data, event.packet->dataLength);
+				packetData = new ByteStream(event.packet->data, event.packet->dataLength);
 				
-				if (SDL_ReadLE32(packetData) == NET_VERSION)
+				if (packetData->ReadLE32() == NET_VERSION)
 				{
-					switch (SDL_ReadLE32(packetData))
+					switch (packetData->ReadLE32())
 					{
 						case PACKETCODE_CHAT_MESSAGE:
-							SDL_RWread(packetData, msg, 1, event.packet->dataLength - 8);
+							packetData->Read(msg, 1, event.packet->dataLength - 8);
 							PrintChat(msg);
 							break;
 							
 						case PACKETCODE_REPLICATE_PLAYER:
-							i = SDL_ReadLE32(packetData);
+							i = packetData->ReadLE32();
 							
 							//cond & unit
-							gVirtualPlayers[i].cond = SDL_ReadLE32(packetData);
-							gVirtualPlayers[i].unit = SDL_ReadLE32(packetData);
-							gVirtualPlayers[i].flag = SDL_ReadLE32(packetData);
+							gVirtualPlayers[i].cond = packetData->ReadLE32();
+							gVirtualPlayers[i].unit = packetData->ReadLE32();
+							gVirtualPlayers[i].flag = packetData->ReadLE32();
 							
 							//Update username
 							char prevName[MAX_NAME];
 							strcpy(prevName, gVirtualPlayers[i].name);
-							SDL_RWread(packetData, gVirtualPlayers[i].name, 1, MAX_NAME);
+							packetData->Read(gVirtualPlayers[i].name, 1, MAX_NAME);
 							
 							if (strcmp(prevName, gVirtualPlayers[i].name))
 							{
@@ -317,8 +367,8 @@ void HandleClient()
 							//Set position
 							gVirtualPlayers[i].lerpX = gVirtualPlayers[i].x;
 							gVirtualPlayers[i].lerpY = gVirtualPlayers[i].y;
-							gVirtualPlayers[i].x = SDL_ReadLE32(packetData);
-							gVirtualPlayers[i].y = SDL_ReadLE32(packetData);
+							gVirtualPlayers[i].x = packetData->ReadLE32();
+							gVirtualPlayers[i].y = packetData->ReadLE32();
 							
 							if (gVirtualPlayers[i].x - gVirtualPlayers[i].lerpX > 0x1000 || gVirtualPlayers[i].y - gVirtualPlayers[i].lerpY > 0x1000
 							 || gVirtualPlayers[i].x - gVirtualPlayers[i].lerpX < -0x1000 || gVirtualPlayers[i].y - gVirtualPlayers[i].lerpY < -0x1000)
@@ -329,21 +379,21 @@ void HandleClient()
 							
 							//Set other variables
 							gVirtualPlayers[i].lerpTick = 0;
-							gVirtualPlayers[i].up = SDL_ReadLE32(packetData);
-							gVirtualPlayers[i].down = SDL_ReadLE32(packetData);
-							gVirtualPlayers[i].arms = SDL_ReadLE32(packetData);
-							gVirtualPlayers[i].equip = SDL_ReadLE32(packetData);
-							gVirtualPlayers[i].ani_no = SDL_ReadLE32(packetData);
-							gVirtualPlayers[i].direct = SDL_ReadLE32(packetData);
-							gVirtualPlayers[i].shock = SDL_ReadLE32(packetData);
-							gVirtualPlayers[i].life = SDL_ReadLE32(packetData);
-							gVirtualPlayers[i].max_life = SDL_ReadLE32(packetData);
+							gVirtualPlayers[i].up = packetData->ReadLE32();
+							gVirtualPlayers[i].down = packetData->ReadLE32();
+							gVirtualPlayers[i].arms = packetData->ReadLE32();
+							gVirtualPlayers[i].equip = packetData->ReadLE32();
+							gVirtualPlayers[i].ani_no = packetData->ReadLE32();
+							gVirtualPlayers[i].direct = packetData->ReadLE32();
+							gVirtualPlayers[i].shock = packetData->ReadLE32();
+							gVirtualPlayers[i].life = packetData->ReadLE32();
+							gVirtualPlayers[i].max_life = packetData->ReadLE32();
 
 
 							static int lastStage;
 							lastStage = gVirtualPlayers[i].stage;
-							gVirtualPlayers[i].stage = SDL_ReadLE32(packetData);
-							gVirtualPlayers[i].mim = SDL_ReadLE32(packetData);
+							gVirtualPlayers[i].stage = packetData->ReadLE32();
+							gVirtualPlayers[i].mim = packetData->ReadLE32();
 
 							break;
 							
@@ -375,7 +425,7 @@ void HandleClient()
 					}
 				}
 				
-				SDL_RWclose(packetData);
+				delete packetData;
 				break;
 		}
 		continue;
