@@ -14,6 +14,7 @@ extern int show_player_names;
 #define ITEM_MAX 32
 #define BULLET_MAX 0x40
 #define CARET_MAX 0x40
+#define MAX_STRIP ((CS_WINDOW_HEIGHT / 16) + 1)
 
 #define gKey (*(int*)0x49E210)
 #define gKeyTrg (*(int*)0x49E214)
@@ -79,6 +80,7 @@ extern int show_player_names;
 #define gMusicNo (*(int*)0x4A57F4) // gMusicNo
 #define CS_previous_song_last_position (*(int*)0x4A57F8)
 #define CS_previous_music (*(int*)0x4A57FC)
+#define g_GameFlags (*(int*)0x49E1E8) // g_GameFlags
 
 // <MIM Compatibility
 #define CSM_MIM_unobstructive (*(unsigned int*)0x49E184)
@@ -101,7 +103,7 @@ typedef enum CS_SurfaceID
 	CS_SURFACE_ID_TITLE,
 	CS_SURFACE_ID_PIXEL,
 	CS_SURFACE_ID_LEVEL_TILESET,
-	CS_SURFACE_ID_UNKNOWN_3,
+	CS_SURFACE_ID_USERNAME, //custom
 	CS_SURFACE_ID_UNKNOWN_4,
 	CS_SURFACE_ID_UNKNOWN_5,
 	CS_SURFACE_ID_FADE,
@@ -964,7 +966,7 @@ static BOOL(* const CS_ReloadBitmap_Resource)(const char* name, CS_SurfaceID sur
 // ReloadBitmap_File - 0x40BFD0
 static BOOL(* const CS_ReloadBitmap_File)(const char* name, int surf_no) = (BOOL(*)(const char*, int))0x40BFD0;
 // MakeSurface_Generic - 0x40C1D0
-static BOOL(* const CS_MakeSurface_Generic)(int bxsize, int bysize, int surf_no) = (BOOL(*)(int, int, int))0x40C1D0;
+static BOOL(* const CS_MakeSurface_Generic)(int bxsize, int bysize, int surf_no, BOOL bSystem) = (BOOL(*)(int, int, int, BOOL))0x40C1D0;
 // BackupSurface - 0x40C320
 static void (* const CS_BackupSurface)(CS_SurfaceID surf_no, const RECT *rect) = (void(*)(CS_SurfaceID, const RECT*))0x40C320;
 // PutBitmap3 - 0x40C3C0

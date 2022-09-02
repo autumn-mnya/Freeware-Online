@@ -117,7 +117,5 @@ struct player
 
 player *Player = (player*)0x49E638;
 
-int *g_GameFlags = (int*)0x49E1E8;
-
 #define TILE2COORD(tile)	tile << 13
 #define PIXEL2COORD(pixel)	pixel << 9

@@ -21,6 +21,12 @@ int show_player_names;
 int frame_x = 0;
 int frame_y = 0;
 
+void MakeCustomSurfaces(int x, int y, int s, BOOL r)
+{
+	CS_MakeSurface_Generic(x, y, s, r);
+	CS_MakeSurface_Generic(CS_WINDOW_WIDTH * 2, MAX_CLIENTS * 16, CS_SURFACE_ID_USERNAME, FALSE);
+}
+
 void ServerHandler()
 {
 	if (InServer())
@@ -91,7 +97,6 @@ void PutFlash(void)
 	PutServer();
 }
 
-
 void InitMod(void)
 {
 	gameIp = ModLoader_GetSettingString("IP", "127.0.0.1");
@@ -102,7 +107,8 @@ void InitMod(void)
 	show_player_names = ModLoader_GetSettingInt("NAME_DISPLAY", 0);
 
 	ModLoader_WriteJump((void*)0x412BC0, (void*)InactiveWindow);
-	
+	ModLoader_WriteCall((void*)0x4115F0, (void*)MakeCustomSurfaces);
+
 	//Hooking into the end of PutBullet
 	ModLoader_WriteByte((void*)0x403F65, 0xC9); //write LEAVE
 	ModLoader_WriteWordBE((void*)0x403F66, 0xEB11); //write short JMP to get past the switch table
