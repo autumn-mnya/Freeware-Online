@@ -309,9 +309,25 @@ void HandleClient()
 							char prevName[MAX_NAME];
 							strcpy(prevName, gVirtualPlayers[i].name);
 							packetData->Read(gVirtualPlayers[i].name, 1, MAX_NAME);
-							
+
 							if (strcmp(prevName, gVirtualPlayers[i].name))
 							{
+								RECT rcUsername = { 0, i * 16, CS_WINDOW_WIDTH, i * 16 + 16 };
+								CS_CortBox2(&rcUsername, 0x000000, CS_SURFACE_ID_USERNAME);
+								std::string acss = (std::string(playerName) + " " + std::to_string(i));
+								const char* anonName = acss.c_str();
+								switch (show_player_names)
+								{
+									default:
+										CS_PutText2((CS_WINDOW_WIDTH - strlen(gVirtualPlayers[i].name) * 5) / 2, i * 16 + 2 + 1, gVirtualPlayers[i].name, 0x000010, CS_SURFACE_ID_USERNAME);
+										CS_PutText2((CS_WINDOW_WIDTH - strlen(gVirtualPlayers[i].name) * 5) / 2, i * 16 + 2, gVirtualPlayers[i].name, 0xFFFFFE, CS_SURFACE_ID_USERNAME);
+										break;
+
+									case 2:
+										CS_PutText2((CS_WINDOW_WIDTH - strlen(anonName) * 5) / 2, i * 16 + 2 + 1, anonName, 0x000010, CS_SURFACE_ID_USERNAME);
+										CS_PutText2((CS_WINDOW_WIDTH - strlen(anonName) * 5) / 2, i * 16 + 2, anonName, 0xFFFFFE, CS_SURFACE_ID_USERNAME);
+										break;
+								}
 							}
 							
 							//Update variables
@@ -347,6 +363,13 @@ void HandleClient()
 							lastStage = gVirtualPlayers[i].stage;
 							gVirtualPlayers[i].stage = packetData->ReadLE32();
 							gVirtualPlayers[i].mim = packetData->ReadLE32();
+
+							if (lastStage != gVirtualPlayers[i].stage)
+							{
+								RECT rcMapName = { CS_WINDOW_WIDTH, i * 16,CS_WINDOW_WIDTH * 2, i * 16 + 16 };
+								CS_CortBox2(&rcMapName, 0x000000, CS_SURFACE_ID_USERNAME);
+								CS_PutText2(CS_WINDOW_WIDTH + (CS_WINDOW_WIDTH - strlen(StageTbl[gVirtualPlayers[i].stage].name) * 5) / 2, i * 16 + 2, StageTbl[gVirtualPlayers[i].stage].name, 0xFFFFFE, CS_SURFACE_ID_USERNAME);
+							}
 
 							break;
 							
@@ -518,28 +541,9 @@ void PutVirtualPlayers(int fx, int fy)
 				}
 
 				// Draw player names
-				int nx;
-				int ny = (drawY / 0x200) - (fy / 0x200) - 19;
-				const char* anonName = (std::string(playerName) + " " + std::to_string(i)).c_str();
-				switch (show_player_names)
-				{
-					default:
-						nx = (drawX / 0x200 - fx / 0x200) - (strlen(gVirtualPlayers[i].name) * 3);
-						CS_PutText(nx, ny,     gVirtualPlayers[i].name, 0x000010);
-						CS_PutText(nx, ny - 1, gVirtualPlayers[i].name, 0xFFFFFF);
-						break;
-
-					// Don't show names
-					case 1:
-						break;
-
-					// Show "Player #"
-					case 2:
-						nx = (drawX / 0x200 - fx / 0x200) - (strlen(playerName) * 3);
-						CS_PutText(nx, ny,     anonName, 0x000010);
-						CS_PutText(nx, ny - 1, anonName, 0xFFFFFF);
-						break;
-				}
+				RECT rcUsername = { 0, i * 16, CS_WINDOW_WIDTH, i * 16 + 16 };
+				if (show_player_names != 1)
+					CS_PutBitmap3(&CS_clip_rect_common, drawX / 0x200 - fx / 0x200 - CS_WINDOW_WIDTH / 2, drawY / 0x200 - fy / 0x200 - 22, &rcUsername, CS_SURFACE_ID_USERNAME);
 			}
 		}
 	}
@@ -682,25 +686,22 @@ void PutServer()
 				// 'Comma menu' Text.
 
 				//Draw username
+				RECT rcUsername = { 0, i * 16, CS_WINDOW_WIDTH, i * 16 + 16 };
+
+				//Draw username
 				switch (show_player_names)
 				{
 					default:
-						CS_PutText((x + nameWidth / 2) - 42, y, gVirtualPlayers[i].name, 0xFFFFFF);
+						CS_PutBitmap3(&rcBack, x + nameWidth / 2 - CS_WINDOW_WIDTH / 2, y - 1, &rcUsername, CS_SURFACE_ID_USERNAME);
 						break;
 
 					case 1:
 						break;
-
-					case 2:
-						CS_PutText((x + nameWidth / 2) - 42, y, (std::string(playerName) + " " + std::to_string(i)).c_str(), 0xFFFFFF);
-						break;
 				}
-				
+
 				//Draw mapname
-				if (show_player_names == 1)
-					CS_PutText((x + nameWidth / 2) - 42, y + 4, StageTbl[gVirtualPlayers[i].stage].name, 0xFFFFFF);
-				else
-					CS_PutText((x + nameWidth / 2) - 42, y + 9, StageTbl[gVirtualPlayers[i].stage].name, 0xFFFFFF);
+				RECT rcMapName = { CS_WINDOW_WIDTH, i * 16, CS_WINDOW_WIDTH * 2, i * 16 + 16 };
+				CS_PutBitmap3(&rcBack, x + nameWidth / 2 - CS_WINDOW_WIDTH / 2, y + 9, &rcMapName, CS_SURFACE_ID_USERNAME);
 			}
 		}
 	}
