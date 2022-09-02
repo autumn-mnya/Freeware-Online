@@ -1,14 +1,15 @@
 #pragma once
 #include <stdint.h>
+#include <chrono>
 
 #define MAX_NAME 0x14
 #define NAME_MIN 2
 
 #define NET_VERSION 7
 
-#define TICKRATE 60
+const std::chrono::milliseconds TICKRATE = std::chrono::milliseconds(60);
 #define MAX_CLIENTS 0x80
-#define VIRTUAL_PLAYER_TIMEOUT 2000
+const std::chrono::milliseconds VIRTUAL_PLAYER_TIMEOUT = std::chrono::milliseconds(20000);
 
 #define PACKET_DATA 0x1000
 
@@ -39,14 +40,14 @@ struct VIRTUAL_PLAYER
 	int unit;
 	int flag;
 	char name[MAX_NAME];
-	int timeout;
+	std::chrono::high_resolution_clock::time_point timeout;
 	
 	//Position
 	int x;
 	int y;
 	int lerpX;
 	int lerpY;
-	int lerpTick;
+	std::chrono::high_resolution_clock::duration lerpTick;
 	
 	//Visual
 	int up;

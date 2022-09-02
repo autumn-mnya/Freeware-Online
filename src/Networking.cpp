@@ -6,8 +6,8 @@
 #include <enet/enet.h>
 #endif
 
+#include <chrono>
 #include <string>
-#include <SDL.h>
 
 #include "File.h"
 #include "Networking.h"
@@ -23,6 +23,8 @@ ENetAddress clientAddress;
 ENetPeer *toServer;
 bool clientConnected;
 char username[MAX_NAME];
+
+typedef std::chrono::high_resolution_clock Clock;
 
 VIRTUAL_PLAYER gVirtualPlayers[MAX_CLIENTS];
 
@@ -63,7 +65,7 @@ static int ConvertIpToAddress(ENetAddress *address, const char *name)
 	}
 	
 	memcpy(&address->host, vals, sizeof(enet_uint32));
-	address->host = SDL_SwapLE32(address->host);
+	address->host = address->host; //originally this swapped endian where needed, but that macro was removed
 	return 0;
 }
 
@@ -196,12 +198,12 @@ void HandleClient()
 	ByteStream *packetData;
 	ENetPacket *definePacket;
 	
-	static unsigned int lastPlayerTick = 0;
+	static Clock::time_point lastPlayerTick;
 	
 	char msg[PACKET_DATA];
 	
 	//Send player data
-	if (SDL_GetTicks() > lastPlayerTick + TICKRATE)
+	if (Clock::now() > lastPlayerTick + TICKRATE)
 	{
 		//Setup packet
 		uint8_t packet[0x100];
@@ -248,7 +250,7 @@ void HandleClient()
 		enet_peer_send(toServer, 0, definePacket);
 		
 		//Prepare for next tick
-		lastPlayerTick = SDL_GetTicks();
+		lastPlayerTick = Clock::now();
 	}
 	
 	//Handle events
@@ -288,7 +290,7 @@ void HandleClient()
 					KillClient();
 				else
 				{
-					//Write skin packet
+					/*Write skin packet
 					char path[MAX_PATH];
 
 					sprintf(path, "%s/%s.bmp", "%s", skinFilename);
@@ -307,7 +309,7 @@ void HandleClient()
 					if (temp)
 					{
 						printf("Sending skin\n");
-						/*
+						
 						packetSize = (8 + SDL_RWsize(temp));
 						packet = (uint8_t*)malloc(packetSize);
 						memset(packet, 0, packetSize);
@@ -322,9 +324,9 @@ void HandleClient()
 						//Send packet
 						definePacket = enet_packet_create(packet, packetSize, ENET_PACKET_FLAG_RELIABLE);
 						free(packet);
-						*/
 						enet_peer_send(toServer, 0, definePacket);
 					}
+					*/
 				}
 				break;
 				
@@ -365,7 +367,7 @@ void HandleClient()
 							}
 							
 							//Update variables
-							gVirtualPlayers[i].timeout = SDL_GetTicks() + VIRTUAL_PLAYER_TIMEOUT;
+							gVirtualPlayers[i].timeout = Clock::now() + VIRTUAL_PLAYER_TIMEOUT;
 							
 							//Set position
 							gVirtualPlayers[i].lerpX = gVirtualPlayers[i].x;
@@ -381,7 +383,7 @@ void HandleClient()
 							}
 							
 							//Set other variables
-							gVirtualPlayers[i].lerpTick = 0;
+							gVirtualPlayers[i].lerpTick = Clock::duration();
 							gVirtualPlayers[i].up = packetData->ReadLE32();
 							gVirtualPlayers[i].down = packetData->ReadLE32();
 							gVirtualPlayers[i].arms = packetData->ReadLE32();
@@ -441,25 +443,25 @@ void PutVirtualPlayers(int fx, int fy)
 	//Timeout other players
 	for (int i = 0; i < MAX_CLIENTS; i++)
 	{
-		if (gVirtualPlayers[i].timeout)
+		if (gVirtualPlayers[i].timeout > Clock::time_point())
 		{
 			//Timeout
-			if (SDL_GetTicks() > gVirtualPlayers[i].timeout)
+			if (Clock::now() > gVirtualPlayers[i].timeout)
 				memset(&gVirtualPlayers[i], 0, sizeof(VIRTUAL_PLAYER));
 		}
 	}
 	
 	//Draw other players
-	static unsigned int lastLerpTick = SDL_GetTicks();
+	static Clock::time_point lastLerpTick = Clock::now();
 	
 	for (int i = 0; i < MAX_CLIENTS; i++)
 	{
-		if (gVirtualPlayers[i].timeout && gVirtualPlayers[i].stage == gStageNo)
+		if (gVirtualPlayers[i].timeout > Clock::time_point() && gVirtualPlayers[i].stage == gStageNo)
 		{
 			//Get position
-			int drawX = gVirtualPlayers[i].lerpX + (gVirtualPlayers[i].x - gVirtualPlayers[i].lerpX) * gVirtualPlayers[i].lerpTick / TICKRATE;
-			int drawY = gVirtualPlayers[i].lerpY + (gVirtualPlayers[i].y - gVirtualPlayers[i].lerpY) * gVirtualPlayers[i].lerpTick / TICKRATE;
-			gVirtualPlayers[i].lerpTick += (SDL_GetTicks() - lastLerpTick);
+			int drawX = gVirtualPlayers[i].lerpX + (gVirtualPlayers[i].x - gVirtualPlayers[i].lerpX) * (gVirtualPlayers[i].lerpTick / TICKRATE);
+			int drawY = gVirtualPlayers[i].lerpY + (gVirtualPlayers[i].y - gVirtualPlayers[i].lerpY) * (gVirtualPlayers[i].lerpTick / TICKRATE);
+			gVirtualPlayers[i].lerpTick += (Clock::now() - lastLerpTick);
 			
 			if (gVirtualPlayers[i].lerpTick > TICKRATE)
 				gVirtualPlayers[i].lerpTick = TICKRATE;
@@ -602,7 +604,7 @@ void PutVirtualPlayers(int fx, int fy)
 		}
 	}
 	
-	lastLerpTick = SDL_GetTicks();
+	lastLerpTick = Clock::now();
 }
 
 //Connection verification
@@ -701,7 +703,7 @@ void PutServer()
 		int clientNo = 0;
 		for (int i = 0; i < MAX_CLIENTS; i++)
 		{
-			if (gVirtualPlayers[i].timeout)
+			if (gVirtualPlayers[i].timeout > Clock::time_point())
 				clientNo++;
 		}
 		
@@ -712,7 +714,7 @@ void PutServer()
 		int player_i = 0;
 		for (int i = 0; i < MAX_CLIENTS; i++)
 		{
-			if (gVirtualPlayers[i].timeout)
+			if (gVirtualPlayers[i].timeout > Clock::time_point())
 			{
 				int x = offX + (player_i % playerPerLine) * nameWidth;
 				int y = 0 + (player_i / playerPerLine) * 20;
