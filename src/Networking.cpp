@@ -215,8 +215,8 @@ void HandleClient()
 				clientConnected = true;
 				
 				//Welcome message
-				PrintChat("Welcome to the server!");
-				PrintChat("Use 'T' to chat!");
+				// PrintChat("Welcome to the server!");
+				// PrintChat("Use 'T' to chat!");
 				
 				//Write packet data
 				packetSize = 8 + MAX_NAME;
