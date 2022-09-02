@@ -166,18 +166,21 @@ public:
 	}
 	void Write(const void* data, size_t size, size_t num)
 	{
-		if (size*num <= End - Stream)
+		size_t s = size*num;
+		if (s > End - Stream)
+			s = End - Stream;
+		if (0 < s && s <= End - Stream)
 		{
-			memcpy(Stream, data, size*num);
-			Stream += size*num;
+			memcpy(Stream, data, s);
+			Stream += s;
 		}
 	}
-	void Read(void* ptr, size_t size, size_t maximum)
+	void Read(void* ptr, size_t size, size_t maxnum)
 	{
-		size_t s = size;
-		if (s > maximum)
-			s = maximum;
-		if (End - Stream <= s)
+		size_t s = size * maxnum;
+		if (s > End - Stream)
+			s = End - Stream;
+		if (0 < s && s <= End - Stream)
 		{
 			memcpy(ptr, Stream, s);
 			Stream += s;
