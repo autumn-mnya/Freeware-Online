@@ -81,20 +81,18 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>src\external\SDL2-2.0.22\lib\x86;src\external\enet-1.3.17\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>ws2_32.lib;winmm.lib;enet.lib;SDL2.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\File.cpp" />
+    <ClCompile Include="src\ByteStream.cpp" />
     <ClCompile Include="src\\main.cpp" />
     <ClCompile Include="src\\mod_loader.cpp" />
     <ClCompile Include="src\\Networking.cpp" />
     <ClCompile Include="src\\Server.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\File.h" />
+    <ClInclude Include="src\ByteStream.h" />
     <ClInclude Include="src\playermain.h" />
-    <ClInclude Include="src\Stage.h" />
     <ClInclude Include="src\\cave_story.h" />
     <ClInclude Include="src\\cs.h" />
     <ClInclude Include="src\\mod_loader.h" />
