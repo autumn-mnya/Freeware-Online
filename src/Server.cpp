@@ -3,6 +3,7 @@
 #include <string>
 #include "Server.h"
 #include "NetworkDefine.h"
+#include "ByteStream.h"
 
 ENetHost *host;
 ENetAddress hostAddress;
@@ -73,12 +74,12 @@ void HandleServerEvent(ENetEvent event)
 						{
 							const int packetSize = 12 + clients[v].skinSize;
 							uint8_t *skinPacket = (uint8_t*)malloc(packetSize);
-							SDL_RWops *skinPacketData = SDL_RWFromMem(skinPacket, packetSize);
-							SDL_WriteLE32(skinPacketData, NET_VERSION);
-							SDL_WriteLE32(skinPacketData, PACKETCODE_SKIN);
-							SDL_WriteLE32(skinPacketData, v);
-							SDL_RWwrite(skinPacketData, clients[v].skinData, 1, clients[v].skinSize);
-							SDL_RWclose(skinPacketData);
+							ByteStream* skinPacketData = new ByteStream(skinPacket, packetSize);
+							skinPacketData->WriteLE32(NET_VERSION);
+							skinPacketData->WriteLE32(PACKETCODE_SKIN);
+							skinPacketData->WriteLE32(v);
+							skinPacketData->Write(clients[v].skinData, 1, clients[v].skinSize);
+							delete skinPacketData;
 							
 							//Send packet
 							ENetPacket *definePacket = enet_packet_create(skinPacket, packetSize, ENET_PACKET_FLAG_RELIABLE);
@@ -130,19 +131,19 @@ void HandleServerEvent(ENetEvent event)
 				if (clients[i].peer == event.peer)
 				{
 					//Handle packet data
-					SDL_RWops *packetData = SDL_RWFromConstMem(event.packet->data, event.packet->dataLength);
-					SDL_RWops *repPacketData;
-					//Brayconn changes (only apply to wounceMsg)
+					ByteStream* packetData = new ByteStream(event.packet->data, event.packet->dataLength);
+					ByteStream* repPacketData;
+					
 					char* wounceMsg = new char[event.packet->dataLength - 8];
 					int netver;
 					
-					if ((netver = SDL_ReadLE32(packetData)) == NET_VERSION)
+					if ((netver = packetData->ReadLE32()) == NET_VERSION)
 					{
-						switch (SDL_ReadLE32(packetData))
+						switch (packetData->ReadLE32())
 						{
 							case PACKETCODE_DEFINE_PLAYER:
 								//Load name
-								SDL_RWread(packetData, clients[i].name, 1, MAX_NAME);
+								packetData->Read(clients[i].name, 1, MAX_NAME);
 								
 								//Broadcast join message
 								char joinMsg[PACKET_DATA];
@@ -150,39 +151,42 @@ void HandleServerEvent(ENetEvent event)
 								BroadcastChatMessage(joinMsg);
 								break;
 							case PACKETCODE_CHAT_MESSAGE:
-								SDL_RWread(packetData, wounceMsg, 1, event.packet->dataLength - 8);
+								packetData->Read(wounceMsg, 1, event.packet->dataLength - 8);
 								BroadcastChatMessage(wounceMsg);
 								break;
 							case PACKETCODE_REPLICATE_PLAYER:
 								//Bounce to other clients
-								char packet[0x100];
+								uint8_t packet[0x100];
 								memset(packet, 0, 0x100);
 								
-								repPacketData = SDL_RWFromMem(packet, 0x100);
+								repPacketData = new ByteStream(packet, 0x100);
 								
-								SDL_WriteLE32(repPacketData, NET_VERSION);
-								SDL_WriteLE32(repPacketData, PACKETCODE_REPLICATE_PLAYER);
+								repPacketData->WriteLE32(NET_VERSION);
+								repPacketData->WriteLE32(PACKETCODE_REPLICATE_PLAYER);
 								
 								//Set attributes
-								SDL_WriteLE32(repPacketData, i);
-								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//cond
-								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//unit
-								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//flag
-								SDL_RWwrite(repPacketData, clients[i].name, 1, MAX_NAME);	//name
-								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//x
-								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//y
-								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//up
-								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//down
-								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//arms
-								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//equip
-								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//ani_no
-								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//direct
-								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//shock
-								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//life
-								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//max life
-								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//stage
-								SDL_WriteLE32(repPacketData, SDL_ReadLE32(packetData));		//mim
-								SDL_RWclose(repPacketData);
+								repPacketData->WriteLE32(i);
+								repPacketData->WriteLE32(packetData->ReadLE32());		//cond
+								repPacketData->WriteLE32(packetData->ReadLE32());		//unit
+								repPacketData->WriteLE32(packetData->ReadLE32());		//flag
+								//TODO
+								//if(HIDE_AND_SEEK)
+								//   do something to overwrite the client name with 0's?
+								repPacketData->Write(clients[i].name, 1, MAX_NAME);	//name
+								repPacketData->WriteLE32(packetData->ReadLE32());		//x
+								repPacketData->WriteLE32(packetData->ReadLE32());		//y
+								repPacketData->WriteLE32(packetData->ReadLE32());		//up
+								repPacketData->WriteLE32(packetData->ReadLE32());		//down
+								repPacketData->WriteLE32(packetData->ReadLE32());		//arms
+								repPacketData->WriteLE32(packetData->ReadLE32());		//equip
+								repPacketData->WriteLE32(packetData->ReadLE32());		//ani_no
+								repPacketData->WriteLE32(packetData->ReadLE32());		//direct
+								repPacketData->WriteLE32(packetData->ReadLE32());		//shock
+								repPacketData->WriteLE32(packetData->ReadLE32());		//life
+								repPacketData->WriteLE32(packetData->ReadLE32());		//max life
+								repPacketData->WriteLE32(packetData->ReadLE32());		//stage
+								repPacketData->WriteLE32(packetData->ReadLE32());		//mim
+								delete repPacketData;
 								
 								for (int v = 0; v < MAX_CLIENTS; v++)
 								{
@@ -201,19 +205,19 @@ void HandleServerEvent(ENetEvent event)
 								free(clients[i].skinData);
 								clients[i].skinData = (uint8_t*)malloc(skinDataSize);
 								clients[i].skinSize = skinDataSize;
-								SDL_RWread(packetData, clients[i].skinData, 1, skinDataSize);
+								packetData->Read(clients[i].skinData, 1, skinDataSize);
 								
 								printf("Received skin for %s\n", clients[i].name);
 								
 								//Send all players skin
 								const unsigned int packetSize = 12 + skinDataSize;
-								uint8_t *skinPacket = (uint8_t*)malloc(packetSize);
-								SDL_RWops *skinPacketData = SDL_RWFromMem(skinPacket, packetSize);
-								SDL_WriteLE32(skinPacketData, NET_VERSION);
-								SDL_WriteLE32(skinPacketData, PACKETCODE_SKIN);
-								SDL_WriteLE32(skinPacketData, i);
-								SDL_RWwrite(skinPacketData, clients[i].skinData, 1, skinDataSize);
-								SDL_RWclose(skinPacketData);
+								uint8_t* skinPacket = (uint8_t*)malloc(packetSize);
+								ByteStream* skinPacketData = new ByteStream(skinPacket, packetSize);
+								skinPacketData->WriteLE32(NET_VERSION);
+								skinPacketData->WriteLE32(PACKETCODE_SKIN);
+								skinPacketData->WriteLE32(i);
+								skinPacketData->Write(clients[i].skinData, 1, skinDataSize);
+								delete skinPacketData;
 								
 								for (int v = 0; v < MAX_CLIENTS; v++)
 								{
@@ -238,7 +242,7 @@ void HandleServerEvent(ENetEvent event)
 					
 					// We have to delete it, since we used new -Brayconn
 					delete[] wounceMsg;
-					SDL_RWclose(packetData);
+					delete packetData;
 					break;
 				}
 			}
@@ -328,11 +332,11 @@ void BroadcastChatMessage(const char *text)
 	auto packetSize = 8 + (strlen(text) + 1);
 	uint8_t* packet = new uint8_t[packetSize];
 	
-	SDL_RWops *packetData = SDL_RWFromMem(packet, packetSize);
-	SDL_WriteLE32(packetData, NET_VERSION);
-	SDL_WriteLE32(packetData, PACKETCODE_CHAT_MESSAGE);
-	SDL_RWwrite(packetData, text, 1, strlen(text) + 1);
-	SDL_RWclose(packetData);
+	ByteStream* packetData = new ByteStream(packet, packetSize);
+	packetData->WriteLE32(NET_VERSION);
+	packetData->WriteLE32(PACKETCODE_CHAT_MESSAGE);
+	packetData->Write(text, 1, strlen(text) + 1);
+	delete packetData;
 
 	//Send packet
 	ENetPacket *definePacket = enet_packet_create(packet, packetSize, ENET_PACKET_FLAG_RELIABLE);
