@@ -1,5 +1,5 @@
 #include <enet/enet.h>
-#include <SDL.h>
+#include <thread>
 #include <string>
 #include "Server.h"
 #include "NetworkDefine.h"
@@ -30,7 +30,7 @@ static int ConvertIpToAddress(ENetAddress *address, const char *name)
 	}
 	
 	memcpy(&address->host, vals, sizeof(enet_uint32));
-	address->host = SDL_SwapLE32(address->host);
+	address->host = address->host; //There was an endian swap where needed here
 	return 0;
 }
 
@@ -46,7 +46,7 @@ static bool VerifyPort(const char *port)
 }
 
 //Start hosting a server
-SDL_Thread *ServerThread;
+std::thread* ServerThread;
 bool toEndThread = false;
 
 void HandleServerEvent(ENetEvent event)
@@ -253,7 +253,7 @@ void HandleServerEvent(ENetEvent event)
 	}
 }
 
-int HandleServerSynchronous(void *ptr)
+int HandleServerSynchronous(void* ptr)
 {
 	ENetEvent event;
 	
@@ -293,7 +293,7 @@ bool StartServer(const char* ip, const char *port)
 	
 	//Start thread
 	toEndThread = false;
-	ServerThread = SDL_CreateThread(HandleServerSynchronous, "ServerThread", (void*)NULL);
+	ServerThread = new std::thread(HandleServerSynchronous, nullptr);
 	return true;
 }
 
@@ -302,7 +302,7 @@ void KillServer()
 {
 	//End thread
 	toEndThread = true;
-	SDL_WaitThread(ServerThread, NULL);
+	ServerThread->join();
 	
 	//Disconnect all clients
 	for (int i = 0; i < MAX_CLIENTS; i++)
@@ -361,14 +361,11 @@ int main(int argc, char *argv[])
 	{
 		//Init enet
 		if (enet_initialize() < 0)
-			std::cout << "Failed to initialize ENet\n";
-
-		//Init SDL
-		if (SDL_Init(0) < 0)
 		{
-			std::cout << "Failed to initialize SDL2\n";
+			std::cout << "Failed to initialize ENet\n";
 			return -1;
 		}
+
 		// port "
 		//Start server
 		std::cout << "Trying to run server at " << argv[1] << ":" << argv[2] << std::endl;
@@ -396,7 +393,6 @@ int main(int argc, char *argv[])
 	}
 	
 	enet_deinitialize();
-	SDL_Quit();
 	return 0;
 }
 #endif
