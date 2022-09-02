@@ -518,11 +518,15 @@ void PutVirtualPlayers(int fx, int fy)
 				}
 
 				// Draw player names
+				int nx;
+				int ny = (drawY / 0x200) - (fy / 0x200) - 19;
+				const char* anonName = (std::string(playerName) + " " + std::to_string(i)).c_str();
 				switch (show_player_names)
 				{
 					default:
-						CS_PutText((drawX / 0x200 - fx / 0x200) - (strlen(gVirtualPlayers[i].name) * 3), drawY / 0x200 - fy / 0x200 - 19, gVirtualPlayers[i].name, 0x000010);
-						CS_PutText((drawX / 0x200 - fx / 0x200) - (strlen(gVirtualPlayers[i].name) * 3), drawY / 0x200 - fy / 0x200 - 20, gVirtualPlayers[i].name, 0xFFFFFF);
+						nx = (drawX / 0x200 - fx / 0x200) - (strlen(gVirtualPlayers[i].name) * 3);
+						CS_PutText(nx, ny,     gVirtualPlayers[i].name, 0x000010);
+						CS_PutText(nx, ny - 1, gVirtualPlayers[i].name, 0xFFFFFF);
 						break;
 
 					// Don't show names
@@ -531,8 +535,9 @@ void PutVirtualPlayers(int fx, int fy)
 
 					// Show "Player #"
 					case 2:
-						CS_PutText((drawX / 0x200 - fx / 0x200) - (strlen(playerName) * 3), drawY / 0x200 - fy / 0x200 - 19, (std::string(playerName) + " " + std::to_string(i)).c_str(), 0x000010);
-						CS_PutText((drawX / 0x200 - fx / 0x200) - (strlen(playerName) * 3), drawY / 0x200 - fy / 0x200 - 20, (std::string(playerName) + " " + std::to_string(i)).c_str(), 0xFFFFFF);
+						nx = (drawX / 0x200 - fx / 0x200) - (strlen(playerName) * 3);
+						CS_PutText(nx, ny,     anonName, 0x000010);
+						CS_PutText(nx, ny - 1, anonName, 0xFFFFFF);
 						break;
 				}
 			}
