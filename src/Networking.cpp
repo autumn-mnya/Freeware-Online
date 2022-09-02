@@ -415,34 +415,20 @@ void PutVirtualPlayers(int fx, int fy)
 				gVirtualPlayers[i].lerpTick = TICKRATE;
 			
 			//Draw
-			RECT rcLeft[12];
-			RECT rcRight[12];
-			
-			rcLeft[0] = {0, 0, 16, 16};
-			rcLeft[1] = {16, 0, 32, 16};
-			rcLeft[2] = {0, 0, 16, 16};
-			rcLeft[3] = {32, 0, 48, 16};
-			rcLeft[4] = {0, 0, 16, 16};
-			rcLeft[5] = {48, 0, 64, 16};
-			rcLeft[6] = {64, 0, 80, 16};
-			rcLeft[7] = {48, 0, 64, 16};
-			rcLeft[8] = {80, 0, 96, 16};
-			rcLeft[9] = {48, 0, 64, 16};
-			rcLeft[10] = {96, 0, 112, 16};
-			rcLeft[11] = {112, 0, 128, 16};
-
-			rcRight[0] = {0, 16, 16, 32};
-			rcRight[1] = {16, 16, 32, 32};
-			rcRight[2] = {0, 16, 16, 32};
-			rcRight[3] = {32, 16, 48, 32};
-			rcRight[4] = {0, 16, 16, 32};
-			rcRight[5] = {48, 16, 64, 32};
-			rcRight[6] = {64, 16, 80, 32};
-			rcRight[7] = {48, 16, 64, 32};
-			rcRight[8] = {80, 16, 96, 32};
-			rcRight[9] = {48, 16, 64, 32};
-			rcRight[10] = {96, 16, 112, 32};
-			rcRight[11] = {112, 16, 128, 32};
+			RECT rcVirtualPlayer[12] = {
+				{0,   0, 16,  16},
+				{16,  0, 32,  16},
+				{0,   0, 16,  16},
+				{32,  0, 48,  16},
+				{0,   0, 16,  16},
+				{48,  0, 64,  16},
+				{64,  0, 80,  16},
+				{48,  0, 64,  16},
+				{80,  0, 96,  16},
+				{48,  0, 64,  16},
+				{96,  0, 112, 16},
+				{112, 0, 128, 16},
+			};
 			
 			if ((gVirtualPlayers[i].cond & 0x80) && !(gVirtualPlayers[i].cond & 2))
 			{
@@ -500,12 +486,13 @@ void PutVirtualPlayers(int fx, int fy)
 				if (gVirtualPlayers[i].shock == 0 || !((gVirtualPlayers[i].shockT >> 1) & 1))
 				{
 					//Draw player
-					RECT rect;
-					if (gVirtualPlayers[i].direct)
-						rect = rcRight[gVirtualPlayers[i].ani_no];
-					else
-						rect = rcLeft[gVirtualPlayers[i].ani_no];
-					
+					RECT rect;		
+					rect = rcVirtualPlayer[gVirtualPlayers[i].ani_no];
+					if (gVirtualPlayers[i].direct){
+						rect.top += 16;
+						rect.bottom += 16;
+					}
+				
 					rect.top += 32 * gVirtualPlayers[i].mim;
 					rect.bottom += 32 * gVirtualPlayers[i].mim;
 
