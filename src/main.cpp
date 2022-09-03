@@ -11,6 +11,15 @@
 #include "Networking.h"
 #include "Server.h"
 
+typedef struct _CS_MAP_DATA
+{
+	unsigned char* data;
+	unsigned char atrb[0x100];
+	short width;
+	short length;
+} _CS_MAP_DATA;
+_CS_MAP_DATA* gMap = (_CS_MAP_DATA*)0x49E480;
+
 const char* gameIp;
 const char* gamePort;
 const char* gamePlyrName;
@@ -84,19 +93,10 @@ void ModeAction_GetTrg()
 	CS_GetTrg();
 }
 
-RECT my_v_rect = { 0, 65, 1, 66 };
-int my_v_x, my_v_y;
-
 // 0x41483A
 void MiniMapLoop_CortBox2(RECT *r, unsigned long c, CS_SurfaceID s)
 {
 	CS_CortBox2(r, c, s);
-
-	for (int i = 0; i < MAX_CLIENTS; i++)
-	{
-		my_v_x = ((gVirtualPlayers[i].x / 0x200) + 8) / 16;
-		my_v_y = ((gVirtualPlayers[i].y / 0x200) + 8) / 16;
-	}
 }
 
 void MiniMapLoop_GetTrg()
@@ -118,6 +118,31 @@ void MiniMapLoop_PutBitmapPlayer(RECT *v, int x, int y, RECT *r, CS_SurfaceID s)
 {
 	// Bitmap
 	CS_PutBitmap3(v, x, y, r, s);
+
+	RECT th_rect = { 0, 65, 1, 66 };
+
+	RECT rcView;
+	for (int f = 0; f <= 8; f++) {
+		rcView.left =	(CS_WINDOW_WIDTH / 2) -  (((gMap->width * f) / 8) / 2);
+		rcView.right =  (CS_WINDOW_WIDTH / 2) +  (((gMap->width * f) / 8) / 2);
+		rcView.top =	(CS_WINDOW_HEIGHT / 2) - (((gMap->length * f) / 8) / 2);
+		rcView.bottom = (CS_WINDOW_HEIGHT / 2) + (((gMap->length * f) / 8) / 2);
+	}
+	rcView.left -= 1;
+	rcView.right = rcView.left + gMap->width + 2;
+	rcView.top -= 1;
+	rcView.bottom = rcView.top + gMap->length + 2;
+
+	for (int i = 0; i < MAX_CLIENTS; i++)
+	{
+		if (gVirtualPlayers[i].stage == gStageNo)
+		{
+			int th_x = (gVirtualPlayers[i].x / 0x200 + 8) / 16;
+			int th_y = (gVirtualPlayers[i].y / 0x200 + 8) / 16;
+			if ((gVirtualPlayers[i].cond & 0x80) && !(gVirtualPlayers[i].cond & 2))
+				CS_PutBitmap3(&CS_clip_rect_common, th_x + rcView.left + 1, th_y + rcView.top + 1, &th_rect, CS_SURFACE_ID_TEXT_BOX);
+		}
+	}
 	// CS_PutBitmap3(&CS_clip_rect_common, my_v_x + rcView.left + 1, my_v_y + rcView.top + 1, &my_v_rect, CS_SURFACE_ID_TEXT_BOX);
 }
 
