@@ -310,6 +310,7 @@ void HandleClient()
 							char prevName[MAX_NAME];
 							strcpy(prevName, gVirtualPlayers[i].name);
 							packetData->Read(gVirtualPlayers[i].name, 1, MAX_NAME);
+							gVirtualPlayers[i].player_num = packetData->ReadLE32();
 
 							if (strcmp(prevName, gVirtualPlayers[i].name))
 							{
@@ -365,7 +366,6 @@ void HandleClient()
 							gVirtualPlayers[i].stage = packetData->ReadLE32();
 							gVirtualPlayers[i].mim = packetData->ReadLE32();
 							gVirtualPlayers[i].hide_vp_on_map = packetData->ReadLE32();
-							gVirtualPlayers[i].player_num = packetData->ReadLE32();
 
 							if (lastStage != gVirtualPlayers[i].stage)
 							{
