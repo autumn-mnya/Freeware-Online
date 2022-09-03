@@ -19,6 +19,8 @@ const char* gamePlyrName;
 bool japanese;
 int mim_compatibility;
 int show_player_names;
+bool hide_players_on_map;
+bool hide_me_on_map;
 
 int networkStarted = 0;
 
@@ -128,7 +130,7 @@ void MiniMapLoop_PutBitmapPlayer(RECT *v, int x, int y, RECT *r, CS_SurfaceID s)
 
 	for (int i = 0; i < MAX_CLIENTS; i++)
 	{
-		if (gVirtualPlayers[i].stage == gStageNo)
+		if (!hide_players_on_map && (gVirtualPlayers[i].stage == gStageNo && gVirtualPlayers[i].hide_vp_on_map == false))
 		{
 			int th_x = (gVirtualPlayers[i].x / 0x200 + 8) / 16;
 			int th_y = (gVirtualPlayers[i].y / 0x200 + 8) / 16;
@@ -187,8 +189,10 @@ void InitMod(void)
 	gamePort = ModLoader_GetSettingString("PORT", "28000");
 	gamePlyrName = ModLoader_GetSettingString("PLAYER_NAME", "Player");
 	japanese = ModLoader_GetSettingBool("JAPANESE", false);
-	mim_compatibility = ModLoader_GetSettingInt("MIM_Compatibility", 0);
+	mim_compatibility = ModLoader_GetSettingInt("MIM_COMPATIBLITY", 0);
 	show_player_names = ModLoader_GetSettingInt("NAME_DISPLAY", 0);
+	hide_players_on_map = ModLoader_GetSettingBool("HIDE_PLAYERS_ON_MAP", false);
+	hide_me_on_map = ModLoader_GetSettingBool("HIDE_ME_ON_MAP", false);
 
 	ModLoader_WriteJump((void*)0x412BC0, (void*)InactiveWindow);
 	ModLoader_WriteCall((void*)0x4115F0, (void*)MakeCustomSurfaces);

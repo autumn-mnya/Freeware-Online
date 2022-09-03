@@ -186,6 +186,7 @@ void HandleServerEvent(ENetEvent event)
 								repPacketData->WriteLE32(packetData->ReadLE32());		//max life
 								repPacketData->WriteLE32(packetData->ReadLE32());		//stage
 								repPacketData->WriteLE32(packetData->ReadLE32());		//mim
+								repPacketData->WriteLE32(packetData->ReadLE32());		//hide_vp_on_map / hide_me_on_map
 								delete repPacketData;
 								
 								for (int v = 0; v < MAX_CLIENTS; v++)

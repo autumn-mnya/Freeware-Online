@@ -193,6 +193,8 @@ void HandleClient()
 				break;
 		}
 		
+		packetData->WriteLE32(hide_me_on_map);
+
 		//Send packet
 		definePacket = enet_packet_create(packet, 0x100, 0);
 		enet_peer_send(toServer, 0, definePacket);
@@ -363,6 +365,7 @@ void HandleClient()
 							lastStage = gVirtualPlayers[i].stage;
 							gVirtualPlayers[i].stage = packetData->ReadLE32();
 							gVirtualPlayers[i].mim = packetData->ReadLE32();
+							gVirtualPlayers[i].hide_vp_on_map = packetData->ReadLE32();
 
 							if (lastStage != gVirtualPlayers[i].stage)
 							{
