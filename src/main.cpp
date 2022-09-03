@@ -135,7 +135,7 @@ void MiniMapLoop_PutBitmapPlayer(RECT *v, int x, int y, RECT *r, CS_SurfaceID s)
 			int th_x = (gVirtualPlayers[i].x / 0x200 + 8) / 16;
 			int th_y = (gVirtualPlayers[i].y / 0x200 + 8) / 16;
 			if ((gVirtualPlayers[i].cond & 0x80) && !(gVirtualPlayers[i].cond & 2))
-				CS_PutBitmap3(&CS_clip_rect_common, th_x + rcView.left + 1, th_y + rcView.top + 1, &th_rect, CS_SURFACE_ID_TEXT_BOX);
+				CS_PutBitmap3(&grcGame, th_x + rcView.left + 1, th_y + rcView.top + 1, &th_rect, CS_SURFACE_ID_TEXT_BOX);
 		}
 	}
 }

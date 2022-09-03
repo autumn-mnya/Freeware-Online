@@ -494,14 +494,14 @@ void PutVirtualPlayers(int fx, int fy)
 				
 				if (gVirtualPlayers[i].direct)
 					CS_PutBitmap3(
-						&CS_clip_rect_common,
+						&grcGame,
 						(drawX - 0x1000) / 0x200 - fx / 0x200,
 						(drawY - 0x1000) / 0x200 - fy / 0x200 + arms_offset_y,
 						&rect_arms,
 						CS_SURFACE_ID_ARMS);
 				else
 					CS_PutBitmap3(
-						&CS_clip_rect_common,
+						&grcGame,
 						(drawX - 0x1000) / 0x200 - fx / 0x200 - 8,
 						(drawY - 0x1000) / 0x200 - fy / 0x200 + arms_offset_y,
 						&rect_arms,
@@ -528,7 +528,7 @@ void PutVirtualPlayers(int fx, int fy)
 						rect.bottom += 32;
 					}
 					
-					CS_PutBitmap3(&CS_clip_rect_common, (drawX - 0x1000) / 0x200 - fx / 0x200, (drawY - 0x1000) / 0x200 - fy / 0x200, &rect, CS_SURFACE_ID_MY_CHAR);
+					CS_PutBitmap3(&grcGame, (drawX - 0x1000) / 0x200 - fx / 0x200, (drawY - 0x1000) / 0x200 - fy / 0x200, &rect, CS_SURFACE_ID_MY_CHAR);
 					
 					//Draw airtank
 					RECT rcBubble[2];
@@ -538,15 +538,15 @@ void PutVirtualPlayers(int fx, int fy)
 					++gVirtualPlayers[i].bubble;
 					
 					if (gVirtualPlayers[i].equip & 0x10 && gVirtualPlayers[i].flag & 0x100)
-						CS_PutBitmap3(&CS_clip_rect_common, drawX / 0x200 - 12 - fx / 0x200, gVirtualPlayers[i].y / 0x200 - 12 - fy / 0x200, &rcBubble[(gVirtualPlayers[i].bubble >> 1) & 1], CS_SURFACE_ID_CARET);
+						CS_PutBitmap3(&grcGame, drawX / 0x200 - 12 - fx / 0x200, gVirtualPlayers[i].y / 0x200 - 12 - fy / 0x200, &rcBubble[(gVirtualPlayers[i].bubble >> 1) & 1], CS_SURFACE_ID_CARET);
 					else if (gVirtualPlayers[i].unit == 1)
-						CS_PutBitmap3(&CS_clip_rect_common, drawY / 0x200 - 12 - fx / 0x200, gVirtualPlayers[i].y / 0x200 - 12 - fy / 0x200, &rcBubble[(gVirtualPlayers[i].bubble >> 1) & 1], CS_SURFACE_ID_CARET);
+						CS_PutBitmap3(&grcGame, drawY / 0x200 - 12 - fx / 0x200, gVirtualPlayers[i].y / 0x200 - 12 - fy / 0x200, &rcBubble[(gVirtualPlayers[i].bubble >> 1) & 1], CS_SURFACE_ID_CARET);
 				}
 
 				// Draw player names
 				RECT rcUsername = { 0, i * 16, CS_WINDOW_WIDTH, i * 16 + 16 };
 				if (show_player_names != 1)
-					CS_PutBitmap3(&CS_clip_rect_common, drawX / 0x200 - fx / 0x200 - CS_WINDOW_WIDTH / 2, drawY / 0x200 - fy / 0x200 - 22, &rcUsername, CS_SURFACE_ID_USERNAME);
+					CS_PutBitmap3(&grcGame, drawX / 0x200 - fx / 0x200 - CS_WINDOW_WIDTH / 2, drawY / 0x200 - fy / 0x200 - 22, &rcUsername, CS_SURFACE_ID_USERNAME);
 			}
 		}
 	}
@@ -638,7 +638,7 @@ void PutServer()
 	/*
 	RECT rcChat = {0, WINDOW_HEIGHT / 2, WINDOW_WIDTH, WINDOW_HEIGHT};
 	if (SDL_GetTicks() < gLastChatMessage + 8000)
-		CS_DrawSprite_WithTransparency(&CS_clip_rect_common, 0, WINDOW_HEIGHT / 2, &rcChat, CS_SURFACE_ID_UNKNOWN_3);
+		CS_DrawSprite_WithTransparency(&grcGame, 0, WINDOW_HEIGHT / 2, &rcChat, CS_SURFACE_ID_UNKNOWN_3);
 	*/
 
 	if (gKey & KEY_ALT_LEFT)
