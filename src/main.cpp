@@ -18,31 +18,7 @@ bool japanese;
 int mim_compatibility;
 int show_player_names;
 
-int frame_x = 0;
-int frame_y = 0;
-
-void MakeCustomSurfaces(int x, int y, int s, BOOL r)
-{
-	CS_MakeSurface_Generic(x, y, s, r);
-	CS_MakeSurface_Generic(CS_WINDOW_WIDTH * 2, MAX_CLIENTS * 16, CS_SURFACE_ID_USERNAME, FALSE);
-}
-
-void ServerHandler()
-{
-	if (InServer())
-		HandleClient();
-	else
-		KillClient();
-}
-
-// ok but actually this is nice
-void InactiveWindow()
-{
-	// nothing lol
-}
-
 int networkStarted = 0;
-RECT rcDrownedChar = { 32, 80, 48, 96 };
 
 const char* EngDisconnectedText = "Disconnected from Server.";
 const char* EngPressPeriodText = "Press period to reconnect! (.)";
@@ -53,8 +29,22 @@ const char* JpnPressPeriodText = "\x83\x73\x83\x8A\x83\x49\x83\x68\x83\x4C\x81\x
 const char* DisconnectedText;
 const char* PressPeriodText;
 
-// Puts the players because idk how to shove this above PutMyChar
-void PutFlash(void)
+void ServerHandler()
+{
+	if (InServer())
+		HandleClient();
+	else
+		KillClient();
+}
+
+void CampLoop_GetTrg()
+{
+	ServerHandler();
+
+	CS_GetTrg();
+}
+
+void ModeAction_GetTrg()
 {
 	if (japanese != true)
 	{
@@ -82,6 +72,30 @@ void PutFlash(void)
 			networkStarted = 1;
 	}
 
+	ServerHandler();
+
+	CS_GetTrg();
+}
+
+void MiniMapLoop_GetTrg()
+{
+	ServerHandler();
+
+	CS_GetTrg();
+}
+
+void SelectStage_Loop_GetTrg()
+{
+	ServerHandler();
+
+	CS_GetTrg();
+}
+
+
+void ModeAction_PutFramePerSecound()
+{
+	PutServer();
+
 	if (!InServer())
 	{
 		CS_PutText(0, 1, DisconnectedText, 0x000010);
@@ -91,10 +105,19 @@ void PutFlash(void)
 		CS_PutText(0, 9 - 1, PressPeriodText, 0xFFFFFF);
 	}
 
-	CS_GetFramePosition(&frame_x, &frame_y);
+	CS_PutFramePerSecound();
+}
 
-	ServerHandler();
-	PutServer();
+void MakeCustomSurfaces(int x, int y, int s, BOOL r)
+{
+	CS_MakeSurface_Generic(x, y, s, r);
+	CS_MakeSurface_Generic(CS_WINDOW_WIDTH * 2, MAX_CLIENTS * 16, CS_SURFACE_ID_USERNAME, FALSE);
+}
+
+// ok but actually this is nice
+void InactiveWindow()
+{
+	// nothing lol
 }
 
 void InitMod(void)
@@ -108,11 +131,11 @@ void InitMod(void)
 
 	ModLoader_WriteJump((void*)0x412BC0, (void*)InactiveWindow);
 	ModLoader_WriteCall((void*)0x4115F0, (void*)MakeCustomSurfaces);
+	ModLoader_WriteCall((void*)0x4104D0, (void*)ModeAction_GetTrg);
+	ModLoader_WriteCall((void*)0x410874, (void*)ModeAction_PutFramePerSecound);
 
 	//Hooking into the end of PutBullet
 	ModLoader_WriteByte((void*)0x403F65, 0xC9); //write LEAVE
 	ModLoader_WriteWordBE((void*)0x403F66, 0xEB11); //write short JMP to get past the switch table
 	ModLoader_WriteJump((void*)0x403F79, (void*)PutVirtualPlayers); //JMP to PutVirtualPlayers instead of returning
-	
-	ModLoader_WriteJump((void*)0x40EE20, (void*)PutFlash);
 }
