@@ -116,10 +116,10 @@ void MiniMapLoop_PutBitmapPlayer(RECT *v, int x, int y, RECT *r, CS_SurfaceID s)
 
 	RECT rcView;
 	for (int f = 0; f <= 8; f++) {
-		rcView.left =	(CS_WINDOW_WIDTH / 2) -  (((gMap->width * f) / 8) / 2);
-		rcView.right =  (CS_WINDOW_WIDTH / 2) +  (((gMap->width * f) / 8) / 2);
-		rcView.top =	(CS_WINDOW_HEIGHT / 2) - (((gMap->length * f) / 8) / 2);
-		rcView.bottom = (CS_WINDOW_HEIGHT / 2) + (((gMap->length * f) / 8) / 2);
+		rcView.left =	((CS_window_surface_width / CS_window_upscale) / 2) -  (((gMap->width * f) / 8) / 2);
+		rcView.right =  ((CS_window_surface_width / CS_window_upscale) / 2) +  (((gMap->width * f) / 8) / 2);
+		rcView.top =	((CS_window_surface_height / CS_window_upscale) / 2) - (((gMap->length * f) / 8) / 2);
+		rcView.bottom = ((CS_window_surface_height / CS_window_upscale) / 2) + (((gMap->length * f) / 8) / 2);
 	}
 	rcView.left -= 1;
 	rcView.right = rcView.left + gMap->width + 2;
@@ -136,8 +136,6 @@ void MiniMapLoop_PutBitmapPlayer(RECT *v, int x, int y, RECT *r, CS_SurfaceID s)
 				CS_PutBitmap3(&CS_clip_rect_common, th_x + rcView.left + 1, th_y + rcView.top + 1, &th_rect, CS_SURFACE_ID_TEXT_BOX);
 		}
 	}
-	CS_PutText(0, 0, std::to_string(gMap->width).c_str(), 0xFFFFFF);
-	// CS_PutBitmap3(&CS_clip_rect_common, my_v_x + rcView.left + 1, my_v_y + rcView.top + 1, &my_v_rect, CS_SURFACE_ID_TEXT_BOX);
 }
 
 void SelectStage_Loop_GetTrg()

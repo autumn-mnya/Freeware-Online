@@ -89,6 +89,11 @@ extern int show_player_names;
 // String array
 #define CS_org_playlist (*(char*(*)[42])0x4981E8)
 
+// Window Width / Window Height
+
+#define CS_WINDOW_WIDTH 320
+#define CS_WINDOW_HEIGHT 240
+
 struct OTHER_RECT	// The original name for this struct is unknown
 {
 	int front;
@@ -319,9 +324,6 @@ struct CS_ISLAND_SPRITE
 };
 
 // Fade
-
-#define CS_WINDOW_WIDTH 320
-#define CS_WINDOW_HEIGHT 240
 
 #define FADE_WIDTH	(((CS_WINDOW_WIDTH - 1) / 16) + 1)
 #define FADE_HEIGHT	(((CS_WINDOW_HEIGHT - 1) / 16) + 1)
