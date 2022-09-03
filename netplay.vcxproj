@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ByteStream.h" />
+    <ClInclude Include="src\Map.h" />
     <ClInclude Include="src\playermain.h" />
     <ClInclude Include="src\\cave_story.h" />
     <ClInclude Include="src\\cs.h" />

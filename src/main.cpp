@@ -2,23 +2,16 @@
 // Copyright © 2019 Cucky
 
 #include <windows.h>
+#include <string>
 
 #include "mod_loader.h"
 
 // #include "cs.h"
 #include "cave_story.h"
 #include "playermain.h"
+#include "Map.h"
 #include "Networking.h"
 #include "Server.h"
-
-typedef struct _CS_MAP_DATA
-{
-	unsigned char* data;
-	unsigned char atrb[0x100];
-	short width;
-	short length;
-} _CS_MAP_DATA;
-_CS_MAP_DATA* gMap = (_CS_MAP_DATA*)0x49E480;
 
 const char* gameIp;
 const char* gamePort;
@@ -143,6 +136,7 @@ void MiniMapLoop_PutBitmapPlayer(RECT *v, int x, int y, RECT *r, CS_SurfaceID s)
 				CS_PutBitmap3(&CS_clip_rect_common, th_x + rcView.left + 1, th_y + rcView.top + 1, &th_rect, CS_SURFACE_ID_TEXT_BOX);
 		}
 	}
+	CS_PutText(0, 0, std::to_string(gMap->width).c_str(), 0xFFFFFF);
 	// CS_PutBitmap3(&CS_clip_rect_common, my_v_x + rcView.left + 1, my_v_y + rcView.top + 1, &my_v_rect, CS_SURFACE_ID_TEXT_BOX);
 }
 
