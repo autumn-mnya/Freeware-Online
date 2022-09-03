@@ -1,7 +1,6 @@
 #pragma once
 #include <stdint.h>
 #include "NetworkDefine.h"
-#include "Server.h"
 
 extern VIRTUAL_PLAYER gVirtualPlayers[MAX_CLIENTS];
 

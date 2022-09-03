@@ -89,7 +89,6 @@
     <ClCompile Include="src\\main.cpp" />
     <ClCompile Include="src\\mod_loader.cpp" />
     <ClCompile Include="src\\Networking.cpp" />
-    <ClCompile Include="src\\Server.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ByteStream.h" />
@@ -102,7 +101,6 @@
     <ClInclude Include="src\\NetworkDefine.h" />
     <ClInclude Include="src\\Networking.h" />
     <ClInclude Include="src\\player.h" />
-    <ClInclude Include="src\\Server.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

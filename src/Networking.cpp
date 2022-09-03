@@ -11,7 +11,6 @@
 
 #include "File.h"
 #include "Networking.h"
-#include "Server.h"
 #include "player.h"
 #include "cave_story.h"
 #include "cs.h"
@@ -316,7 +315,7 @@ void HandleClient()
 							{
 								RECT rcUsername = { 0, i * 16, CS_WINDOW_WIDTH, i * 16 + 16 };
 								CS_CortBox2(&rcUsername, 0x000000, CS_SURFACE_ID_USERNAME);
-								std::string acss = (std::string(playerName) + " " + std::to_string(i));
+								std::string acss = (std::string(playerName) + " " + std::to_string(gVirtualPlayers[i].player_num));
 								const char* anonName = acss.c_str();
 								switch (show_player_names)
 								{
@@ -366,6 +365,7 @@ void HandleClient()
 							gVirtualPlayers[i].stage = packetData->ReadLE32();
 							gVirtualPlayers[i].mim = packetData->ReadLE32();
 							gVirtualPlayers[i].hide_vp_on_map = packetData->ReadLE32();
+							gVirtualPlayers[i].player_num = packetData->ReadLE32();
 
 							if (lastStage != gVirtualPlayers[i].stage)
 							{

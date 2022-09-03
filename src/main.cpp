@@ -11,7 +11,6 @@
 #include "playermain.h"
 #include "Map.h"
 #include "Networking.h"
-#include "Server.h"
 
 const char* gameIp;
 const char* gamePort;

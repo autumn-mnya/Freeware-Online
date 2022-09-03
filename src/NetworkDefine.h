@@ -5,7 +5,7 @@
 #define MAX_NAME 0x14
 #define NAME_MIN 2
 
-#define NET_VERSION 9
+#define NET_VERSION 10
 
 const std::chrono::milliseconds TICKRATE = std::chrono::milliseconds(60);
 #define MAX_CLIENTS 0x80
@@ -64,6 +64,7 @@ struct VIRTUAL_PLAYER
 	int stage;
 	unsigned int mim;
 	bool hide_vp_on_map;
+	int player_num;
 };
 
 struct PACKET
@@ -79,4 +80,5 @@ struct CLIENT
 	char name[MAX_NAME];
 	uint8_t *skinData;
 	uint32_t skinSize;
+	int player_num;
 };
