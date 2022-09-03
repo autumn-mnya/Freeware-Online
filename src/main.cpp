@@ -84,6 +84,21 @@ void ModeAction_GetTrg()
 	CS_GetTrg();
 }
 
+RECT my_v_rect = { 0, 65, 1, 66 };
+int my_v_x, my_v_y;
+
+// 0x41483A
+void MiniMapLoop_CortBox2(RECT *r, unsigned long c, CS_SurfaceID s)
+{
+	CS_CortBox2(r, c, s);
+
+	for (int i = 0; i < MAX_CLIENTS; i++)
+	{
+		my_v_x = ((gVirtualPlayers[i].x / 0x200) + 8) / 16;
+		my_v_y = ((gVirtualPlayers[i].y / 0x200) + 8) / 16;
+	}
+}
+
 void MiniMapLoop_GetTrg()
 {
 	ServerHandler();
@@ -96,6 +111,14 @@ void MiniMapLoop_PutFramePerSecound()
 	PutServer();
 
 	CS_PutFramePerSecound();
+}
+
+// 0x41498E
+void MiniMapLoop_PutBitmapPlayer(RECT *v, int x, int y, RECT *r, CS_SurfaceID s)
+{
+	// Bitmap
+	CS_PutBitmap3(v, x, y, r, s);
+	// CS_PutBitmap3(&CS_clip_rect_common, my_v_x + rcView.left + 1, my_v_y + rcView.top + 1, &my_v_rect, CS_SURFACE_ID_TEXT_BOX);
 }
 
 void SelectStage_Loop_GetTrg()
@@ -159,9 +182,11 @@ void InitMod(void)
 	ModLoader_WriteCall((void*)0x4104D0, (void*)ModeAction_GetTrg);
 	ModLoader_WriteCall((void*)0x410874, (void*)ModeAction_PutFramePerSecound);
 	// MiniMapLoop replacement CALLs (run networking in minimap)
+	ModLoader_WriteCall((void*)0x41483A, (void*)MiniMapLoop_CortBox2);
 	ModLoader_WriteCall((void*)0x4146BE, (void*)MiniMapLoop_GetTrg);
 	ModLoader_WriteCall((void*)0x4147B8, (void*)MiniMapLoop_PutFramePerSecound);
 	ModLoader_WriteCall((void*)0x41485A, (void*)MiniMapLoop_GetTrg);
+	ModLoader_WriteCall((void*)0x41498E, (void*)MiniMapLoop_PutBitmapPlayer);
 	ModLoader_WriteCall((void*)0x414996, (void*)MiniMapLoop_PutFramePerSecound);
 	ModLoader_WriteCall((void*)0x4149D6, (void*)MiniMapLoop_GetTrg);
 	ModLoader_WriteCall((void*)0x414AD0, (void*)MiniMapLoop_PutFramePerSecound);
