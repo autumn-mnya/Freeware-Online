@@ -44,6 +44,13 @@ void CampLoop_GetTrg()
 	CS_GetTrg();
 }
 
+void CampLoop_PutFramePerSecound()
+{
+	PutServer();
+
+	CS_PutFramePerSecound();
+}
+
 void ModeAction_GetTrg()
 {
 	if (japanese != true)
@@ -84,11 +91,25 @@ void MiniMapLoop_GetTrg()
 	CS_GetTrg();
 }
 
+void MiniMapLoop_PutFramePerSecound()
+{
+	PutServer();
+
+	CS_PutFramePerSecound();
+}
+
 void SelectStage_Loop_GetTrg()
 {
 	ServerHandler();
 
 	CS_GetTrg();
+}
+
+void SelectStage_Loop_PutFramePerSecound()
+{
+	PutServer();
+
+	CS_PutFramePerSecound();
 }
 
 
@@ -131,8 +152,22 @@ void InitMod(void)
 
 	ModLoader_WriteJump((void*)0x412BC0, (void*)InactiveWindow);
 	ModLoader_WriteCall((void*)0x4115F0, (void*)MakeCustomSurfaces);
+	// CampLoop replacement CALLs (run networking in inventory)
+	ModLoader_WriteCall((void*)0x401DD8, (void*)CampLoop_GetTrg);
+	ModLoader_WriteCall((void*)0x401E84, (void*)CampLoop_PutFramePerSecound);
+	// ModeAction replacement CALLs (run networking in mode action instead of PutFlash)
 	ModLoader_WriteCall((void*)0x4104D0, (void*)ModeAction_GetTrg);
 	ModLoader_WriteCall((void*)0x410874, (void*)ModeAction_PutFramePerSecound);
+	// MiniMapLoop replacement CALLs (run networking in minimap)
+	ModLoader_WriteCall((void*)0x4146BE, (void*)MiniMapLoop_GetTrg);
+	ModLoader_WriteCall((void*)0x4147B8, (void*)MiniMapLoop_PutFramePerSecound);
+	ModLoader_WriteCall((void*)0x41485A, (void*)MiniMapLoop_GetTrg);
+	ModLoader_WriteCall((void*)0x414996, (void*)MiniMapLoop_PutFramePerSecound);
+	ModLoader_WriteCall((void*)0x4149D6, (void*)MiniMapLoop_GetTrg);
+	ModLoader_WriteCall((void*)0x414AD0, (void*)MiniMapLoop_PutFramePerSecound);
+	// SelectStage_Loop replacement CALLs (run networking in teleporter menu)
+	ModLoader_WriteCall((void*)0x41DA88, (void*)SelectStage_Loop_GetTrg);
+	ModLoader_WriteCall((void*)0x41DB6F, (void*)SelectStage_Loop_PutFramePerSecound);
 
 	//Hooking into the end of PutBullet
 	ModLoader_WriteByte((void*)0x403F65, 0xC9); //write LEAVE
