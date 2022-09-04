@@ -78,8 +78,7 @@ void ModeAction_GetTrg()
 	{
 		InitNetworking();
 		JoinServer(gameIp, gamePort, gamePlyrName);
-		if (InServer())
-			networkStarted = 1;
+		networkStarted = 1;
 	}
 
 	ServerHandler();
