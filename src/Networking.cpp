@@ -170,6 +170,10 @@ void HandleClient()
 		packetData->WriteLE32(gArmsData[gSelectedArms].code);
 		packetData->WriteLE32(Player2->equip);
 		packetData->WriteLE32(Player2->ani_no);
+		packetData->WriteLE32(Player2->hit.left);
+		packetData->WriteLE32(Player2->hit.top);
+		packetData->WriteLE32(Player2->hit.right);
+		packetData->WriteLE32(Player2->hit.bottom);
 		packetData->WriteLE32(Player2->direct);
 		packetData->WriteLE32(Player2->shock);
 		packetData->WriteLE32(Player2->life);
@@ -355,6 +359,10 @@ void HandleClient()
 							gVirtualPlayers[i].arms = packetData->ReadLE32();
 							gVirtualPlayers[i].equip = packetData->ReadLE32();
 							gVirtualPlayers[i].ani_no = packetData->ReadLE32();
+							gVirtualPlayers[i].hit.left = packetData->ReadLE32();
+							gVirtualPlayers[i].hit.top = packetData->ReadLE32();
+							gVirtualPlayers[i].hit.right = packetData->ReadLE32();
+							gVirtualPlayers[i].hit.bottom = packetData->ReadLE32();
 							gVirtualPlayers[i].direct = packetData->ReadLE32();
 							gVirtualPlayers[i].shock = packetData->ReadLE32();
 							gVirtualPlayers[i].life = packetData->ReadLE32();
@@ -400,6 +408,10 @@ void HandleClient()
 								SDL_RWclose(bitmapData);
 							}
 							*/
+							break;
+
+							// undefined currently, might be for grabbing other players and throwing them similar to New Super Mario Bros.
+						case PACKETCODE_GRAB_PLAYER:
 							break;
 					}
 				}

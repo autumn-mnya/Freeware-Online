@@ -32,6 +32,7 @@ enum PACKET_CODES
 	PACKETCODE_CHAT_MESSAGE,
 	PACKETCODE_REPLICATE_PLAYER,
 	PACKETCODE_SKIN,
+	PACKETCODE_GRAB_PLAYER,
 };
 
 struct VIRTUAL_PLAYER
@@ -55,6 +56,7 @@ struct VIRTUAL_PLAYER
 	int arms;
 	int equip;
 	int ani_no;
+	RECT hit;
 	int direct;
 	int shock;
 	int shockT;
