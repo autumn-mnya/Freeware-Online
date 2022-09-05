@@ -20,6 +20,7 @@ int mim_compatibility;
 int show_player_names;
 bool hide_players_on_map;
 bool hide_me_on_map;
+bool im_being_held = false;
 
 int networkStarted = 0;
 
@@ -72,6 +73,42 @@ void ModeAction_GetTrg()
 		// Period key pressed, reset network state.
 		if (gKey & KEY_ALT_DOWN)
 			networkStarted = 0;
+	}
+
+	// Holding a player code
+	for (int i = 0; i < MAX_CLIENTS; i++)
+	{
+		if (gVirtualPlayers[i].stage == gStageNo && gVirtualPlayers[i].is_being_held == false)
+		{
+			if (gVirtualPlayers[i].y - gVirtualPlayers[i].hit.top < (Player3->y + Player3->hit.bottom) &&
+				gVirtualPlayers[i].y + gVirtualPlayers[i].hit.bottom >(Player3->y - Player3->hit.top) &&
+				gVirtualPlayers[i].x - gVirtualPlayers[i].hit.left < (Player3->x + Player3->hit.right) &&
+				gVirtualPlayers[i].x + gVirtualPlayers[i].hit.right >(Player3->x - Player3->hit.left) &&
+				(gKeyTrg & gKeyDown))
+			{
+				gVirtualPlayers[i].x = Player3->x;
+				gVirtualPlayers[i].y = Player3->y - (16 * 0x200);
+				gVirtualPlayers[i].is_being_held = true;
+			}
+		}
+		else if (gVirtualPlayers[i].stage == gStageNo && gVirtualPlayers[i].is_being_held == true)
+		{
+			if (gKeyTrg & gKeyDown)
+			{
+				gVirtualPlayers[i].x = Player3->x;
+				gVirtualPlayers[i].y = Player3->y;
+				gVirtualPlayers[i].is_being_held = false;
+			}
+		}
+
+		if (im_being_held == true)
+		{
+			// i don't know how to do networking code, but if "im being held", then i should go ABOVE the player whos holding me's head??
+			// idk how this works lol just please work please work pl
+
+			Player3->x = gVirtualPlayers[i].x;
+			Player3->y = gVirtualPlayers[i].y - (16 * 0x200);
+		}
 	}
 
 	if (networkStarted != 1)

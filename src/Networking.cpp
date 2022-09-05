@@ -197,6 +197,7 @@ void HandleClient()
 		}
 		
 		packetData->WriteLE32(hide_me_on_map);
+		packetData->WriteLE32(im_being_held);
 
 		//Send packet
 		definePacket = enet_packet_create(packet, 0x100, 0);
@@ -374,6 +375,7 @@ void HandleClient()
 							gVirtualPlayers[i].stage = packetData->ReadLE32();
 							gVirtualPlayers[i].mim = packetData->ReadLE32();
 							gVirtualPlayers[i].hide_vp_on_map = packetData->ReadLE32();
+							gVirtualPlayers[i].is_being_held = packetData->ReadLE32();
 
 							if (lastStage != gVirtualPlayers[i].stage)
 							{

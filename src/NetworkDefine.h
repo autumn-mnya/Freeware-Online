@@ -67,6 +67,7 @@ struct VIRTUAL_PLAYER
 	unsigned int mim;
 	bool hide_vp_on_map;
 	int player_num;
+	bool is_being_held;
 };
 
 struct PACKET
