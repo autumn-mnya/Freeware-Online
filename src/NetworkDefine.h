@@ -46,6 +46,8 @@ struct VIRTUAL_PLAYER
 	//Position
 	int x;
 	int y;
+	int xm;
+	int ym;
 	int lerpX;
 	int lerpY;
 	std::chrono::high_resolution_clock::duration lerpTick;

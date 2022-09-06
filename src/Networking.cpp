@@ -165,6 +165,8 @@ void HandleClient()
 		packetData->WriteLE32(Player2->flag);
 		packetData->WriteLE32(Player2->x);
 		packetData->WriteLE32(Player2->y);
+		packetData->WriteLE32(Player2->xm);
+		packetData->WriteLE32(Player2->ym);
 		packetData->WriteLE32(Player2->up);
 		packetData->WriteLE32(Player2->down);
 		packetData->WriteLE32(gArmsData[gSelectedArms].code);
@@ -345,7 +347,9 @@ void HandleClient()
 							gVirtualPlayers[i].lerpY = gVirtualPlayers[i].y;
 							gVirtualPlayers[i].x = packetData->ReadLE32();
 							gVirtualPlayers[i].y = packetData->ReadLE32();
-							
+							gVirtualPlayers[i].xm = packetData->ReadLE32();
+							gVirtualPlayers[i].ym = packetData->ReadLE32();
+
 							if (gVirtualPlayers[i].x - gVirtualPlayers[i].lerpX > 0x1000 || gVirtualPlayers[i].y - gVirtualPlayers[i].lerpY > 0x1000
 							 || gVirtualPlayers[i].x - gVirtualPlayers[i].lerpX < -0x1000 || gVirtualPlayers[i].y - gVirtualPlayers[i].lerpY < -0x1000)
 							{

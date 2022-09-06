@@ -78,7 +78,7 @@ void ModeAction_GetTrg()
 	// Holding a player code
 	for (int i = 0; i < MAX_CLIENTS; i++)
 	{
-		if (gVirtualPlayers[i].stage == gStageNo && gVirtualPlayers[i].is_being_held == false)
+		if (gVirtualPlayers[i].stage == gStageNo)
 		{
 			if (gVirtualPlayers[i].y - gVirtualPlayers[i].hit.top < (Player3->y + Player3->hit.bottom) &&
 				gVirtualPlayers[i].y + gVirtualPlayers[i].hit.bottom >(Player3->y - Player3->hit.top) &&
