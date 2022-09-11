@@ -21,6 +21,7 @@ int show_player_names;
 bool hide_players_on_map;
 bool hide_me_on_map;
 bool im_being_held = false;
+bool pause_window_on_lost_focus = false;
 
 int networkStarted = 0;
 
@@ -73,42 +74,6 @@ void ModeAction_GetTrg()
 		// Period key pressed, reset network state.
 		if (gKey & KEY_ALT_DOWN)
 			networkStarted = 0;
-	}
-
-	// Holding a player code
-	for (int i = 0; i < MAX_CLIENTS; i++)
-	{
-		if (gVirtualPlayers[i].stage == gStageNo)
-		{
-			if (gVirtualPlayers[i].y - gVirtualPlayers[i].hit.top < (Player3->y + Player3->hit.bottom) &&
-				gVirtualPlayers[i].y + gVirtualPlayers[i].hit.bottom >(Player3->y - Player3->hit.top) &&
-				gVirtualPlayers[i].x - gVirtualPlayers[i].hit.left < (Player3->x + Player3->hit.right) &&
-				gVirtualPlayers[i].x + gVirtualPlayers[i].hit.right >(Player3->x - Player3->hit.left) &&
-				(gKeyTrg & gKeyDown))
-			{
-				gVirtualPlayers[i].x = Player3->x;
-				gVirtualPlayers[i].y = Player3->y - (16 * 0x200);
-				gVirtualPlayers[i].is_being_held = true;
-			}
-		}
-		else if (gVirtualPlayers[i].stage == gStageNo && gVirtualPlayers[i].is_being_held == true)
-		{
-			if (gKeyTrg & gKeyDown)
-			{
-				gVirtualPlayers[i].x = Player3->x;
-				gVirtualPlayers[i].y = Player3->y;
-				gVirtualPlayers[i].is_being_held = false;
-			}
-		}
-
-		if (im_being_held == true)
-		{
-			// i don't know how to do networking code, but if "im being held", then i should go ABOVE the player whos holding me's head??
-			// idk how this works lol just please work please work pl
-
-			Player3->x = gVirtualPlayers[i].x;
-			Player3->y = gVirtualPlayers[i].y - (16 * 0x200);
-		}
 	}
 
 	if (networkStarted != 1)
@@ -212,12 +177,6 @@ void MakeCustomSurfaces(int x, int y, int s, BOOL r)
 	CS_MakeSurface_Generic(CS_WINDOW_WIDTH * 2, MAX_CLIENTS * 16, CS_SURFACE_ID_USERNAME, FALSE);
 }
 
-// ok but actually this is nice
-void InactiveWindow()
-{
-	// nothing lol
-}
-
 void InitMod(void)
 {
 	gameIp = ModLoader_GetSettingString("IP", "127.0.0.1");
@@ -228,8 +187,11 @@ void InitMod(void)
 	show_player_names = ModLoader_GetSettingInt("NAME_DISPLAY", 0);
 	hide_players_on_map = ModLoader_GetSettingBool("HIDE_PLAYERS_ON_MAP", false);
 	hide_me_on_map = ModLoader_GetSettingBool("HIDE_ME_ON_MAP", false);
+	pause_window_on_lost_focus = ModLoader_GetSettingBool("PAUSE_WINDOW_ON_LOST_FOCUS", false);
 
-	ModLoader_WriteJump((void*)0x412BC0, (void*)InactiveWindow);
+	if (pause_window_on_lost_focus == false)
+		ModLoader_WriteCall((void*)0x413316, (void*)CS_ActiveWindow);
+
 	ModLoader_WriteCall((void*)0x4115F0, (void*)MakeCustomSurfaces);
 	// CampLoop replacement CALLs (run networking in inventory)
 	ModLoader_WriteCall((void*)0x401DD8, (void*)CampLoop_GetTrg);

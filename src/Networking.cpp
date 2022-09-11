@@ -532,7 +532,8 @@ void PutVirtualPlayers(int fx, int fy)
 					//Draw player
 					RECT rect;		
 					rect = rcVirtualPlayer[gVirtualPlayers[i].ani_no];
-					if (gVirtualPlayers[i].direct){
+					if (gVirtualPlayers[i].direct)
+					{
 						rect.top += 16;
 						rect.bottom += 16;
 					}
