@@ -1,15 +1,9 @@
-﻿// Copyright © 2017 Clownacy
-// Copyright © 2019 Cucky
-
-#include <windows.h>
+﻿#include <windows.h>
 #include <string>
 
 #include "mod_loader.h"
 
-// #include "cs.h"
 #include "cave_story.h"
-#include "playermain.h"
-#include "Map.h"
 #include "Networking.h"
 
 const char* gameIp;
@@ -46,14 +40,14 @@ void CampLoop_GetTrg()
 {
 	ServerHandler();
 
-	CS_GetTrg();
+	GetTrg();
 }
 
 void CampLoop_PutFramePerSecound()
 {
 	PutServer();
 
-	CS_PutFramePerSecound();
+	PutFramePerSecound();
 }
 
 void ModeAction_GetTrg()
@@ -85,43 +79,43 @@ void ModeAction_GetTrg()
 
 	ServerHandler();
 
-	CS_GetTrg();
+	GetTrg();
 }
 
 // 0x41483A
-void MiniMapLoop_CortBox2(RECT *r, unsigned long c, CS_SurfaceID s)
+void MiniMapLoop_CortBox2(RECT *r, unsigned long c, SurfaceID s)
 {
-	CS_CortBox2(r, c, s);
+	CortBox2(r, c, s);
 }
 
 void MiniMapLoop_GetTrg()
 {
 	ServerHandler();
 
-	CS_GetTrg();
+	GetTrg();
 }
 
 void MiniMapLoop_PutFramePerSecound()
 {
 	PutServer();
 
-	CS_PutFramePerSecound();
+	PutFramePerSecound();
 }
 
 // 0x41498E
-void MiniMapLoop_PutBitmapPlayer(RECT *v, int x, int y, RECT *r, CS_SurfaceID s)
+void MiniMapLoop_PutBitmapPlayer(RECT *v, int x, int y, RECT *r, SurfaceID s)
 {
 	// Bitmap
-	CS_PutBitmap3(v, x, y, r, s);
+	PutBitmap3(v, x, y, r, s);
 
 	RECT th_rect = { 0, 65, 1, 66 };
 
 	RECT rcView;
 	for (int f = 0; f <= 8; f++) {
-		rcView.left =	((CS_window_surface_width / CS_window_upscale) / 2) -  (((gMap->width * f) / 8) / 2);
-		rcView.right =  ((CS_window_surface_width / CS_window_upscale) / 2) +  (((gMap->width * f) / 8) / 2);
-		rcView.top =	((CS_window_surface_height / CS_window_upscale) / 2) - (((gMap->length * f) / 8) / 2);
-		rcView.bottom = ((CS_window_surface_height / CS_window_upscale) / 2) + (((gMap->length * f) / 8) / 2);
+		rcView.left =	((window_surface_width / mag) / 2) -  (((gMap->width * f) / 8) / 2);
+		rcView.right =  ((window_surface_width / mag) / 2) +  (((gMap->width * f) / 8) / 2);
+		rcView.top =	((window_surface_height / mag) / 2) - (((gMap->length * f) / 8) / 2);
+		rcView.bottom = ((window_surface_height / mag) / 2) + (((gMap->length * f) / 8) / 2);
 	}
 	rcView.left -= 1;
 	rcView.right = rcView.left + gMap->width + 2;
@@ -135,7 +129,7 @@ void MiniMapLoop_PutBitmapPlayer(RECT *v, int x, int y, RECT *r, CS_SurfaceID s)
 			int th_x = (gVirtualPlayers[i].x / 0x200 + 8) / 16;
 			int th_y = (gVirtualPlayers[i].y / 0x200 + 8) / 16;
 			if ((gVirtualPlayers[i].cond & 0x80) && !(gVirtualPlayers[i].cond & 2))
-				CS_PutBitmap3(&grcGame, th_x + rcView.left + 1, th_y + rcView.top + 1, &th_rect, CS_SURFACE_ID_TEXT_BOX);
+				PutBitmap3(&grcGame, th_x + rcView.left + 1, th_y + rcView.top + 1, &th_rect, SURFACE_ID_TEXT_BOX);
 		}
 	}
 }
@@ -144,14 +138,14 @@ void SelectStage_Loop_GetTrg()
 {
 	ServerHandler();
 
-	CS_GetTrg();
+	GetTrg();
 }
 
 void SelectStage_Loop_PutFramePerSecound()
 {
 	PutServer();
 
-	CS_PutFramePerSecound();
+	PutFramePerSecound();
 }
 
 
@@ -161,20 +155,20 @@ void ModeAction_PutFramePerSecound()
 
 	if (!InServer())
 	{
-		CS_PutText(0, 1, DisconnectedText, 0x000010);
-		CS_PutText(0, 1 - 1, DisconnectedText, 0xFFFFFF);
+		PutText(0, 1, DisconnectedText, 0x000010);
+		PutText(0, 1 - 1, DisconnectedText, 0xFFFFFF);
 
-		CS_PutText(0, 9, PressPeriodText, 0x000010);
-		CS_PutText(0, 9 - 1, PressPeriodText, 0xFFFFFF);
+		PutText(0, 9, PressPeriodText, 0x000010);
+		PutText(0, 9 - 1, PressPeriodText, 0xFFFFFF);
 	}
 
-	CS_PutFramePerSecound();
+	PutFramePerSecound();
 }
 
 void MakeCustomSurfaces(int x, int y, int s, BOOL r)
 {
-	CS_MakeSurface_Generic(x, y, s, r);
-	CS_MakeSurface_Generic(CS_WINDOW_WIDTH * 2, MAX_CLIENTS * 16, CS_SURFACE_ID_USERNAME, FALSE);
+	MakeSurface_Generic(x, y, s, r);
+	MakeSurface_Generic(WINDOW_WIDTH * 2, MAX_CLIENTS * 16, SURFACE_ID_USERNAME, FALSE);
 }
 
 void InitMod(void)
@@ -190,7 +184,7 @@ void InitMod(void)
 	pause_window_on_lost_focus = ModLoader_GetSettingBool("PAUSE_WINDOW_ON_LOST_FOCUS", false);
 
 	if (pause_window_on_lost_focus == false)
-		ModLoader_WriteCall((void*)0x413316, (void*)CS_ActiveWindow);
+		ModLoader_WriteCall((void*)0x413316, (void*)ActiveWindow);
 
 	ModLoader_WriteCall((void*)0x4115F0, (void*)MakeCustomSurfaces);
 	// CampLoop replacement CALLs (run networking in inventory)

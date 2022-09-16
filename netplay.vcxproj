@@ -92,15 +92,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ByteStream.h" />
-    <ClInclude Include="src\Map.h" />
-    <ClInclude Include="src\playermain.h" />
     <ClInclude Include="src\\cave_story.h" />
-    <ClInclude Include="src\\cs.h" />
     <ClInclude Include="src\\mod_loader.h" />
     <ClInclude Include="src\\mod_loader_hooks.h" />
     <ClInclude Include="src\\NetworkDefine.h" />
     <ClInclude Include="src\\Networking.h" />
-    <ClInclude Include="src\\player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

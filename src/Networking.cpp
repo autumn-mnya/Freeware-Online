@@ -11,11 +11,8 @@
 
 #include "File.h"
 #include "Networking.h"
-#include "player.h"
 #include "cave_story.h"
-#include "cs.h"
 #include "mod_loader.h"
-#include "Stage.h"
 #include "ByteStream.h"
 
 ENetHost *client;
@@ -113,8 +110,8 @@ bool JoinServer(const char *ip, const char *port, const char *name)
 	/*
 	for (int i = 0; i < MAX_CLIENTS; i++)
 	{
-		CS_ReleaseSurface(CS_SURFACE_ID_MY_CHAR + i);
-		CS_MakeSurface_File("MyChar", CS_SURFACE_ID_MY_CHAR + i);
+		ReleaseSurface(SURFACE_ID_MY_CHAR + i);
+		MakeSurface_File("MyChar", SURFACE_ID_MY_CHAR + i);
 	}
 	*/
 	
@@ -160,26 +157,26 @@ void HandleClient()
 		packetData->WriteLE32(PACKETCODE_REPLICATE_PLAYER);
 		
 		//Set attributes
-		packetData->WriteLE32(Player2->cond);
-		packetData->WriteLE32(Player2->unit);
-		packetData->WriteLE32(Player2->flag);
-		packetData->WriteLE32(Player2->x);
-		packetData->WriteLE32(Player2->y);
-		packetData->WriteLE32(Player2->xm);
-		packetData->WriteLE32(Player2->ym);
-		packetData->WriteLE32(Player2->up);
-		packetData->WriteLE32(Player2->down);
+		packetData->WriteLE32(gMC->cond);
+		packetData->WriteLE32(gMC->unit);
+		packetData->WriteLE32(gMC->flag);
+		packetData->WriteLE32(gMC->x);
+		packetData->WriteLE32(gMC->y);
+		packetData->WriteLE32(gMC->xm);
+		packetData->WriteLE32(gMC->ym);
+		packetData->WriteLE32(gMC->up);
+		packetData->WriteLE32(gMC->down);
 		packetData->WriteLE32(gArmsData[gSelectedArms].code);
-		packetData->WriteLE32(Player2->equip);
-		packetData->WriteLE32(Player2->ani_no);
-		packetData->WriteLE32(Player2->hit.left);
-		packetData->WriteLE32(Player2->hit.top);
-		packetData->WriteLE32(Player2->hit.right);
-		packetData->WriteLE32(Player2->hit.bottom);
-		packetData->WriteLE32(Player2->direct);
-		packetData->WriteLE32(Player2->shock);
-		packetData->WriteLE32(Player2->life);
-		packetData->WriteLE32(Player2->max_life);
+		packetData->WriteLE32(gMC->equip);
+		packetData->WriteLE32(gMC->ani_no);
+		packetData->WriteLE32(gMC->hit.back);
+		packetData->WriteLE32(gMC->hit.top);
+		packetData->WriteLE32(gMC->hit.front);
+		packetData->WriteLE32(gMC->hit.bottom);
+		packetData->WriteLE32(gMC->direct);
+		packetData->WriteLE32(gMC->shock);
+		packetData->WriteLE32(gMC->life);
+		packetData->WriteLE32(gMC->max_life);
 		packetData->WriteLE32(gStageNo);
 
 		// <MIM patch location
@@ -321,20 +318,20 @@ void HandleClient()
 
 							if (strcmp(prevName, gVirtualPlayers[i].name))
 							{
-								RECT rcUsername = { 0, i * 16, CS_WINDOW_WIDTH, i * 16 + 16 };
-								CS_CortBox2(&rcUsername, 0x000000, CS_SURFACE_ID_USERNAME);
+								RECT rcUsername = { 0, i * 16, WINDOW_WIDTH, i * 16 + 16 };
+								CortBox2(&rcUsername, 0x000000, SURFACE_ID_USERNAME);
 								std::string acss = (std::string(playerName) + " " + std::to_string(gVirtualPlayers[i].player_num));
 								const char* anonName = acss.c_str();
 								switch (show_player_names)
 								{
 									default:
-										CS_PutText2((CS_WINDOW_WIDTH - strlen(gVirtualPlayers[i].name) * 5) / 2, i * 16 + 2 + 1, gVirtualPlayers[i].name, 0x000010, CS_SURFACE_ID_USERNAME);
-										CS_PutText2((CS_WINDOW_WIDTH - strlen(gVirtualPlayers[i].name) * 5) / 2, i * 16 + 2, gVirtualPlayers[i].name, 0xFFFFFE, CS_SURFACE_ID_USERNAME);
+										PutText2((WINDOW_WIDTH - strlen(gVirtualPlayers[i].name) * 5) / 2, i * 16 + 2 + 1, gVirtualPlayers[i].name, 0x000010, SURFACE_ID_USERNAME);
+										PutText2((WINDOW_WIDTH - strlen(gVirtualPlayers[i].name) * 5) / 2, i * 16 + 2, gVirtualPlayers[i].name, 0xFFFFFE, SURFACE_ID_USERNAME);
 										break;
 
 									case 2:
-										CS_PutText2((CS_WINDOW_WIDTH - strlen(anonName) * 5) / 2, i * 16 + 2 + 1, anonName, 0x000010, CS_SURFACE_ID_USERNAME);
-										CS_PutText2((CS_WINDOW_WIDTH - strlen(anonName) * 5) / 2, i * 16 + 2, anonName, 0xFFFFFE, CS_SURFACE_ID_USERNAME);
+										PutText2((WINDOW_WIDTH - strlen(anonName) * 5) / 2, i * 16 + 2 + 1, anonName, 0x000010, SURFACE_ID_USERNAME);
+										PutText2((WINDOW_WIDTH - strlen(anonName) * 5) / 2, i * 16 + 2, anonName, 0xFFFFFE, SURFACE_ID_USERNAME);
 										break;
 								}
 							}
@@ -383,9 +380,9 @@ void HandleClient()
 
 							if (lastStage != gVirtualPlayers[i].stage)
 							{
-								RECT rcMapName = { CS_WINDOW_WIDTH, i * 16,CS_WINDOW_WIDTH * 2, i * 16 + 16 };
-								CS_CortBox2(&rcMapName, 0x000000, CS_SURFACE_ID_USERNAME);
-								CS_PutText2(CS_WINDOW_WIDTH + (CS_WINDOW_WIDTH - strlen(StageTbl[gVirtualPlayers[i].stage].name) * 5) / 2, i * 16 + 2, StageTbl[gVirtualPlayers[i].stage].name, 0xFFFFFE, CS_SURFACE_ID_USERNAME);
+								RECT rcMapName = { WINDOW_WIDTH, i * 16,WINDOW_WIDTH * 2, i * 16 + 16 };
+								CortBox2(&rcMapName, 0x000000, SURFACE_ID_USERNAME);
+								PutText2(WINDOW_WIDTH + (WINDOW_WIDTH - strlen(gTMT[gVirtualPlayers[i].stage].name) * 5) / 2, i * 16 + 2, gTMT[gVirtualPlayers[i].stage].name, 0xFFFFFE, SURFACE_ID_USERNAME);
 							}
 
 							break;
@@ -511,19 +508,19 @@ void PutVirtualPlayers(int fx, int fy)
 					++rect_arms.top;
 				
 				if (gVirtualPlayers[i].direct)
-					CS_PutBitmap3(
+					PutBitmap3(
 						&grcGame,
 						(drawX - 0x1000) / 0x200 - fx / 0x200,
 						(drawY - 0x1000) / 0x200 - fy / 0x200 + arms_offset_y,
 						&rect_arms,
-						CS_SURFACE_ID_ARMS);
+						SURFACE_ID_ARMS);
 				else
-					CS_PutBitmap3(
+					PutBitmap3(
 						&grcGame,
 						(drawX - 0x1000) / 0x200 - fx / 0x200 - 8,
 						(drawY - 0x1000) / 0x200 - fy / 0x200 + arms_offset_y,
 						&rect_arms,
-						CS_SURFACE_ID_ARMS);
+						SURFACE_ID_ARMS);
 				
 				gVirtualPlayers[i].shockT++;
 				
@@ -547,7 +544,7 @@ void PutVirtualPlayers(int fx, int fy)
 						rect.bottom += 32;
 					}
 					
-					CS_PutBitmap3(&grcGame, (drawX - 0x1000) / 0x200 - fx / 0x200, (drawY - 0x1000) / 0x200 - fy / 0x200, &rect, CS_SURFACE_ID_MY_CHAR);
+					PutBitmap3(&grcGame, (drawX - 0x1000) / 0x200 - fx / 0x200, (drawY - 0x1000) / 0x200 - fy / 0x200, &rect, SURFACE_ID_MY_CHAR);
 					
 					//Draw airtank
 					RECT rcBubble[2];
@@ -557,15 +554,15 @@ void PutVirtualPlayers(int fx, int fy)
 					++gVirtualPlayers[i].bubble;
 					
 					if (gVirtualPlayers[i].equip & 0x10 && gVirtualPlayers[i].flag & 0x100)
-						CS_PutBitmap3(&grcGame, drawX / 0x200 - 12 - fx / 0x200, gVirtualPlayers[i].y / 0x200 - 12 - fy / 0x200, &rcBubble[(gVirtualPlayers[i].bubble >> 1) & 1], CS_SURFACE_ID_CARET);
+						PutBitmap3(&grcGame, drawX / 0x200 - 12 - fx / 0x200, gVirtualPlayers[i].y / 0x200 - 12 - fy / 0x200, &rcBubble[(gVirtualPlayers[i].bubble >> 1) & 1], SURFACE_ID_CARET);
 					else if (gVirtualPlayers[i].unit == 1)
-						CS_PutBitmap3(&grcGame, drawY / 0x200 - 12 - fx / 0x200, gVirtualPlayers[i].y / 0x200 - 12 - fy / 0x200, &rcBubble[(gVirtualPlayers[i].bubble >> 1) & 1], CS_SURFACE_ID_CARET);
+						PutBitmap3(&grcGame, drawY / 0x200 - 12 - fx / 0x200, gVirtualPlayers[i].y / 0x200 - 12 - fy / 0x200, &rcBubble[(gVirtualPlayers[i].bubble >> 1) & 1], SURFACE_ID_CARET);
 				}
 
 				// Draw player names
-				RECT rcUsername = { 0, i * 16, CS_WINDOW_WIDTH, i * 16 + 16 };
+				RECT rcUsername = { 0, i * 16, WINDOW_WIDTH, i * 16 + 16 };
 				if (show_player_names != 1)
-					CS_PutBitmap3(&grcGame, drawX / 0x200 - fx / 0x200 - CS_WINDOW_WIDTH / 2, drawY / 0x200 - fy / 0x200 - 22, &rcUsername, CS_SURFACE_ID_USERNAME);
+					PutBitmap3(&grcGame, drawX / 0x200 - fx / 0x200 - WINDOW_WIDTH / 2, drawY / 0x200 - fy / 0x200 - 22, &rcUsername, SURFACE_ID_USERNAME);
 			}
 		}
 	}
@@ -657,7 +654,7 @@ void PutServer()
 	/*
 	RECT rcChat = {0, WINDOW_HEIGHT / 2, WINDOW_WIDTH, WINDOW_HEIGHT};
 	if (SDL_GetTicks() < gLastChatMessage + 8000)
-		CS_DrawSprite_WithTransparency(&grcGame, 0, WINDOW_HEIGHT / 2, &rcChat, CS_SURFACE_ID_UNKNOWN_3);
+		DrawSprite_WithTransparency(&grcGame, 0, WINDOW_HEIGHT / 2, &rcChat, SURFACE_ID_UNKNOWN_3);
 	*/
 
 	if (gKey & KEY_ALT_LEFT)
@@ -688,7 +685,7 @@ void PutServer()
 				
 				//Draw back
 				RECT rcBack = {x, y, x + nameWidth, y + 20};
-				CS_CortBox(&rcBack, 0x000020);
+				CortBox(&rcBack, 0x000020);
 				
 				//Draw skin
 				RECT rcSkin = {0, 0, 16, 16};
@@ -703,18 +700,18 @@ void PutServer()
 					rcSkin.bottom += 32;
 				}
 
-				CS_PutBitmap3(&rcBack, x, y + 2, &rcSkin, CS_SURFACE_ID_MY_CHAR);
+				PutBitmap3(&rcBack, x, y + 2, &rcSkin, SURFACE_ID_MY_CHAR);
 
 				// 'Comma menu' Text.
 
 				//Draw username
-				RECT rcUsername = { 0, i * 16, CS_WINDOW_WIDTH, i * 16 + 16 };
+				RECT rcUsername = { 0, i * 16, WINDOW_WIDTH, i * 16 + 16 };
 
 				//Draw username
 				switch (show_player_names)
 				{
 					default:
-						CS_PutBitmap3(&rcBack, x + nameWidth / 2 - CS_WINDOW_WIDTH / 2, y - 1, &rcUsername, CS_SURFACE_ID_USERNAME);
+						PutBitmap3(&rcBack, x + nameWidth / 2 - WINDOW_WIDTH / 2, y - 1, &rcUsername, SURFACE_ID_USERNAME);
 						break;
 
 					case 1:
@@ -722,8 +719,8 @@ void PutServer()
 				}
 
 				//Draw mapname
-				RECT rcMapName = { CS_WINDOW_WIDTH, i * 16, CS_WINDOW_WIDTH * 2, i * 16 + 16 };
-				CS_PutBitmap3(&rcBack, x + nameWidth / 2 - CS_WINDOW_WIDTH / 2, y + 9, &rcMapName, CS_SURFACE_ID_USERNAME);
+				RECT rcMapName = { WINDOW_WIDTH, i * 16, WINDOW_WIDTH * 2, i * 16 + 16 };
+				PutBitmap3(&rcBack, x + nameWidth / 2 - WINDOW_WIDTH / 2, y + 9, &rcMapName, SURFACE_ID_USERNAME);
 			}
 		}
 	}
