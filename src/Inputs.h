@@ -6,6 +6,7 @@
 
 extern long gKeyPlayerList;
 extern long gKeyChat;
+extern long gKeyReconnect;
 
 extern char gTypedText[MAX_TYPE];
 

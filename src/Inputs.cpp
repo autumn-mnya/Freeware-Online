@@ -3,6 +3,7 @@
 
 long gKeyPlayerList = KEY_TAB;
 long gKeyChat = KEY_T;
+long gKeyReconnect = KEY_ALT_DOWN;
 
 char gTypedText[MAX_TYPE];
 

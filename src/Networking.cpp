@@ -221,6 +221,7 @@ void HandleClient()
 				clientConnected = true;
 				
 				//Welcome message
+
 				/*
 				PrintChat("Welcome to the server!");
 				PrintChat("Use 'T' to chat!");
@@ -307,6 +308,9 @@ void HandleClient()
 							
 						case PACKETCODE_REPLICATE_PLAYER:
 							i = packetData->ReadLE32();
+
+							if (i < 0 || MAX_CLIENTS <= i)
+								break;
 							
 							//cond & unit
 							gVirtualPlayers[i].cond = packetData->ReadLE32();

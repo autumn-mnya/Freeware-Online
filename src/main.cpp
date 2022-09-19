@@ -127,7 +127,7 @@ void ModeAction_GetTrg()
 	if (networkStarted == 1 && !InServer())
 	{
 		// Period key pressed, reset network state.
-		if (gKey & KEY_ALT_DOWN)
+		if (gKey & gKeyReconnect)
 			networkStarted = 0;
 	}
 
