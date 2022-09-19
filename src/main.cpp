@@ -96,7 +96,7 @@ void SetMyShooting()
 
 	if ((gKeyTrg & gKeyShot) && g_GameFlags & 2)
 	{
-		if (gArmsData[gSelectedArms].code != 0)
+		if (gArmsData[gSelectedArms].code != 0 && my_soft_rensha == 0)
 		{
 			my_soft_rensha = 4;
 			my_shooting = true;
@@ -114,7 +114,7 @@ void VirtualShootBullet()
 	{
 		if (gVirtualPlayers[i].stage == gStageNo)
 		{
-			if (gVirtualPlayers[i].shooting == true && gVirtualPlayers[i].arms != 0 && gVirtualPlayers[i].soft_rensha == 4)
+			if (gVirtualPlayers[i].shooting == true && gVirtualPlayers[i].arms != 0)
 			{
 				if (gVirtualPlayers[i].up)
 				{
