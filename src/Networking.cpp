@@ -201,6 +201,7 @@ void HandleClient()
 		// shooting gun
 		packetData->WriteLE32(my_shooting);
 		packetData->WriteLE32(my_soft_rensha);
+		packetData->WriteLE32(gArmsData[gSelectedArms].level);
 
 		//Send packet
 		definePacket = enet_packet_create(packet, 0x100, 0);
@@ -389,6 +390,7 @@ void HandleClient()
 							gVirtualPlayers[i].is_being_held = packetData->ReadLE32();
 							gVirtualPlayers[i].shooting = packetData->ReadLE32();
 							gVirtualPlayers[i].soft_rensha = packetData->ReadLE32();
+							gVirtualPlayers[i].arms_level = packetData->ReadLE32();
 
 							if (lastStage != gVirtualPlayers[i].stage)
 							{
