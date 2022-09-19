@@ -12,6 +12,7 @@
 #include "File.h"
 #include "Networking.h"
 #include "cave_story.h"
+#include "Inputs.h"
 #include "mod_loader.h"
 #include "ByteStream.h"
 
@@ -657,7 +658,7 @@ void PutServer()
 		DrawSprite_WithTransparency(&grcGame, 0, WINDOW_HEIGHT / 2, &rcChat, SURFACE_ID_UNKNOWN_3);
 	*/
 
-	if (gKey & KEY_ALT_LEFT)
+	if (gKey & gKeyPlayerList)
 	{
 		//Draw player-list
 		const int nameWidth = ((MAX_NAME * 5) + 8 + 16);

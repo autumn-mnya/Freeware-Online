@@ -58,7 +58,9 @@ extern bool im_being_held;
 #define KEY_L 0x80000
 #define KEY_PLUS 0x100000
 #define KEY_ESCAPE 0x8000
-
+// Freeware Online keys
+#define KEY_TAB 0x200000
+#define KEY_T 0x400000
 
 // Variables
 #define ghWnd (*(HWND*)0x49E458) //ghWnd

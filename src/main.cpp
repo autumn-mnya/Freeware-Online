@@ -4,6 +4,7 @@
 #include "mod_loader.h"
 
 #include "cave_story.h"
+#include "Inputs.h"
 #include "Networking.h"
 
 const char* gameIp;
@@ -52,6 +53,9 @@ void CampLoop_PutFramePerSecound()
 
 void ModeAction_GetTrg()
 {
+	CustomInputHandler();
+	ChatInput();
+
 	if (japanese != true)
 	{
 		DisconnectedText = EngDisconnectedText;
@@ -152,6 +156,11 @@ void SelectStage_Loop_PutFramePerSecound()
 void ModeAction_PutFramePerSecound()
 {
 	PutServer();
+
+	if (gKey & gKeyChat)
+		PutText(0, 64, "banger game", 0xFFFFFF);
+
+	PutText(0, 80, chatbox, 0xFFFFFF);
 
 	if (!InServer())
 	{
