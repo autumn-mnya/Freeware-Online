@@ -221,8 +221,10 @@ void HandleClient()
 				clientConnected = true;
 				
 				//Welcome message
-				// PrintChat("Welcome to the server!");
-				// PrintChat("Use 'T' to chat!");
+				/*
+				PrintChat("Welcome to the server!");
+				PrintChat("Use 'T' to chat!");
+				*/
 				
 				//Write packet data
 				packetSize = 8 + MAX_NAME;
@@ -585,7 +587,6 @@ bool ConnectedServer()
 //Chat system
 void SendChatMessage(const char *name, const char *text)
 {
-	/*
 	//Get actual text to render (and clip so it fits into 256 bytes)
 	char msgName[MAX_NAME + 3];
 	
@@ -602,11 +603,13 @@ void SendChatMessage(const char *name, const char *text)
 	// This packet is different from how it was originally -Brayconn
 	auto packetSize = 8 + (strlen(msgText) + 1);
 	uint8_t* packet = new uint8_t[packetSize];
+	/*
 	SDL_RWops *packetData = SDL_RWFromMem(packet, packetSize);
 	SDL_WriteLE32(packetData, NET_VERSION);
 	SDL_WriteLE32(packetData, PACKETCODE_CHAT_MESSAGE);
 	SDL_RWwrite(packetData, msgText, 1, sizeof(msgText));
 	SDL_RWclose(packetData);
+	*/
 
 	//Send packet
 	ENetPacket *definePacket = enet_packet_create(packet, packetSize, ENET_PACKET_FLAG_RELIABLE);
@@ -614,49 +617,41 @@ void SendChatMessage(const char *name, const char *text)
 
 	// Brayconn addition (if we use new, we delete afterwards!!)
 	delete[] packet;
-	*/
 }
 
 void ClearChat()
 {
-	/*
 	RECT rcChatFull = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
 	CortBox2(&rcChatFull, 0x000000, SURFACE_ID_CHAT);
-	*/
 }
 
 void ShiftChat()
 {
-	/*
 	//Shift chat upwards
 	RECT rcChatShift = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT - CHAT_OFF_Y + CHAT_LINE_HEIGHT};
 	RECT rcChatNewLine = {0, WINDOW_HEIGHT - CHAT_OFF_Y, WINDOW_WIDTH, WINDOW_HEIGHT - CHAT_OFF_Y + CHAT_LINE_HEIGHT};
 	Surface2Surface(0, -CHAT_LINE_HEIGHT, &rcChatShift, SURFACE_ID_CHAT, SURFACE_ID_CHAT);
 	CortBox2(&rcChatNewLine, 0x000000, SURFACE_ID_CHAT);
-	*/
 }
 
 void PrintChat(const char *text)
 {
-	/*
-	gLastChatMessage = SDL_GetTicks();
+	gLastChatMessage = GetTickCount();
 	
 	//Draw new line
 	ShiftChat();
-	PutTextChat2(8, WINDOW_HEIGHT - CHAT_OFF_Y + 1, text, 0x110022, SURFACE_ID_CHAT);
-	PutTextChat2(8, WINDOW_HEIGHT - CHAT_OFF_Y, text, 0xFFFFFE, SURFACE_ID_CHAT);
-	*/
+	PutText2(8, WINDOW_HEIGHT - CHAT_OFF_Y + 1, text, 0x110022, SURFACE_ID_CHAT);
+	PutText2(8, WINDOW_HEIGHT - CHAT_OFF_Y, text, 0xFFFFFE, SURFACE_ID_CHAT);
 }
 
 //Draw server things
 void PutServer()
 {
 	//Draw chat
-	/*
 	RECT rcChat = {0, WINDOW_HEIGHT / 2, WINDOW_WIDTH, WINDOW_HEIGHT};
-	if (SDL_GetTicks() < gLastChatMessage + 8000)
-		DrawSprite_WithTransparency(&grcGame, 0, WINDOW_HEIGHT / 2, &rcChat, SURFACE_ID_UNKNOWN_3);
-	*/
+	if (GetTickCount() < gLastChatMessage + 8000)
+		PutBitmap3(&grcGame, 0, WINDOW_HEIGHT / 2, &rcChat, SURFACE_ID_CHAT);
+
 
 	if (gKey & gKeyPlayerList)
 	{

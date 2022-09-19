@@ -29,6 +29,63 @@ const char* JpnPressPeriodText = "\x83\x73\x83\x8A\x83\x49\x83\x68\x83\x4C\x81\x
 const char* DisconnectedText;
 const char* PressPeriodText;
 
+bool gTypingChat = false;
+
+void HandleChat()
+{
+	static char chatMessage[PACKET_DATA];
+	static RECT rcChatTypeArea = { 0, WINDOW_HEIGHT - CHAT_OFF_Y + CHAT_LINE_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT };
+
+	if (gTypingChat == true)
+	{
+		gLastChatMessage = GetTickCount();
+
+		if (strlen(gTypedText) > 0)
+		{
+			if (gTypedText[0] == '\x08')
+			{
+				if (strlen(chatMessage))
+					chatMessage[strlen(chatMessage) - 1] = '\0';
+			}
+			else if (strlen(chatMessage) + strlen(gTypedText) < PACKET_DATA)
+				strcat(chatMessage, gTypedText);
+			PlaySoundObject(2, SOUND_MODE_PLAY);
+
+			//Redraw text
+			CortBox2(&rcChatTypeArea, 0x000000, SURFACE_ID_CHAT);
+
+			char text[PACKET_DATA + 5];
+			sprintf(text, "Say: %s_", chatMessage);
+			PutText2(8, WINDOW_HEIGHT - CHAT_OFF_Y + CHAT_LINE_HEIGHT + 1, text, 0x110022, SURFACE_ID_CHAT);
+			PutText2(8, WINDOW_HEIGHT - CHAT_OFF_Y + CHAT_LINE_HEIGHT, text, 0xFFFFFE, SURFACE_ID_CHAT);
+		}
+
+		if (gKeyTrg & KEY_ENTER)
+		{
+			if (strlen(chatMessage) > 0)
+				SendChatMessage(NULL, chatMessage);
+			memset(chatMessage, 0, PACKET_DATA);
+			CortBox2(&rcChatTypeArea, 0x000000, SURFACE_ID_CHAT);
+			gTypingChat = false;
+		}
+	}
+
+	//Open chat when T is pressed
+	if (gKeyTrg & KEY_T)
+	{
+		if (gTypingChat == false)
+		{
+			memset(chatMessage, 0, PACKET_DATA);
+			gTypingChat = true;
+
+			//Redraw text
+			CortBox2(&rcChatTypeArea, 0x000000, SURFACE_ID_CHAT);
+			PutText2(8, WINDOW_HEIGHT - CHAT_OFF_Y + CHAT_LINE_HEIGHT + 1, "Say: _", 0x110022, SURFACE_ID_CHAT);
+			PutText2(8, WINDOW_HEIGHT - CHAT_OFF_Y + CHAT_LINE_HEIGHT, "Say: _", 0xFFFFFE, SURFACE_ID_CHAT);
+		}
+	}
+}
+
 void ServerHandler()
 {
 	if (InServer())
@@ -160,7 +217,7 @@ void ModeAction_PutFramePerSecound()
 	if (gKey & gKeyChat)
 		PutText(0, 64, "banger game", 0xFFFFFF);
 
-	PutText(0, 80, chatbox, 0xFFFFFF);
+	PutText(0, 80, gTypedText, 0xFFFFFF);
 
 	if (!InServer())
 	{
@@ -178,6 +235,7 @@ void MakeCustomSurfaces(int x, int y, int s, BOOL r)
 {
 	MakeSurface_Generic(x, y, s, r);
 	MakeSurface_Generic(WINDOW_WIDTH * 2, MAX_CLIENTS * 16, SURFACE_ID_USERNAME, FALSE);
+	MakeSurface_Generic(WINDOW_WIDTH, WINDOW_HEIGHT, SURFACE_ID_CHAT, FALSE);
 }
 
 void InitMod(void)

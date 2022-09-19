@@ -4,7 +4,7 @@
 long gKeyPlayerList = KEY_TAB;
 long gKeyChat = KEY_T;
 
-char chatbox[0x40];
+char gTypedText[MAX_TYPE];
 
 void CustomInputHandler()
 {
@@ -21,6 +21,9 @@ void CustomInputHandler()
 
 void ChatInput()
 {
-	if (GetKeyState('A') & 0x8000)
-		strcat(chatbox, "a");
+	if (strlen(gTypedText) != MAX_TYPE)
+	{
+		if (GetKeyState('A') & 0x8000)
+			strcat(gTypedText, "a");
+	}
 }

@@ -61,6 +61,7 @@ extern bool im_being_held;
 // Freeware Online keys
 #define KEY_TAB 0x200000
 #define KEY_T 0x400000
+#define KEY_ENTER 0x800000
 
 // Variables
 #define ghWnd (*(HWND*)0x49E458) //ghWnd
@@ -176,6 +177,7 @@ typedef enum SurfaceID
 	SURFACE_ID_LEVEL_TILESET = 2,
 	SURFACE_ID_USERNAME = 3,
 	SURFACE_ID_SKIN = 4,
+	SURFACE_ID_CHAT = 5,
 	SURFACE_ID_FADE = 6,
 	SURFACE_ID_ITEM_IMAGE = 8,
 	SURFACE_ID_MAP = 9,
