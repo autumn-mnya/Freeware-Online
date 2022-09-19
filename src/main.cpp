@@ -17,6 +17,9 @@ bool hide_players_on_map;
 bool hide_me_on_map;
 bool im_being_held = false;
 bool pause_window_on_lost_focus = false;
+// I'm shooting a gun
+bool my_shooting = false;
+int my_soft_rensha = 0;
 
 int networkStarted = 0;
 
@@ -86,10 +89,85 @@ void HandleChat()
 	}
 }
 
+void SetMyShooting()
+{
+	if (my_soft_rensha != 0)
+		--my_soft_rensha;
+
+	if ((gKeyTrg & gKeyShot) && g_GameFlags & 2)
+	{
+		if (gArmsData[gSelectedArms].code != 0)
+		{
+			my_soft_rensha = 4;
+			my_shooting = true;
+		}
+	}
+	else if (my_soft_rensha == 0)
+	{
+		my_shooting = false;
+	}
+}
+
+void VirtualShootBullet()
+{
+	for (int i = 0; i < MAX_CLIENTS; i++)
+	{
+		if (gVirtualPlayers[i].stage == gStageNo)
+		{
+			if (gVirtualPlayers[i].shooting == true && gVirtualPlayers[i].arms != 0 && gVirtualPlayers[i].soft_rensha == 4)
+			{
+				if (gVirtualPlayers[i].up)
+				{
+					if (gVirtualPlayers[i].direct == 0)
+					{
+						SetBullet(6, gVirtualPlayers[i].x - (1 * 0x200), gVirtualPlayers[i].y - (8 * 0x200), 1);
+						SetCaret(gVirtualPlayers[i].x - (1 * 0x200), gVirtualPlayers[i].y - (8 * 0x200), CARET_SHOOT, DIR_LEFT);
+					}
+					else
+					{
+						SetBullet(6, gVirtualPlayers[i].x + (1 * 0x200), gVirtualPlayers[i].y - (8 * 0x200), 1);
+						SetCaret(gVirtualPlayers[i].x + (1 * 0x200), gVirtualPlayers[i].y - (8 * 0x200), CARET_SHOOT, DIR_LEFT);
+					}
+				}
+				else if (gVirtualPlayers[i].down)
+				{
+					if (gVirtualPlayers[i].direct == 0)
+					{
+						SetBullet(6, gVirtualPlayers[i].x - (1 * 0x200), gVirtualPlayers[i].y + (8 * 0x200), 3);
+						SetCaret(gVirtualPlayers[i].x - (1 * 0x200), gVirtualPlayers[i].y + (8 * 0x200), CARET_SHOOT, DIR_LEFT);
+					}
+					else
+					{
+						SetBullet(6, gVirtualPlayers[i].x + (1 * 0x200), gVirtualPlayers[i].y + (8 * 0x200), 3);
+						SetCaret(gVirtualPlayers[i].x + (1 * 0x200), gVirtualPlayers[i].y + (8 * 0x200), CARET_SHOOT, DIR_LEFT);
+					}
+				}
+				else
+				{
+					if (gVirtualPlayers[i].direct == 0)
+					{
+						SetBullet(6, gVirtualPlayers[i].x - (6 * 0x200), gVirtualPlayers[i].y + (3 * 0x200), 0);
+						SetCaret(gVirtualPlayers[i].x - (12 * 0x200), gVirtualPlayers[i].y + (3 * 0x200), CARET_SHOOT, DIR_LEFT);
+					}
+					else
+					{
+						SetBullet(6, gVirtualPlayers[i].x + (6 * 0x200), gVirtualPlayers[i].y + (3 * 0x200), 2);
+						SetCaret(gVirtualPlayers[i].x + (12 * 0x200), gVirtualPlayers[i].y + (3 * 0x200), CARET_SHOOT, DIR_LEFT);
+					}
+				}
+			}
+		}
+	}
+}
+
 void ServerHandler()
 {
 	if (InServer())
+	{
 		HandleClient();
+		SetMyShooting();
+		VirtualShootBullet();
+	}
 	else
 		KillClient();
 }

@@ -11,6 +11,8 @@ extern int mim_compatibility;
 extern int show_player_names;
 extern bool hide_me_on_map;
 extern bool im_being_held;
+extern bool my_shooting;
+extern int my_soft_rensha;
 
 // <MIM Compatibility
 #define CSM_MIM_unobstructive (*(unsigned int*)0x49E184)

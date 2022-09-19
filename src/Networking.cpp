@@ -198,6 +198,9 @@ void HandleClient()
 		
 		packetData->WriteLE32(hide_me_on_map);
 		packetData->WriteLE32(im_being_held);
+		// shooting gun
+		packetData->WriteLE32(my_shooting);
+		packetData->WriteLE32(my_soft_rensha);
 
 		//Send packet
 		definePacket = enet_packet_create(packet, 0x100, 0);
@@ -384,6 +387,8 @@ void HandleClient()
 							gVirtualPlayers[i].mim = packetData->ReadLE32();
 							gVirtualPlayers[i].hide_vp_on_map = packetData->ReadLE32();
 							gVirtualPlayers[i].is_being_held = packetData->ReadLE32();
+							gVirtualPlayers[i].shooting = packetData->ReadLE32();
+							gVirtualPlayers[i].soft_rensha = packetData->ReadLE32();
 
 							if (lastStage != gVirtualPlayers[i].stage)
 							{

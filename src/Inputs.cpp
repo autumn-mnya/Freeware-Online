@@ -1,7 +1,7 @@
 #include "Inputs.h"
 #include "cave_story.h"
 
-long gKeyPlayerList = KEY_TAB;
+long gKeyPlayerList = KEY_ALT_LEFT;
 long gKeyChat = KEY_T;
 long gKeyReconnect = KEY_ALT_DOWN;
 
@@ -22,9 +22,11 @@ void CustomInputHandler()
 
 void ChatInput()
 {
+	/*
 	if (strlen(gTypedText) != MAX_TYPE)
 	{
 		if (GetKeyState('A') & 0x8000)
 			strcat(gTypedText, "a");
 	}
+	*/
 }
