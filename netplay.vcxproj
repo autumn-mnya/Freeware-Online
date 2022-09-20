@@ -95,7 +95,7 @@
   <ItemGroup>
     <ClInclude Include="src\ByteStream.h" />
     <ClInclude Include="src\Inputs.h" />
-    <ClInclude Include="src\VirtualPlayer.h" />
+    <ClInclude Include="src\VirtualShoot.h" />
     <ClInclude Include="src\\cave_story.h" />
     <ClInclude Include="src\\mod_loader.h" />
     <ClInclude Include="src\\mod_loader_hooks.h" />

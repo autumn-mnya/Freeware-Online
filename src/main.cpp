@@ -6,7 +6,7 @@
 #include "cave_story.h"
 #include "Inputs.h"
 #include "Networking.h"
-#include "VirtualPlayer.h"
+#include "VirtualShoot.h"
 
 const char* gameIp;
 const char* gamePort;
@@ -14,6 +14,7 @@ const char* gamePlyrName;
 bool japanese;
 int mim_compatibility;
 int show_player_names;
+bool enable_map_calls;
 bool hide_players_on_map;
 bool hide_me_on_map;
 bool im_being_held = false;
@@ -254,6 +255,7 @@ void InitMod(void)
 	japanese = ModLoader_GetSettingBool("JAPANESE", false);
 	mim_compatibility = ModLoader_GetSettingInt("MIM_COMPATIBLITY", 0);
 	show_player_names = ModLoader_GetSettingInt("NAME_DISPLAY", 0);
+	enable_map_calls = ModLoader_GetSettingBool("ENABLE_MAP_SYSTEM_CODE", true);
 	hide_players_on_map = ModLoader_GetSettingBool("HIDE_PLAYERS_ON_MAP", false);
 	hide_me_on_map = ModLoader_GetSettingBool("HIDE_ME_ON_MAP", false);
 	pause_window_on_lost_focus = ModLoader_GetSettingBool("PAUSE_WINDOW_ON_LOST_FOCUS", false);
@@ -269,14 +271,17 @@ void InitMod(void)
 	ModLoader_WriteCall((void*)0x4104D0, (void*)ModeAction_GetTrg);
 	ModLoader_WriteCall((void*)0x410874, (void*)ModeAction_PutFramePerSecound);
 	// MiniMapLoop replacement CALLs (run networking in minimap)
-	ModLoader_WriteCall((void*)0x41483A, (void*)MiniMapLoop_CortBox2);
-	ModLoader_WriteCall((void*)0x4146BE, (void*)MiniMapLoop_GetTrg);
-	ModLoader_WriteCall((void*)0x4147B8, (void*)MiniMapLoop_PutFramePerSecound);
-	ModLoader_WriteCall((void*)0x41485A, (void*)MiniMapLoop_GetTrg);
-	ModLoader_WriteCall((void*)0x41498E, (void*)MiniMapLoop_PutBitmapPlayer);
-	ModLoader_WriteCall((void*)0x414996, (void*)MiniMapLoop_PutFramePerSecound);
-	ModLoader_WriteCall((void*)0x4149D6, (void*)MiniMapLoop_GetTrg);
-	ModLoader_WriteCall((void*)0x414AD0, (void*)MiniMapLoop_PutFramePerSecound);
+	if (enable_map_calls)
+	{
+		ModLoader_WriteCall((void*)0x41483A, (void*)MiniMapLoop_CortBox2);
+		ModLoader_WriteCall((void*)0x4146BE, (void*)MiniMapLoop_GetTrg);
+		ModLoader_WriteCall((void*)0x4147B8, (void*)MiniMapLoop_PutFramePerSecound);
+		ModLoader_WriteCall((void*)0x41485A, (void*)MiniMapLoop_GetTrg);
+		ModLoader_WriteCall((void*)0x41498E, (void*)MiniMapLoop_PutBitmapPlayer);
+		ModLoader_WriteCall((void*)0x414996, (void*)MiniMapLoop_PutFramePerSecound);
+		ModLoader_WriteCall((void*)0x4149D6, (void*)MiniMapLoop_GetTrg);
+		ModLoader_WriteCall((void*)0x414AD0, (void*)MiniMapLoop_PutFramePerSecound);
+	}
 	// SelectStage_Loop replacement CALLs (run networking in teleporter menu)
 	ModLoader_WriteCall((void*)0x41DA88, (void*)SelectStage_Loop_GetTrg);
 	ModLoader_WriteCall((void*)0x41DB6F, (void*)SelectStage_Loop_PutFramePerSecound);

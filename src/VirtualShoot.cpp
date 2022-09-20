@@ -1,3 +1,5 @@
+#include "VirtualShoot.h"
+
 #include "cave_story.h"
 #include "main.h"
 #include "NetworkDefine.h"
