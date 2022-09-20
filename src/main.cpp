@@ -20,6 +20,7 @@ bool hide_me_on_map;
 bool im_being_held = false;
 bool pause_window_on_lost_focus = false;
 // I'm shooting a gun
+bool enable_experimental_shoot_sync = false;
 bool my_shooting = false;
 int my_soft_rensha = 0;
 
@@ -96,8 +97,11 @@ void ServerHandler()
 	if (InServer())
 	{
 		HandleClient();
-		SetMyShooting();
-		VirtualShootBullet();
+		if (enable_experimental_shoot_sync)
+		{
+			SetMyShooting();
+			VirtualShootBullet();
+		}
 	}
 	else
 		KillClient();
@@ -259,6 +263,7 @@ void InitMod(void)
 	hide_players_on_map = ModLoader_GetSettingBool("HIDE_PLAYERS_ON_MAP", false);
 	hide_me_on_map = ModLoader_GetSettingBool("HIDE_ME_ON_MAP", false);
 	pause_window_on_lost_focus = ModLoader_GetSettingBool("PAUSE_WINDOW_ON_LOST_FOCUS", false);
+	enable_experimental_shoot_sync = ModLoader_GetSettingBool("ENABLE_SHOOT_SYNC", false);
 
 	if (pause_window_on_lost_focus == false)
 		ModLoader_WriteCall((void*)0x413316, (void*)ActiveWindow);

@@ -6,6 +6,68 @@
 #include "Networking.h"
 #include <Windows.h>
 
+// Virtual Players Max Bullets
+BULLET gVul[BULLET_MAX * MAX_CLIENTS];
+
+void SetVirtualBullet(int no, int x, int y, int dir)
+{
+	int i = 0;
+	while (i < (BULLET_MAX * MAX_CLIENTS) && gVul[i].cond & 0x80)
+		++i;
+
+	if (i >= BULLET_MAX * MAX_CLIENTS)
+		return;
+
+	memset(&gVul[i], 0, sizeof(BULLET));
+	gVul[i].code_bullet = no;
+	gVul[i].cond = 0x80;
+	gVul[i].direct = dir;
+	gVul[i].damage = gBulTbl[no].damage;
+	gVul[i].life = gBulTbl[no].life;
+	gVul[i].life_count = gBulTbl[no].life_count;
+	gVul[i].bbits = gBulTbl[no].bbits;
+	gVul[i].enemyXL = gBulTbl[no].enemyXL * 0x200;
+	gVul[i].enemyYL = gBulTbl[no].enemyYL * 0x200;
+	gVul[i].blockXL = gBulTbl[no].blockXL * 0x200;
+	gVul[i].blockYL = gBulTbl[no].blockYL * 0x200;
+	gVul[i].view.back = gBulTbl[no].view.back * 0x200;
+	gVul[i].view.front = gBulTbl[no].view.front * 0x200;
+	gVul[i].view.top = gBulTbl[no].view.top * 0x200;
+	gVul[i].view.bottom = gBulTbl[no].view.bottom * 0x200;
+	gVul[i].x = x;
+	gVul[i].y = y;
+}
+
+// Test function replacement
+void CS_SetBullet(int no, int x, int y, int dir)
+{
+	int i = 0;
+	while (i < BULLET_MAX && gBul[i].cond & 0x80)
+		++i;
+
+	if (i >= BULLET_MAX)
+		return;
+
+	memset(&gBul[i], 0, sizeof(BULLET));
+	gBul[i].code_bullet = no;
+	gBul[i].cond = 0x80;
+	gBul[i].direct = dir;
+	gBul[i].damage = gBulTbl[no].damage;
+	gBul[i].life = gBulTbl[no].life;
+	gBul[i].life_count = gBulTbl[no].life_count;
+	gBul[i].bbits = gBulTbl[no].bbits;
+	gBul[i].enemyXL = gBulTbl[no].enemyXL * 0x200;
+	gBul[i].enemyYL = gBulTbl[no].enemyYL * 0x200;
+	gBul[i].blockXL = gBulTbl[no].blockXL * 0x200;
+	gBul[i].blockYL = gBulTbl[no].blockYL * 0x200;
+	gBul[i].view.back = gBulTbl[no].view.back * 0x200;
+	gBul[i].view.front = gBulTbl[no].view.front * 0x200;
+	gBul[i].view.top = gBulTbl[no].view.top * 0x200;
+	gBul[i].view.bottom = gBulTbl[no].view.bottom * 0x200;
+	gBul[i].x = x;
+	gBul[i].y = y;
+}
+
 void VPShootBullet_Snake(int level)
 {
 	int bul_no;

@@ -66,6 +66,7 @@ extern int my_soft_rensha;
 #define KEY_ENTER 0x800000
 
 // Variables
+#define hMutex (*(HANDLE*)0x49E478) // handle to the games mutex
 #define ghWnd (*(HWND*)0x49E458) //ghWnd
 #define mag (*(int*)0x48F914) // mag
 #define grcGame (*(RECT*)0x48F91C) // grcGame
