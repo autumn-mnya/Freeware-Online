@@ -114,6 +114,7 @@ static int* gun_empty = (int*)0x4A554C;
 static int* gNumberTextScript = (int*)0x4A5B34;
 #define gWaterY (*(int*)0x499C90)
 #define bContinue (*(BOOL*)0x49E1E4)
+#define bMax (*(BOOL*)0x4A5560) // If spur is at max charge
 
 // <MIM Compatibility
 #define CSM_MIM_unobstructive (*(unsigned int*)0x49E184)
@@ -1154,7 +1155,7 @@ static void (* const HitMyCharBoss)(void) = (void(*)(void))0x417E40;
 // MycParam functions
 static void (* const AddExpMyChar)(int x) = (void(*)(int))0x4196F0;
 static void (* const ZeroExpMyChar)(void) = (void(*)(void))0x419890;
-static BOOL(* const IsExpMyChar)(void) = (BOOL(*)(void))0x4198C0;
+static BOOL(* const IsMaxExpMyChar)(void) = (BOOL(*)(void))0x4198C0;
 static void (* const DamageMyChar)(int damage) = (void(*)(int))0x419910;
 static void (* const ZeroArmsEnergy_All)(void) = (void(*)(void))0x419B50;
 static void (* const AddBulletMyChar)(int no, int val) = (void(*)(int, int))0x419BA0;

@@ -73,6 +73,7 @@ struct VIRTUAL_PLAYER
 	bool shooting;
 	int soft_rensha;
 	int arms_level;
+	bool spurMax;
 };
 
 struct PACKET
