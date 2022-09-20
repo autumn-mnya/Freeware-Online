@@ -309,7 +309,7 @@ void VirtualShootBullet()
 						break;
 
 					case 3:
-						ShootBullet_FireBall(gVirtualPlayers[i].arms_level);
+						VPShootBullet_FireBall(gVirtualPlayers[i].arms_level);
 						break;
 
 					case 4:
