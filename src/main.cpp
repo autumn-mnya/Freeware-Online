@@ -6,6 +6,7 @@
 #include "cave_story.h"
 #include "Inputs.h"
 #include "Networking.h"
+#include "VirtualPlayer.h"
 
 const char* gameIp;
 const char* gamePort;
@@ -85,77 +86,6 @@ void HandleChat()
 			CortBox2(&rcChatTypeArea, 0x000000, SURFACE_ID_CHAT);
 			PutText2(8, WINDOW_HEIGHT - CHAT_OFF_Y + CHAT_LINE_HEIGHT + 1, "Say: _", 0x110022, SURFACE_ID_CHAT);
 			PutText2(8, WINDOW_HEIGHT - CHAT_OFF_Y + CHAT_LINE_HEIGHT, "Say: _", 0xFFFFFE, SURFACE_ID_CHAT);
-		}
-	}
-}
-
-void SetMyShooting()
-{
-	if (my_soft_rensha != 0)
-		--my_soft_rensha;
-
-	if ((gKeyTrg & gKeyShot) && g_GameFlags & 2)
-	{
-		if (gArmsData[gSelectedArms].code != 0 && my_soft_rensha == 0)
-		{
-			my_soft_rensha = 4;
-			my_shooting = true;
-		}
-	}
-	else if (my_soft_rensha == 0)
-	{
-		my_shooting = false;
-	}
-}
-
-void VirtualShootBullet()
-{
-	for (int i = 0; i < MAX_CLIENTS; i++)
-	{
-		if (gVirtualPlayers[i].stage == gStageNo)
-		{
-			if (gVirtualPlayers[i].shooting == true && gVirtualPlayers[i].arms != 0)
-			{
-				if (gVirtualPlayers[i].up)
-				{
-					if (gVirtualPlayers[i].direct == 0)
-					{
-						SetBullet(6, gVirtualPlayers[i].x - (1 * 0x200), gVirtualPlayers[i].y - (8 * 0x200), 1);
-						SetCaret(gVirtualPlayers[i].x - (1 * 0x200), gVirtualPlayers[i].y - (8 * 0x200), CARET_SHOOT, DIR_LEFT);
-					}
-					else
-					{
-						SetBullet(6, gVirtualPlayers[i].x + (1 * 0x200), gVirtualPlayers[i].y - (8 * 0x200), 1);
-						SetCaret(gVirtualPlayers[i].x + (1 * 0x200), gVirtualPlayers[i].y - (8 * 0x200), CARET_SHOOT, DIR_LEFT);
-					}
-				}
-				else if (gVirtualPlayers[i].down)
-				{
-					if (gVirtualPlayers[i].direct == 0)
-					{
-						SetBullet(6, gVirtualPlayers[i].x - (1 * 0x200), gVirtualPlayers[i].y + (8 * 0x200), 3);
-						SetCaret(gVirtualPlayers[i].x - (1 * 0x200), gVirtualPlayers[i].y + (8 * 0x200), CARET_SHOOT, DIR_LEFT);
-					}
-					else
-					{
-						SetBullet(6, gVirtualPlayers[i].x + (1 * 0x200), gVirtualPlayers[i].y + (8 * 0x200), 3);
-						SetCaret(gVirtualPlayers[i].x + (1 * 0x200), gVirtualPlayers[i].y + (8 * 0x200), CARET_SHOOT, DIR_LEFT);
-					}
-				}
-				else
-				{
-					if (gVirtualPlayers[i].direct == 0)
-					{
-						SetBullet(6, gVirtualPlayers[i].x - (6 * 0x200), gVirtualPlayers[i].y + (3 * 0x200), 0);
-						SetCaret(gVirtualPlayers[i].x - (12 * 0x200), gVirtualPlayers[i].y + (3 * 0x200), CARET_SHOOT, DIR_LEFT);
-					}
-					else
-					{
-						SetBullet(6, gVirtualPlayers[i].x + (6 * 0x200), gVirtualPlayers[i].y + (3 * 0x200), 2);
-						SetCaret(gVirtualPlayers[i].x + (12 * 0x200), gVirtualPlayers[i].y + (3 * 0x200), CARET_SHOOT, DIR_LEFT);
-					}
-				}
-			}
 		}
 	}
 }

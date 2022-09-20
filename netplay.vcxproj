@@ -87,6 +87,7 @@
   <ItemGroup>
     <ClCompile Include="src\ByteStream.cpp" />
     <ClCompile Include="src\Inputs.cpp" />
+    <ClCompile Include="src\VirtualShoot.cpp" />
     <ClCompile Include="src\\main.cpp" />
     <ClCompile Include="src\\mod_loader.cpp" />
     <ClCompile Include="src\\Networking.cpp" />
@@ -94,6 +95,7 @@
   <ItemGroup>
     <ClInclude Include="src\ByteStream.h" />
     <ClInclude Include="src\Inputs.h" />
+    <ClInclude Include="src\VirtualPlayer.h" />
     <ClInclude Include="src\\cave_story.h" />
     <ClInclude Include="src\\mod_loader.h" />
     <ClInclude Include="src\\mod_loader_hooks.h" />
