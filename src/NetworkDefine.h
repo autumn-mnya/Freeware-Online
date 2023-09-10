@@ -70,10 +70,6 @@ struct VIRTUAL_PLAYER
 	bool hide_vp_on_map;
 	int player_num;
 	bool is_being_held;
-	bool shooting;
-	int soft_rensha;
-	int arms_level;
-	bool spurMax;
 };
 
 struct PACKET

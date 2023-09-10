@@ -86,22 +86,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\ByteStream.cpp" />
-<<<<<<< HEAD
-    <ClCompile Include="src\Inputs.cpp" />
-    <ClCompile Include="src\VirtualShoot.cpp" />
-=======
->>>>>>> parent of 5583566 (netplay dev testiungggggg)
     <ClCompile Include="src\\main.cpp" />
     <ClCompile Include="src\\mod_loader.cpp" />
     <ClCompile Include="src\\Networking.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ByteStream.h" />
-<<<<<<< HEAD
-    <ClInclude Include="src\Inputs.h" />
-    <ClInclude Include="src\VirtualShoot.h" />
-=======
->>>>>>> parent of 5583566 (netplay dev testiungggggg)
     <ClInclude Include="src\\cave_story.h" />
     <ClInclude Include="src\\mod_loader.h" />
     <ClInclude Include="src\\mod_loader_hooks.h" />

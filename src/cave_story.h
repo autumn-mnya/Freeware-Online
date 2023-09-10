@@ -11,8 +11,6 @@ extern int mim_compatibility;
 extern int show_player_names;
 extern bool hide_me_on_map;
 extern bool im_being_held;
-extern bool my_shooting;
-extern int my_soft_rensha;
 
 // <MIM Compatibility
 #define CSM_MIM_unobstructive (*(unsigned int*)0x49E184)
@@ -60,17 +58,9 @@ extern int my_soft_rensha;
 #define KEY_L 0x80000
 #define KEY_PLUS 0x100000
 #define KEY_ESCAPE 0x8000
-<<<<<<< HEAD
-// Freeware Online keys
-#define KEY_TAB 0x200000
-#define KEY_T 0x400000
-#define KEY_ENTER 0x800000
-=======
 
->>>>>>> parent of 5583566 (netplay dev testiungggggg)
 
 // Variables
-#define hMutex (*(HANDLE*)0x49E478) // handle to the games mutex
 #define ghWnd (*(HWND*)0x49E458) //ghWnd
 #define mag (*(int*)0x48F914) // mag
 #define grcGame (*(RECT*)0x48F91C) // grcGame
@@ -119,7 +109,6 @@ static int* gun_empty = (int*)0x4A554C;
 static int* gNumberTextScript = (int*)0x4A5B34;
 #define gWaterY (*(int*)0x499C90)
 #define bContinue (*(BOOL*)0x49E1E4)
-#define bMax (*(BOOL*)0x4A5560) // If spur is at max charge
 
 // <MIM Compatibility
 #define CSM_MIM_unobstructive (*(unsigned int*)0x49E184)
@@ -185,7 +174,6 @@ typedef enum SurfaceID
 	SURFACE_ID_LEVEL_TILESET = 2,
 	SURFACE_ID_USERNAME = 3,
 	SURFACE_ID_SKIN = 4,
-	SURFACE_ID_CHAT = 5,
 	SURFACE_ID_FADE = 6,
 	SURFACE_ID_ITEM_IMAGE = 8,
 	SURFACE_ID_MAP = 9,
@@ -1160,7 +1148,7 @@ static void (* const HitMyCharBoss)(void) = (void(*)(void))0x417E40;
 // MycParam functions
 static void (* const AddExpMyChar)(int x) = (void(*)(int))0x4196F0;
 static void (* const ZeroExpMyChar)(void) = (void(*)(void))0x419890;
-static BOOL(* const IsMaxExpMyChar)(void) = (BOOL(*)(void))0x4198C0;
+static BOOL(* const IsExpMyChar)(void) = (BOOL(*)(void))0x4198C0;
 static void (* const DamageMyChar)(int damage) = (void(*)(int))0x419910;
 static void (* const ZeroArmsEnergy_All)(void) = (void(*)(void))0x419B50;
 static void (* const AddBulletMyChar)(int no, int val) = (void(*)(int, int))0x419BA0;

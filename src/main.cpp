@@ -5,7 +5,6 @@
 
 #include "cave_story.h"
 #include "Networking.h"
-#include "VirtualShoot.h"
 
 const char* gameIp;
 const char* gamePort;
@@ -13,15 +12,10 @@ const char* gamePlyrName;
 bool japanese;
 int mim_compatibility;
 int show_player_names;
-bool enable_map_calls;
 bool hide_players_on_map;
 bool hide_me_on_map;
 bool im_being_held = false;
 bool pause_window_on_lost_focus = false;
-// I'm shooting a gun
-bool enable_experimental_shoot_sync = false;
-bool my_shooting = false;
-int my_soft_rensha = 0;
 
 int networkStarted = 0;
 
@@ -34,74 +28,10 @@ const char* JpnPressPeriodText = "\x83\x73\x83\x8A\x83\x49\x83\x68\x83\x4C\x81\x
 const char* DisconnectedText;
 const char* PressPeriodText;
 
-bool gTypingChat = false;
-
-void HandleChat()
-{
-	static char chatMessage[PACKET_DATA];
-	static RECT rcChatTypeArea = { 0, WINDOW_HEIGHT - CHAT_OFF_Y + CHAT_LINE_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT };
-
-	if (gTypingChat == true)
-	{
-		gLastChatMessage = GetTickCount();
-
-		if (strlen(gTypedText) > 0)
-		{
-			if (gTypedText[0] == '\x08')
-			{
-				if (strlen(chatMessage))
-					chatMessage[strlen(chatMessage) - 1] = '\0';
-			}
-			else if (strlen(chatMessage) + strlen(gTypedText) < PACKET_DATA)
-				strcat(chatMessage, gTypedText);
-			PlaySoundObject(2, SOUND_MODE_PLAY);
-
-			//Redraw text
-			CortBox2(&rcChatTypeArea, 0x000000, SURFACE_ID_CHAT);
-
-			char text[PACKET_DATA + 5];
-			sprintf(text, "Say: %s_", chatMessage);
-			PutText2(8, WINDOW_HEIGHT - CHAT_OFF_Y + CHAT_LINE_HEIGHT + 1, text, 0x110022, SURFACE_ID_CHAT);
-			PutText2(8, WINDOW_HEIGHT - CHAT_OFF_Y + CHAT_LINE_HEIGHT, text, 0xFFFFFE, SURFACE_ID_CHAT);
-		}
-
-		if (gKeyTrg & KEY_ENTER)
-		{
-			if (strlen(chatMessage) > 0)
-				SendChatMessage(NULL, chatMessage);
-			memset(chatMessage, 0, PACKET_DATA);
-			CortBox2(&rcChatTypeArea, 0x000000, SURFACE_ID_CHAT);
-			gTypingChat = false;
-		}
-	}
-
-	//Open chat when T is pressed
-	if (gKeyTrg & KEY_T)
-	{
-		if (gTypingChat == false)
-		{
-			memset(chatMessage, 0, PACKET_DATA);
-			gTypingChat = true;
-
-			//Redraw text
-			CortBox2(&rcChatTypeArea, 0x000000, SURFACE_ID_CHAT);
-			PutText2(8, WINDOW_HEIGHT - CHAT_OFF_Y + CHAT_LINE_HEIGHT + 1, "Say: _", 0x110022, SURFACE_ID_CHAT);
-			PutText2(8, WINDOW_HEIGHT - CHAT_OFF_Y + CHAT_LINE_HEIGHT, "Say: _", 0xFFFFFE, SURFACE_ID_CHAT);
-		}
-	}
-}
-
 void ServerHandler()
 {
 	if (InServer())
-	{
 		HandleClient();
-		if (enable_experimental_shoot_sync)
-		{
-			SetMyShooting();
-			VirtualShootBullet();
-		}
-	}
 	else
 		KillClient();
 }
@@ -136,7 +66,7 @@ void ModeAction_GetTrg()
 	if (networkStarted == 1 && !InServer())
 	{
 		// Period key pressed, reset network state.
-		if (gKey & gKeyReconnect)
+		if (gKey & KEY_ALT_DOWN)
 			networkStarted = 0;
 	}
 
@@ -223,14 +153,6 @@ void ModeAction_PutFramePerSecound()
 {
 	PutServer();
 
-<<<<<<< HEAD
-	if (gKey & gKeyChat)
-		PutText(0, 64, "banger game", 0xFFFFFF);
-
-	PutText(0, 80, gTypedText, 0xFFFFFF);
-
-=======
->>>>>>> parent of 5583566 (netplay dev testiungggggg)
 	if (!InServer())
 	{
 		PutText(0, 1, DisconnectedText, 0x000010);
@@ -247,7 +169,6 @@ void MakeCustomSurfaces(int x, int y, int s, BOOL r)
 {
 	MakeSurface_Generic(x, y, s, r);
 	MakeSurface_Generic(WINDOW_WIDTH * 2, MAX_CLIENTS * 16, SURFACE_ID_USERNAME, FALSE);
-	MakeSurface_Generic(WINDOW_WIDTH, WINDOW_HEIGHT, SURFACE_ID_CHAT, FALSE);
 }
 
 void InitMod(void)
@@ -258,11 +179,9 @@ void InitMod(void)
 	japanese = ModLoader_GetSettingBool("JAPANESE", false);
 	mim_compatibility = ModLoader_GetSettingInt("MIM_COMPATIBLITY", 0);
 	show_player_names = ModLoader_GetSettingInt("NAME_DISPLAY", 0);
-	enable_map_calls = ModLoader_GetSettingBool("ENABLE_MAP_SYSTEM_CODE", true);
 	hide_players_on_map = ModLoader_GetSettingBool("HIDE_PLAYERS_ON_MAP", false);
 	hide_me_on_map = ModLoader_GetSettingBool("HIDE_ME_ON_MAP", false);
 	pause_window_on_lost_focus = ModLoader_GetSettingBool("PAUSE_WINDOW_ON_LOST_FOCUS", false);
-	enable_experimental_shoot_sync = ModLoader_GetSettingBool("ENABLE_SHOOT_SYNC", false);
 
 	if (pause_window_on_lost_focus == false)
 		ModLoader_WriteCall((void*)0x413316, (void*)ActiveWindow);
@@ -275,17 +194,14 @@ void InitMod(void)
 	ModLoader_WriteCall((void*)0x4104D0, (void*)ModeAction_GetTrg);
 	ModLoader_WriteCall((void*)0x410874, (void*)ModeAction_PutFramePerSecound);
 	// MiniMapLoop replacement CALLs (run networking in minimap)
-	if (enable_map_calls)
-	{
-		ModLoader_WriteCall((void*)0x41483A, (void*)MiniMapLoop_CortBox2);
-		ModLoader_WriteCall((void*)0x4146BE, (void*)MiniMapLoop_GetTrg);
-		ModLoader_WriteCall((void*)0x4147B8, (void*)MiniMapLoop_PutFramePerSecound);
-		ModLoader_WriteCall((void*)0x41485A, (void*)MiniMapLoop_GetTrg);
-		ModLoader_WriteCall((void*)0x41498E, (void*)MiniMapLoop_PutBitmapPlayer);
-		ModLoader_WriteCall((void*)0x414996, (void*)MiniMapLoop_PutFramePerSecound);
-		ModLoader_WriteCall((void*)0x4149D6, (void*)MiniMapLoop_GetTrg);
-		ModLoader_WriteCall((void*)0x414AD0, (void*)MiniMapLoop_PutFramePerSecound);
-	}
+	ModLoader_WriteCall((void*)0x41483A, (void*)MiniMapLoop_CortBox2);
+	ModLoader_WriteCall((void*)0x4146BE, (void*)MiniMapLoop_GetTrg);
+	ModLoader_WriteCall((void*)0x4147B8, (void*)MiniMapLoop_PutFramePerSecound);
+	ModLoader_WriteCall((void*)0x41485A, (void*)MiniMapLoop_GetTrg);
+	ModLoader_WriteCall((void*)0x41498E, (void*)MiniMapLoop_PutBitmapPlayer);
+	ModLoader_WriteCall((void*)0x414996, (void*)MiniMapLoop_PutFramePerSecound);
+	ModLoader_WriteCall((void*)0x4149D6, (void*)MiniMapLoop_GetTrg);
+	ModLoader_WriteCall((void*)0x414AD0, (void*)MiniMapLoop_PutFramePerSecound);
 	// SelectStage_Loop replacement CALLs (run networking in teleporter menu)
 	ModLoader_WriteCall((void*)0x41DA88, (void*)SelectStage_Loop_GetTrg);
 	ModLoader_WriteCall((void*)0x41DB6F, (void*)SelectStage_Loop_PutFramePerSecound);
