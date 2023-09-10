@@ -60,10 +60,14 @@ extern int my_soft_rensha;
 #define KEY_L 0x80000
 #define KEY_PLUS 0x100000
 #define KEY_ESCAPE 0x8000
+<<<<<<< HEAD
 // Freeware Online keys
 #define KEY_TAB 0x200000
 #define KEY_T 0x400000
 #define KEY_ENTER 0x800000
+=======
+
+>>>>>>> parent of 5583566 (netplay dev testiungggggg)
 
 // Variables
 #define hMutex (*(HANDLE*)0x49E478) // handle to the games mutex

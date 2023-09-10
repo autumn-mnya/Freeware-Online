@@ -4,7 +4,6 @@
 #include "mod_loader.h"
 
 #include "cave_story.h"
-#include "Inputs.h"
 #include "Networking.h"
 #include "VirtualShoot.h"
 
@@ -123,9 +122,6 @@ void CampLoop_PutFramePerSecound()
 
 void ModeAction_GetTrg()
 {
-	CustomInputHandler();
-	ChatInput();
-
 	if (japanese != true)
 	{
 		DisconnectedText = EngDisconnectedText;
@@ -227,11 +223,14 @@ void ModeAction_PutFramePerSecound()
 {
 	PutServer();
 
+<<<<<<< HEAD
 	if (gKey & gKeyChat)
 		PutText(0, 64, "banger game", 0xFFFFFF);
 
 	PutText(0, 80, gTypedText, 0xFFFFFF);
 
+=======
+>>>>>>> parent of 5583566 (netplay dev testiungggggg)
 	if (!InServer())
 	{
 		PutText(0, 1, DisconnectedText, 0x000010);

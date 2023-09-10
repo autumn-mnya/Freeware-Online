@@ -12,7 +12,6 @@
 #include "File.h"
 #include "Networking.h"
 #include "cave_story.h"
-#include "Inputs.h"
 #include "mod_loader.h"
 #include "ByteStream.h"
 
@@ -666,7 +665,7 @@ void PutServer()
 		PutBitmap3(&grcGame, 0, WINDOW_HEIGHT / 2, &rcChat, SURFACE_ID_CHAT);
 
 
-	if (gKey & gKeyPlayerList)
+	if (gKey & KEY_ALT_LEFT)
 	{
 		//Draw player-list
 		const int nameWidth = ((MAX_NAME * 5) + 8 + 16);
