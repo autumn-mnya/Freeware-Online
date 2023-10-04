@@ -1,23 +1,21 @@
-﻿#pragma once
+﻿// Mod loader for Freeware Cave Story
+// Public domain
+#pragma once
 
 #include <ddraw.h>
 #include <dinput.h>
 #include <dsound.h>
-#include "Windows.h"
+#include <windows.h>
 
-extern const char* gameIp;
-extern const char* gamePort;
-extern int mim_compatibility;
-extern int show_player_names;
-extern bool hide_me_on_map;
-extern bool im_being_held;
+static int& window_magnification = *reinterpret_cast<int*>(0x48F914); // Window magnification
+static ::RECT& grcGame = *reinterpret_cast<::RECT*>(0x48F91C);
+static ::RECT& grcFull = *reinterpret_cast<::RECT*>(0x48F92C);
 
-// <MIM Compatibility
-#define CSM_MIM_unobstructive (*(unsigned int*)0x49E184)
-#define CSM_MIM_tsc_plus  (*(int*)0x49E09C)
+static auto& gModulePath = *reinterpret_cast<char(*)[MAX_PATH]>(0x49E328);
+static auto& gDataPath = *reinterpret_cast<char(*)[MAX_PATH]>(0x49E220);
 
-#define WINDOW_WIDTH 320
-#define WINDOW_HEIGHT 240
+#define WINDOW_WIDTH grcGame.right
+#define WINDOW_HEIGHT grcGame.bottom
 
 // Max amounts of X
 
@@ -27,8 +25,8 @@ extern bool im_being_held;
 #define BULLET_MAX 0x40
 #define CARET_MAX 0x40
 #define MAX_STRIP ((240 / 16) + 1)
-#define FADE_WIDTH	(((WINDOW_WIDTH - 1) / 16) + 1)
-#define FADE_HEIGHT	(((WINDOW_HEIGHT - 1) / 16) + 1)
+#define FADE_WIDTH	(((320 - 1) / 16) + 1)
+#define FADE_HEIGHT	(((320 - 1) / 16) + 1)
 #define PXM_BUFFER_SIZE 0x4B000
 #define NPC_MAX 0x200
 #define STAGE_MAX 8
@@ -38,19 +36,21 @@ extern bool im_being_held;
 
 // Input key detection
 
-#define gKey (*(int*)0x49E210)
-#define gKeyTrg (*(int*)0x49E214)
+static int& gKey = *reinterpret_cast<int*>(0x49E210);
+static int& gKeyTrg = *reinterpret_cast<int*>(0x49E214);
+static int& gKeyJump = *reinterpret_cast<int*>(0x493610);
+static int& gKeyShot = *reinterpret_cast<int*>(0x493614);
+static int& gKeyArms = *reinterpret_cast<int*>(0x493618);
+static int& gKeyArmsRev = *reinterpret_cast<int*>(0x49361C);
+static int& gKeyItem = *reinterpret_cast<int*>(0x493620);
+static int& gKeyMap = *reinterpret_cast<int*>(0x493624);
+static int& gKeyOk = *reinterpret_cast<int*>(0x493628);
+static int& gKeyCancel = *reinterpret_cast<int*>(0x49362C);
+static int& gKeyLeft = *reinterpret_cast<int*>(0x493630);
+static int& gKeyUp = *reinterpret_cast<int*>(0x493634);
+static int& gKeyRight = *reinterpret_cast<int*>(0x493638);
+static int& gKeyDown = *reinterpret_cast<int*>(0x49363C);
 
-#define gKeyArms (*(int*)0x493618)
-#define gKeyArmsRev (*(int*)0x49361C)
-#define gKeyItem (*(int*)0x493620)
-#define gKeyMap (*(int*)0x493624)
-#define gKeyJump (*(int*)0x493628)
-#define gKeyShot (*(int*)0x49362C)
-#define gKeyLeft (*(int*)0x493630)
-#define gKeyUp (*(int*)0x493634)
-#define gKeyRight (*(int*)0x493638)
-#define gKeyDown (*(int*)0x49363C)
 #define KEY_ALT_LEFT 0x10000
 #define KEY_ALT_DOWN 0x20000
 #define KEY_ALT_RIGHT 0x40000
@@ -59,20 +59,25 @@ extern bool im_being_held;
 #define KEY_PLUS 0x100000
 #define KEY_ESCAPE 0x8000
 
-
 // Variables
-#define ghWnd (*(HWND*)0x49E458) //ghWnd
-#define mag (*(int*)0x48F914) // mag
-#define grcGame (*(RECT*)0x48F91C) // grcGame
-#define grcFull (*(RECT*)0x48F92C) // grcFull
+static HWND& ghWnd = *reinterpret_cast<HWND*>(0x49E458);
+static const char*& lpWindowName = *reinterpret_cast<const char**>(0x493640);
+static HINSTANCE ghInstance = *reinterpret_cast<HINSTANCE*>(0x49E44C);
+
+#define hObject (*(HANDLE*)0x49E478)
+#define hMutex (*(HANDLE*)0x49E47C)
+
 #define background_tile_width (*(int*)0x499C78)
 #define background_tile_height (*(int*)0x499C7C)
+
 #define dword_499C8C (*(int*)0x499C8C)
+
 #define window_padding_h (*(int*)0x49CDA8)
 #define window_padding_w (*(int*)0x49CDAC)
+
 #define window_surface_width (*(int*)0x49D374)
 #define window_surface_height (*(int*)0x49D378)
-#define directdraw (*(IDirectDraw7**)0x49D37C) 
+#define directdraw (*(IDirectDraw7**)0x49D37C)
 #define screen_primary_surface (*(IDirectDrawSurface7** const)0x49D380)
 #define screen_surface (*(IDirectDrawSurface7** const)0x49D384)
 #define surfaces (*(IDirectDrawSurface7*(*)[40])0x49D388)
@@ -100,22 +105,29 @@ extern bool im_being_held;
 #define gSelectedItem (*(int*)0x499C6C)
 #define music_fade_flag (*(int*)0x4A4E10)
 #define gStageNo (*(int*)0x4A57F0) // gStageNo
-#define gMusicNo (*(int*)0x4A57F4) // gMusicNo
-#define gOldPos (*(int*)0x4A57F8) // gOldPos (previous position in music)
-#define gOldNo (*(int*)0x4A57FC) // gOldNo (previous music)
-#define g_GameFlags (*(int*)0x49E1E8)
-#define gCounter (*(int*)0x49E1EC)
-static int* gun_empty = (int*)0x4A554C;
-static int* gNumberTextScript = (int*)0x4A5B34;
-#define gWaterY (*(int*)0x499C90)
 #define bContinue (*(BOOL*)0x49E1E4)
+static BOOL& bFPS = *reinterpret_cast<BOOL*>(0x49E464);
+static BOOL& bActive = *reinterpret_cast<BOOL*>(0x49E468);
+static BOOL& bFullscreen = *reinterpret_cast<BOOL*>(0x49E460);
+#define BoosterFuel (*(int*)0x49E6E8)
+
+#define gConfigHeader (*(char*)0x48F908) // config header
+#define gConfigFileName (*(char**)0x48F90C) // config filename
 
 // <MIM Compatibility
 #define CSM_MIM_unobstructive (*(unsigned int*)0x49E184)
 #define CSM_MIM_tsc_plus  (*(int*)0x49E09C)
 
+// Hookspaces & Hookjumps
+
+#define TextScriptBuffer (*(char**)0x4A5AD8) // I renamed this one but you get the idea
+#define CS_tsc_offset (*(unsigned int*)0x4A5AE0) // gTS.p_read
+
+#define CSH_tsc_start (void*) 0x4225D5, 12
+#define CSH_tsc_end (void*) 0x425244, 12
+#define CSJ_tsc_done 0x4225CB
+
 // String array
-#define gMusicTable (*(char*(*)[42])0x4981E8)
 
 struct OTHER_RECT	// The original name for this struct is unknown
 {
@@ -125,23 +137,13 @@ struct OTHER_RECT	// The original name for this struct is unknown
 	int bottom;
 };
 
-enum Collisions
-{
-	COLL_LEFT_WALL = 1,     // Touching a left wall
-	COLL_CEILING = 2,       // Touching a ceiling
-	COLL_RIGHT_WALL = 4,    // Touching a right wall
-	COLL_GROUND = 8         // Touching the ground
-	// To be continued
-};
+// Enums
 
-enum Direction
+enum
 {
-	DIR_LEFT = 0,
-	DIR_UP = 1,
-	DIR_RIGHT = 2,
-	DIR_DOWN = 3,
-	DIR_AUTO = 4,
-	DIR_OTHER = 5
+	enum_ESCRETURN_exit,
+	enum_ESCRETURN_continue,
+	enum_ESCRETURN_restart
 };
 
 enum
@@ -166,14 +168,69 @@ enum
 	CARET_PUSH_JUMP_KEY = 17
 };
 
-// Enums
+enum
+{
+	EQUIP_BOOSTER_0_8 = 1,
+	EQUIP_MAP = 2,
+	EQUIP_ARMS_BARRIER = 4,
+	EQUIP_TURBOCHARGE = 8,
+	EQUIP_AIR_TANK = 0x10,
+	EQUIP_BOOSTER_2_0 = 0x20,
+	EQUIP_MIMIGA_MASK = 0x40,
+	EQUIP_WHIMSICAL_STAR = 0x80,
+	EQUIP_NIKUMARU_COUNTER = 0x100
+};
+
+enum SoundEffectNames
+{
+	SND_YES_NO_CHANGE_CHOICE = 1,
+	SND_MESSAGE_TYPING = 2,
+	SND_QUOTE_BUMP_HEAD = 3,
+	SND_SWITCH_WEAPON = 4,
+	SND_YES_NO_PROMPT = 5,
+	// To be continued
+	SND_SILLY_EXPLOSION = 25,
+	SND_LARGE_OBJECT_HIT_GROUND = 26,
+	// To be continued
+	SND_ENEMY_SHOOT_PROJECTILE = 39,
+	// To be continued
+	SND_BEHEMOTH_LARGE_HURT = 52,
+	// To be continued
+	SND_EXPLOSION = 72
+	// To be continued
+};
+
+enum Collisions
+{
+	COLL_LEFT_WALL = 1,     // Touching a left wall
+	COLL_CEILING = 2,       // Touching a ceiling
+	COLL_RIGHT_WALL = 4,    // Touching a right wall
+	COLL_GROUND = 8         // Touching the ground
+	// To be continued
+};
+
+enum Direction
+{
+	DIR_LEFT = 0,
+	DIR_UP = 1,
+	DIR_RIGHT = 2,
+	DIR_DOWN = 3,
+	DIR_AUTO = 4,
+	DIR_OTHER = 5
+};
+
+enum FlashMode
+{
+	FLASH_MODE_EXPLOSION = 1,
+	FLASH_MODE_FLASH = 2
+};
+
 typedef enum SurfaceID
 {
 	SURFACE_ID_TITLE = 0,
 	SURFACE_ID_PIXEL = 1,
 	SURFACE_ID_LEVEL_TILESET = 2,
 	SURFACE_ID_USERNAME = 3,
-	SURFACE_ID_SKIN = 4,
 	SURFACE_ID_FADE = 6,
 	SURFACE_ID_ITEM_IMAGE = 8,
 	SURFACE_ID_MAP = 9,
@@ -202,8 +259,6 @@ typedef enum SurfaceID
 	SURFACE_ID_CREDIT_CAST = 35,
 	SURFACE_ID_CREDITS_IMAGE = 36,
 	SURFACE_ID_CASTS = 37,
-	SURFACE_ID_NES = 38,
-	SURFACE_ID_UI = 39,
 	SURFACE_ID_MAX = 40
 } SurfaceID;
 
@@ -253,16 +308,17 @@ typedef struct BOSSLIFE	// Not the original struct name
 } BOSSLIFE;
 
 // Config
+
 typedef struct ConfigData
 {
-	char magic_string[0x20];
+	char proof[0x20];
 	char font_name[0x40];
-	unsigned long directional_keys;
-	unsigned long jump_shoot_keys;
-	unsigned long jump_shoot_keys_2;
-	unsigned long window_size;
-	unsigned long gamepad_enabled;
-	unsigned long gamepad_buttons[8];
+	long move_button_mode;
+	long attack_button_mode;
+	long ok_button_mode;
+	long display_mode;
+	BOOL bJoystick;
+	long joystick_button[8];
 } ConfigData;
 
 // Bullet
@@ -396,15 +452,9 @@ struct FADE
 
 // Flash
 
-enum FlashMode
+struct FLASH
 {
-	FLASH_MODE_EXPLOSION = 1,
-	FLASH_MODE_FLASH = 2
-};
-
-static struct
-{
-	FlashMode mode;
+	int mode;
 	int act_no;
 	BOOL flag;
 	int cnt;
@@ -413,7 +463,20 @@ static struct
 	int y;
 	RECT rect1;
 	RECT rect2;
-} flash;
+};
+
+// Frame
+
+typedef struct FRAME
+{
+	int x;
+	int y;
+	int* tgt_x;
+	int* tgt_y;
+	int wait;
+	int quake;
+	int quake2;
+} FRAME;
 
 // Input
 
@@ -431,7 +494,7 @@ struct DIRECTINPUTSTATUS
 typedef struct MAP_DATA
 {
 	unsigned char* data;
-	unsigned char atrb[0x100];
+	unsigned char atrb[0x101]; // this should be bigger than 0x100
 	short width;
 	short length;
 } MAP_DATA;
@@ -721,6 +784,83 @@ typedef struct PROFILEDATA
 	unsigned char flags[1000];
 } PROFILEDATA;
 
+// Organya
+
+struct ORGANYATRACK
+{
+	unsigned short freq;
+	unsigned char wave_no;
+	unsigned char pipi;
+	unsigned short note_num;
+};
+
+struct ORGANYADATA
+{
+	unsigned short wait;
+	unsigned char line;
+	unsigned char dot;
+	long repeat_x;
+	long end_x;
+	ORGANYATRACK tdata[16];
+};
+
+struct NOTELIST
+{
+	NOTELIST* from;
+	NOTELIST* to;
+	long x;
+	unsigned char length;
+	unsigned char y;
+	unsigned char volume;
+	unsigned char pan;
+};
+
+struct TRACKDATA
+{
+	unsigned short freq;
+	unsigned char wave_no;
+	signed char pipi;
+	NOTELIST* note_p;
+	NOTELIST* note_list;
+};
+
+struct MUSICINFO
+{
+	unsigned short wait;
+	unsigned char line;
+	unsigned char dot;
+	unsigned short alloc_note;
+	long repeat_x;
+	long end_x;
+	TRACKDATA tdata[16];
+};
+
+struct ORGDATA
+{
+	MUSICINFO info;
+	char track;
+	char mute[16];
+	unsigned char def_pan;
+	unsigned char def_volume;
+
+	ORGDATA();
+	void InitOrgData();
+	void GetMusicInfo(MUSICINFO* mi);
+	BOOL SetMusicInfo(MUSICINFO* mi, unsigned long flag);
+	BOOL NoteAlloc(unsigned short note_num);
+	void ReleaseNote(void);
+	void PlayData(void);
+	void SetPlayPointer(long x);
+	BOOL InitMusicData(const char* path);
+};
+
+struct OCTWAVE
+{
+	short wave_size;
+	short oct_par;
+	short oct_size;
+};
+
 // Sound
 
 enum SoundMode
@@ -729,26 +869,6 @@ enum SoundMode
 	SOUND_MODE_STOP = 0,
 	SOUND_MODE_PLAY = 1
 };
-
-// Star
-
-static struct
-{
-	int cond;
-	int code;
-	int direct;
-	int x;
-	int y;
-	int xm;
-	int ym;
-	int act_no;
-	int act_wait;
-	int ani_no;
-	int ani_wait;
-	int view_left;
-	int view_top;
-	RECT rect;
-} star[3];
 
 // TextScript
 
@@ -817,26 +937,119 @@ typedef struct VALUEVIEW
 } VALUEVIEW;
 
 // Pointers to structs
+typedef void (*BOSSFUNCTION)(void);
+typedef void (*CARETFUNCTION)(CARET*);
+typedef void (*NPCFUNCTION)(NPCHAR*);
 
-static ARMS* gArmsData = (ARMS*)0x499BC8;
+static auto& gArmsData = *reinterpret_cast<ARMS(*)[8]>(0x499BC8);
+static auto& gItemData = *reinterpret_cast<ITEM(*)[32]>(0x499B40);
 static ARMS_LEVEL* gArmsLevelTable = (ARMS_LEVEL*)0x493660;
-static BULLET* gBul = (BULLET*)0x499C98;
-static BULLET_TABLE* gBulTbl = (BULLET_TABLE*)0x48F044;
-static NPCHAR* gBoss = (NPCHAR*)0x4BBA58;
-static CARET* gCrt = (CARET*)0x49BCA8;
-static CARET_TABLE* gCaretTable = (CARET_TABLE*)0x48F830;
-static ITEM* gItemData = (ITEM*)0x499B40;
-static MYCHAR* gMC = (MYCHAR*)0x49E638;
-static MAP_DATA* gMap = (MAP_DATA*)0x49E480;
-static NPCHAR* gNPC = (NPCHAR*)0x4A6220;
-static PERMIT_STAGE* gPermitStage = (PERMIT_STAGE*)0x4A5500;
-static STAGE_TABLE* gTMT = (STAGE_TABLE*)(*(unsigned*)0x420c2f); // This is a pointer to where it gets used, instead of the actual table, so that it has compatibility with mods.
-static TEXT_SCRIPT* gTS = (TEXT_SCRIPT*)0x4A59D0;
-static VALUEVIEW* gVV = (VALUEVIEW*)0x4A5F98;
-static signed char* gMapping = (signed char*)0x49E5B8;
-static unsigned char* gFlagNPC = (unsigned char*)0x49DDA0;
-#define gCurlyShoot_wait (*(int*)0x4BBA2C)
 
+static BACK& gBack = *reinterpret_cast<BACK*>(0x499C74);
+static int& gWaterY = *reinterpret_cast<int*>(0x499C90); // Global water level
+
+static auto& gBul = *reinterpret_cast<BULLET(*)[64]>(0x499C98);
+static auto& gBulTbl = *reinterpret_cast<BULLET_TABLE(*)[46]>(0x48F044);
+static int& spur_charge = *reinterpret_cast<int*>(0x4A5550);
+
+static auto& gBoss = *reinterpret_cast<NPCHAR(*)[20]>(0x4BBA58);
+static auto& gpBossFuncTbl = *reinterpret_cast<BOSSFUNCTION(*)[10]>(0x498AEC);
+static BOSSLIFE& gBL = *reinterpret_cast<BOSSLIFE*>(0x4BBA44);
+
+static auto& gCaretTable = *reinterpret_cast<CARET_TABLE(*)[18]>(0x48F830);
+static auto& gpCaretFuncTbl = *reinterpret_cast<CARETFUNCTION(*)[18]>(0x48F8C0);
+static auto& star = *reinterpret_cast<CARET(*)[3]>(0x4A5800);
+
+static const char*& gProof = *reinterpret_cast<const char**>(0x48F908);
+static const char*& gConfigName = *reinterpret_cast<const char**>(0x48F90C);
+
+static FADE& gFade = *reinterpret_cast<FADE*>(0x49DB30);
+static unsigned long& mask_color = *reinterpret_cast<unsigned long*>(0x49DB28);
+
+static auto& gFlagNPC = *reinterpret_cast<unsigned char(*)[1000]>(0x49DDA0);
+static auto& gSkipFlag = *reinterpret_cast<unsigned char(*)[8]>(0x49DD98);
+
+static FLASH& flash = *reinterpret_cast<FLASH*>(0x49E188);
+static unsigned long& gFlashColor = *reinterpret_cast<unsigned long*>(0x49E1C4);
+
+static FRAME& gFrame = *reinterpret_cast<FRAME*>(0x49E1C8);
+
+static MYCHAR& gMC = *reinterpret_cast<MYCHAR*>(0x49E638);
+static int& time_count = *reinterpret_cast<int*>(0x49E6F4); // Nikumaru/290 counter value
+
+static MAP_DATA& gMap = *reinterpret_cast<MAP_DATA*>(0x49E480);
+static const char*& code_pxma = *reinterpret_cast<const char**>(0x49364C);
+static MAP_NAME& gMapName = *reinterpret_cast<MAP_NAME*>(0x49E590);
+static RECT& mapname_rect = *reinterpret_cast<RECT*>(0x493650); // Not original name
+
+static auto& gNPC = *reinterpret_cast<NPCHAR(*)[0x200]>(0x4A6220);
+static int& gCurlyShoot_wait = *reinterpret_cast<int*>(0x4BBA2C);
+static int& gCurlyShoot_x = *reinterpret_cast<int*>(0x4BBA20);
+static int& gCurlyShoot_y = *reinterpret_cast<int*>(0x4BBA24);
+static int& gSuperXpos = *reinterpret_cast<int*>(0x4BBA30);
+static int& gSuperYpos = *reinterpret_cast<int*>(0x4BBA28);
+static const char*& gPassPixEve = *reinterpret_cast<const char**>(0x498540);
+
+static NPC_TABLE** gNpcTable = (NPC_TABLE**)0x4BBA34;
+
+static auto& gPermitStage = *reinterpret_cast<PERMIT_STAGE(*)[8]>(0x4A5500);
+
+static STAGE_TABLE* oTMT = (STAGE_TABLE*)0x4937B0; // Default stage table in the exe.
+static STAGE_TABLE* gTMT = (STAGE_TABLE*)(*(unsigned*)0x420C2F); // This is a pointer to where it gets used, instead of the actual table, so that it has compatibility with mods.
+
+static auto& lpORGANBUFFER = *reinterpret_cast<LPDIRECTSOUNDBUFFER(*)[8][8][2]>(0x4A4B48);
+static auto& oct_wave = *reinterpret_cast<OCTWAVE(*)[8]>(0x493708);
+static WAVEFORMATEX& format_tbl2 = *reinterpret_cast<WAVEFORMATEX*>(0x493738);
+static auto& freq_tbl = *reinterpret_cast<short(*)[12]>(0x49374C);
+static auto& pan_tbl = *reinterpret_cast<short(*)[13]>(0x493764);
+static auto& g_mute = *reinterpret_cast<BOOL(*)[16]>(0x4A4D48);
+static auto& old_key = *reinterpret_cast<unsigned char(*)[16]>(0x493780);
+static auto& key_on = *reinterpret_cast<unsigned char(*)[16]>(0x4A4D88);
+static auto& key_twin = *reinterpret_cast<unsigned char(*)[16]>(0x4A4D98);
+static auto& wave_data = *reinterpret_cast<signed char(*)[100][0x100]>(0x49E700);
+static ORGDATA& org_data = *reinterpret_cast<ORGDATA*>(0x4A4E18);
+static long& PlayPos = *reinterpret_cast<LONG*>(0x4A4B00);
+static auto& np = *reinterpret_cast<NOTELIST * (*)[16]>(0x4A4B08);
+static auto& now_leng = *reinterpret_cast<long(*)[8]>(0x4A4DB0);
+static int& Volume = *reinterpret_cast<int*>(0x4937A4);
+static auto& TrackVol = *reinterpret_cast<int(*)[16]>(0x4A4DD0);
+static BOOL& bFadeout = *reinterpret_cast<BOOL*>(0x4A4E10);
+
+static LPDIRECTSOUND& lpDS = *reinterpret_cast<LPDIRECTSOUND*>(0x4A57E8);
+static LPDIRECTSOUNDBUFFER& lpPRIMARYBUFFER = *reinterpret_cast<LPDIRECTSOUNDBUFFER*>(0x4A57EC);
+static auto& lpSECONDARYBUFFER = *reinterpret_cast<LPDIRECTSOUNDBUFFER(*)[160]>(0x4A5568);
+
+static int& gMusicNo = *reinterpret_cast<int*>(0x4A57F4);
+static unsigned int& gOldPos = *reinterpret_cast<unsigned int*>(0x4A57F8);
+static int& gOldNo = *reinterpret_cast<int*>(0x4A57FC);
+static auto& gMusicTable = *reinterpret_cast<const char* (*)[42]>(0x4981E8);
+
+static auto& gPtpTable = *reinterpret_cast<PIXTONEPARAMETER(*)[139]>(0x48F940);
+static auto& gWaveModelTable = *reinterpret_cast<signed char(*)[6][0x100]>(0x4A4F00);
+
+static const char*& gDefaultName = *reinterpret_cast<const char**>(0x4937A8);
+static const char*& gProfileCode = *reinterpret_cast<const char**>(0x4937AC);
+
+static int& noise_no = *reinterpret_cast<int*>(0x49E6EC);
+static unsigned int& noise_freq = *reinterpret_cast<unsigned int*>(0x49E6F0);
+
+static TEXT_SCRIPT& gTS = *reinterpret_cast<TEXT_SCRIPT*>(0x4A59D0);
+static auto& text = *reinterpret_cast<char(*)[4][0x40]>(0x4A58D0);
+static RECT& gRect_line = *reinterpret_cast<RECT*>(0x498290);
+static auto& gNumberTextScript = *reinterpret_cast<int(*)[4]>(0x4A5B34);
+
+static auto& gVV = *reinterpret_cast<VALUEVIEW(*)[16]>(0x4A5F98);
+static int& gVVIndex = *reinterpret_cast<int*>(0x4A5F90);
+
+static const char*& gVersionString = *reinterpret_cast<const char**>(0x48F910);
+
+static auto& gMapping = *reinterpret_cast<signed char(*)[0x80]>(0x49E5B8);
+
+static auto& gSin = *reinterpret_cast<int(*)[0x100]>(0x4A5B48);
+static auto& gTan = *reinterpret_cast<short(*)[0x21]>(0x4A5F48);
+
+static int& g_GameFlags = *reinterpret_cast<int*>(0x49E1E8);
+static int& gCounter = *reinterpret_cast<int*>(0x49E1EC);
 
 ///////////////
 // Functions //
@@ -844,446 +1057,468 @@ static unsigned char* gFlagNPC = (unsigned char*)0x49DDA0;
 
 
 //ArmsItem functions
-static void (* const ClearArmsData)(void) = (void(*)(void))0x401000;
-static void (* const ClearItemData)(void) = (void(*)(void))0x401030;
-static BOOL(* const AddArmsData)(long code, long max_num) = (BOOL(*)(long, long))0x401050;
-static BOOL(* const SubArmsData)(long code) = (BOOL(*)(long))0x401160;
-static BOOL(* const TradeArms)(long code, long code2, long max_num) = (BOOL(*)(long, long, long))0x401220;
-static BOOL(* const AddItemData)(long code) = (BOOL(*)(long))0x4012D0;
-static BOOL(* const SubItemData)(long code) = (BOOL(*)(long))0x401330;
-static void (* const MoveCampCursor)(void) = (void(*)(void))0x4013C0;
-static void (* const PutCampObject)(void) = (void(*)(void))0x4016F0;
-static void (* const CampLoop)(void) = (void(*)(void))0x401D10;
-static BOOL(* const CheckItem)(long a) = (BOOL(*)(long))0x401F20;
-static BOOL(* const CheckArms)(long a) = (BOOL(*)(long))0x401F60;
-static BOOL(* const UseArmsEnergy)(long num) = (BOOL(*)(long))0x401FA0;
-static BOOL(* const ChargeArmsEnergy)(long num) = (BOOL(*)(long))0x402020;
-static void (* const FullArmsEnergy)(void) = (void(*)(void))0x402090;
-static int (* const RotationArms)(void) = (int(*)(void))0x4020E0;
-static int (* const RotationArmsRev)(void) = (int(*)(void))0x402190;
-static void (* const ChangeToFirstArms)(void) = (void(*)(void))0x402240;
+const auto ClearArmsData = reinterpret_cast<void(*)(void)>(0x401000);
+const auto ClearItemData = reinterpret_cast<void(*)(void)>(0x401030);
+const auto AddArmsData = reinterpret_cast<BOOL(*)(int, int)>(0x401050);
+const auto SubArmsData = reinterpret_cast<BOOL(*)(int)>(0x401160);
+const auto TradeArms = reinterpret_cast<BOOL(*)(int, int, int)>(0x401220);
+const auto AddItemData = reinterpret_cast<BOOL(*)(int)>(0x4012D0);
+const auto SubItemData = reinterpret_cast<BOOL(*)(int)>(0x401330);
+const auto MoveCampCursor = reinterpret_cast<void(*)(void)>(0x4013C0);
+const auto PutCampObject = reinterpret_cast<void(*)(void)>(0x4016F0);
+const auto CampLoop = reinterpret_cast<int(*)(void)>(0x401D10);
+const auto CheckItem = reinterpret_cast<BOOL(*)(int)>(0x401F20);
+const auto CheckArms = reinterpret_cast<BOOL(*)(int)>(0x401F60);
+const auto UseArmsEnergy = reinterpret_cast<BOOL(*)(int)>(0x401FA0);
+const auto ChargeArmsEnergy = reinterpret_cast<BOOL(*)(int)>(0x402020);
+const auto FullArmsEnergy = reinterpret_cast<void(*)(void)>(0x402090);
+const auto RotationArms = reinterpret_cast<int(*)(void)>(0x4020E0);
+const auto RotationArmsRev = reinterpret_cast<int(*)(void)>(0x402190);
+const auto ChangeToFirstArms = reinterpret_cast<void(*)(void)>(0x402240);
 // Background functions
-static BOOL(* const InitBack)(const char* background_filename, int background_type) = (BOOL(*)(const char*, int))0x402270;
-static void (* const ActBack)(void) = (void (*)(void))0x402370;
-static void (* const PutBack)(int x_pos, int y_pos) = (void(*)(int, int))0x4023D0;
-static void (* const PutFront)(int x_pos, int y_pos) = (void(*)(int, int))0x402830;
+const auto InitBack = reinterpret_cast<int(*)(const char*, int)>(0x402270);
+const auto ActBack = reinterpret_cast<void(*)(void)>(0x402370);
+const auto PutBack = reinterpret_cast<void(*)(int, int)>(0x4023D0);
+const auto PutFront = reinterpret_cast<void(*)(int, int)>(0x402830);
 // Bullet Collision functions
-static int (* const JudgeHitBulletBlock)(int x, int y, BULLET* bul) = (int(*)(int, int, BULLET*))0x4029B0;
-static int (* const JudgeHitBulletBlock2)(int x, int y, unsigned char* atrb, BULLET* bul) = (int(*)(int, int, unsigned char*, BULLET*))0x402B30;
-static int (* const JudgeHitBulletTriangleA)(int x, int y, BULLET* bul) = (int(*)(int, int, BULLET*))0x402FC0;
-static int (* const JudgeHitBulletTriangleB)(int x, int y, BULLET* bul) = (int(*)(int, int, BULLET*))0x4030B0;
-static int (* const JudgeHitBulletTriangleC)(int x, int y, BULLET* bul) = (int(*)(int, int, BULLET*))0x4031A0;
-static int (* const JudgeHitBulletTriangleD)(int x, int y, BULLET* bul) = (int(*)(int, int, BULLET*))0x403290;
-static int (* const JudgeHitBulletTriangleE)(int x, int y, BULLET* bul) = (int(*)(int, int, BULLET*))0x403380;
-static int (* const JudgeHitBulletTriangleF)(int x, int y, BULLET* bul) = (int(*)(int, int, BULLET*))0x403470;
-static int (* const JudgeHitBulletTriangleG)(int x, int y, BULLET* bul) = (int(*)(int, int, BULLET*))0x403560;
-static int (* const JudgeHitBulletTriangleH)(int x, int y, BULLET* bul) = (int(*)(int, int, BULLET*))0x403650;
-static void (* const HitBulletMap)(void) = (void(*)(void))0x403740;
+const auto JudgeHitBulletBlock = reinterpret_cast<int(*)(int, int, BULLET*)>(0x4029B0);
+const auto JudgeHitBulletBlock2 = reinterpret_cast<int(*)(int, int, unsigned char*, BULLET*)>(0x402B30);
+const auto JudgeHitBulletTriangleA = reinterpret_cast<int(*)(int, int, BULLET*)>(0x402FC0);
+const auto JudgeHitBulletTriangleB = reinterpret_cast<int(*)(int, int, BULLET*)>(0x4030B0);
+const auto JudgeHitBulletTriangleC = reinterpret_cast<int(*)(int, int, BULLET*)>(0x4031A0);
+const auto JudgeHitBulletTriangleD = reinterpret_cast<int(*)(int, int, BULLET*)>(0x403290);
+const auto JudgeHitBulletTriangleE = reinterpret_cast<int(*)(int, int, BULLET*)>(0x403380);
+const auto JudgeHitBulletTriangleF = reinterpret_cast<int(*)(int, int, BULLET*)>(0x403470);
+const auto JudgeHitBulletTriangleG = reinterpret_cast<int(*)(int, int, BULLET*)>(0x403560);
+const auto JudgeHitBulletTriangleH = reinterpret_cast<int(*)(int, int, BULLET*)>(0x403650);
+const auto HitBulletMap = reinterpret_cast<void(*)(void)>(0x403740);
 // Bullet functions
-static void (* const InitBullet)(void) = (void(*)(void))0x403C00;
-static int (* const CountArmsBullet)(int arms_code) = (int(*)(int))0x403C40;
-static int (* const CountBulletNum)(int bullet_code) = (int(*)(int))0x403CB0;
-static void (* const DeleteBullet)(int code) = (void(*)(int))0x403D10;
-static void (* const ClearBullet)(void) = (void(*)(void))0x403D80;
-static void (* const PutBullet)(int fx, int fy) = (void(*)(int, int))0x403DC0;
-static void (* const SetBullet)(int no, int x, int y, int dir) = (void(*)(int, int, int, int))0x403F80;
-static void (* const ActBullet_Frontia1)(BULLET* bul) = (void(*)(BULLET*))0x404160;
-static void (* const ActBullet_Frontia2)(BULLET* bul, int level) = (void(*)(BULLET*, int))0x4043F0;
-static void (* const ActBullet_PoleStar)(BULLET* bul, int level) = (void(*)(BULLET*, int))0x4047B0;
-static void (* const ActBullet_FireBall)(BULLET* bul, int level) = (void(*)(BULLET*, int))0x404B30;
-static void (* const ActBullet_MachineGun)(BULLET* bul, int level) = (void(*)(BULLET*, int))0x405120;
-static void (* const ActBullet_Missile)(BULLET* bul, int level) = (void(*)(BULLET*, int))0x4055A0;
-static void (* const ActBullet_Bom)(BULLET* bul, int level) = (void(*)(BULLET*, int))0x405D80;
-static void (* const ActBullet_Bubblin1)(BULLET* bul) = (void(*)(BULLET*))0x405F30;
-static void (* const ActBullet_Bubblin2)(BULLET* bul) = (void(*)(BULLET*))0x406190;
-static void (* const ActBullet_Bubblin3)(BULLET* bul) = (void(*)(BULLET*))0x4064D0;
-static void (* const ActBullet_Spine)(BULLET* bul) = (void(*)(BULLET*))0x4068B0;
-static void (* const ActBullet_Sword1)(BULLET* bul) = (void(*)(BULLET*))0x406BB0;
-static void (* const ActBullet_Sword2)(BULLET* bul) = (void(*)(BULLET*))0x406E60;
-static void (* const ActBullet_Sword3)(BULLET* bul) = (void(*)(BULLET*))0x407110;
-static void (* const ActBullet_Edge)(BULLET* bul) = (void(*)(BULLET*))0x4075E0;
-static void (* const ActBullet_Drop)(BULLET* bul) = (void(*)(BULLET*))0x4078A0;
-static void (* const ActBullet_SuperMissile)(BULLET* bul, int level) = (void(*)(BULLET*, int))0x407910;
-static void (* const ActBullet_SuperBom)(BULLET* bul, int level) = (void(*)(BULLET*, int))0x408080;
-static void (* const ActBullet_Nemesis)(BULLET* bul, int level) = (void(*)(BULLET*, int))0x408230;
-static void (* const ActBullet_Spur)(BULLET* bul, int level) = (void(*)(BULLET*, int))0x408710;
-static void (* const ActBullet_SpurTail)(BULLET* bul, int level) = (void(*)(BULLET*, int))0x408AE0;
-static void (* const ActBullet_EnemyClear)(BULLET* bul) = (void(*)(BULLET*))0x408F40;
-static void (* const ActBullet_Star)(BULLET* bul) = (void(*)(BULLET*))0x408F90;
-static void (* const ActBullet)(void) = (void(*)(void))0x408FC0;
-static BOOL(* const IsSomeActiveBullet)(void) = (BOOL(*)(void))0x4095C0;
+const auto InitBullet = reinterpret_cast<void(*)(void)>(0x403C00);
+const auto CountArmsBullet = reinterpret_cast<int(*)(int)>(0x403C40);
+const auto CountBulletNum = reinterpret_cast<int(*)(int)>(0x403CB0);
+const auto DeleteBullet = reinterpret_cast<void(*)(int)>(0x403D10);
+const auto ClearBullet = reinterpret_cast<void(*)(void)>(0x403D80);
+const auto PutBullet = reinterpret_cast<void(*)(int, int)>(0x403DC0);
+const auto SetBullet = reinterpret_cast<void(*)(int, int, int, int)>(0x403F80);
+// Bullet act functions
+const auto ActBullet_Frontia1 = reinterpret_cast<void(*)(BULLET*)>(0x404160);
+const auto ActBullet_Frontia2 = reinterpret_cast<void(*)(BULLET*, int)>(0x4043F0);
+const auto ActBullet_PoleStar = reinterpret_cast<void(*)(BULLET*, int)>(0x4047B0);
+const auto ActBullet_FireBall = reinterpret_cast<void(*)(BULLET*, int)>(0x404B30);
+const auto ActBullet_MachineGun = reinterpret_cast<void(*)(BULLET*, int)>(0x405120);
+const auto ActBullet_Missile = reinterpret_cast<void(*)(BULLET*, int)>(0x4055A0);
+const auto ActBullet_Bom = reinterpret_cast<void(*)(BULLET*, int)>(0x405D80);
+const auto ActBullet_Bubblin1 = reinterpret_cast<void(*)(BULLET*)>(0x405F30);
+const auto ActBullet_Bubblin2 = reinterpret_cast<void(*)(BULLET*)>(0x406190);
+const auto ActBullet_Bubblin3 = reinterpret_cast<void(*)(BULLET*)>(0x4064D0);
+const auto ActBullet_Spine = reinterpret_cast<void(*)(BULLET*)>(0x4068B0);
+const auto ActBullet_Sword1 = reinterpret_cast<void(*)(BULLET*)>(0x406BB0);
+const auto ActBullet_Sword2 = reinterpret_cast<void(*)(BULLET*)>(0x406E60);
+const auto ActBullet_Sword3 = reinterpret_cast<void(*)(BULLET*)>(0x407110);
+const auto ActBullet_Edge = reinterpret_cast<void(*)(BULLET*)>(0x4075E0);
+const auto ActBullet_Drop = reinterpret_cast<void(*)(BULLET*)>(0x4078A0);
+const auto ActBullet_SuperMissile = reinterpret_cast<void(*)(BULLET*, int)>(0x407910);
+const auto ActBullet_SuperBom = reinterpret_cast<void(*)(BULLET*, int)>(0x408080);
+const auto ActBullet_Nemesis = reinterpret_cast<void(*)(BULLET*, int)>(0x408230);
+const auto ActBullet_Spur = reinterpret_cast<void(*)(BULLET*, int)>(0x408710);
+const auto ActBullet_SpurTail = reinterpret_cast<void(*)(BULLET*, int)>(0x408AE0);
+const auto ActBullet_EnemyClear = reinterpret_cast<void(*)(BULLET*)>(0x408F40);
+const auto ActBullet_Star = reinterpret_cast<void(*)(BULLET*)>(0x408F90);
+const auto ActBullet = reinterpret_cast<void(*)(void)>(0x408FC0);
+const auto IsActiveSomeBullet = reinterpret_cast<BOOL(*)(void)>(0x4095C0);
 // Caret functions
-static void (* const InitCaret)(void) = (void(*)(void))0x409650;
-static void (* const ActCaret00)(CARET* crt) = (void(*)(CARET*))0x409670;
-static void (* const ActCaret01)(CARET* crt) = (void(*)(CARET*))0x409680;
-static void (* const ActCaret02)(CARET* crt) = (void(*)(CARET*))0x409880;
-static void (* const ActCaret03)(CARET* crt) = (void(*)(CARET*))0x409B80;
-static void (* const ActCaret04)(CARET* crt) = (void(*)(CARET*))0x409C70;
-static void (* const ActCaret05)(CARET* crt) = (void(*)(CARET*))0x409E00;
-static void (* const ActCaret07)(CARET* crt) = (void(*)(CARET*))0x409F60;
-static void (* const ActCaret08)(CARET* crt) = (void(*)(CARET*))0x40A120;
-static void (* const ActCaret09)(CARET* crt) = (void(*)(CARET*))0x40A1B0;
-static void (* const ActCaret10)(CARET* crt) = (void(*)(CARET*))0x40A280;
-static void (* const ActCaret11)(CARET* crt) = (void(*)(CARET*))0x40A3F0;
-static void (* const ActCaret12)(CARET* crt) = (void(*)(CARET*))0x40A5A0;
-static void (* const ActCaret13)(CARET* crt) = (void(*)(CARET*))0x40A650;
-static void (* const ActCaret14)(CARET* crt) = (void(*)(CARET*))0x40A7E0;
-static void (* const ActCaret15)(CARET* crt) = (void(*)(CARET*))0x40A8F0;
-static void (* const ActCaret16)(CARET* crt) = (void(*)(CARET*))0x40A9E0;
-static void (* const ActCaret17)(CARET* crt) = (void(*)(CARET*))0x40AAA0;
-static void (* const ActCaret)(void) = (void(*)(void))0x40AB50;
-static void (* const PutCaret)(int fx, int fy) = (void(*)(int, int))0x40ABC0;
-static void (* const SetCaret)(int x, int y, int code, int dir) = (void(*)(int, int, int, int))0x40AC90;
-static BOOL(* const LoadConfigData)(ConfigData* config_memory) = (BOOL(*)(ConfigData*))0x40AD60;
-static void(* const DefaultConfigData)(ConfigData* config_memory) = (void(*)(ConfigData*))0x40AE30;
-// Dialog functions (not implemented into cave_story.h yet)
-
-// VersionDialog - 0x40AEC0
-
-// DebugMuteDialog - 0x40AFC0
-
-// DebugSaveDialog - 0x40B1D0
-
-// QuitDialog - 0x40B290
-
+const auto InitCaret = reinterpret_cast<void(*)(void)>(0x409650);
+const CARETFUNCTION ActCaretFn[18] = {
+	reinterpret_cast<CARETFUNCTION>(0x409670), // 00
+	reinterpret_cast<CARETFUNCTION>(0x409680), // 01
+	reinterpret_cast<CARETFUNCTION>(0x409880), // 02
+	reinterpret_cast<CARETFUNCTION>(0x409B80), // 03
+	reinterpret_cast<CARETFUNCTION>(0x409C70), // 04
+	reinterpret_cast<CARETFUNCTION>(0x409E00), // 05
+	nullptr,                                   // 06 (nonexistent)
+	reinterpret_cast<CARETFUNCTION>(0x409F60), // 07
+	reinterpret_cast<CARETFUNCTION>(0x40A120), // 08
+	reinterpret_cast<CARETFUNCTION>(0x40A1B0), // 09
+	reinterpret_cast<CARETFUNCTION>(0x40A280), // 10
+	reinterpret_cast<CARETFUNCTION>(0x40A3F0), // 11
+	reinterpret_cast<CARETFUNCTION>(0x40A5A0), // 12
+	reinterpret_cast<CARETFUNCTION>(0x40A650), // 13
+	reinterpret_cast<CARETFUNCTION>(0x40A7E0), // 14
+	reinterpret_cast<CARETFUNCTION>(0x40A8F0), // 15
+	reinterpret_cast<CARETFUNCTION>(0x40A9E0), // 16
+	reinterpret_cast<CARETFUNCTION>(0x40AAA0)  // 17
+};
+const auto ActCaret = reinterpret_cast<void(*)(void)>(0x40AB50);
+const auto PutCaret = reinterpret_cast<void(*)(int, int)>(0x40ABC0);
+const auto SetCaret = reinterpret_cast<void(*)(int, int, int, int)>(0x40AC90);
+// Config functions
+const auto LoadConfigData = reinterpret_cast<BOOL(*)(ConfigData*)>(0x40AD60);
+const auto DefaultConfigData = reinterpret_cast<void(*)(ConfigData*)>(0x40AE30);
+// Dialog functions
+const auto VersionDialog = reinterpret_cast<DLGPROC>(0x40AEC0);
+const auto DebugMuteDialog = reinterpret_cast<DLGPROC>(0x40AFC0);
+const auto DebugSaveDialog = reinterpret_cast<DLGPROC>(0x40B1D0);
+const auto QuitDialog = reinterpret_cast<DLGPROC>(0x40B290);
 // Draw functions
-static void(* const SetClientOffset)(int width, int height) = (void(*)(int, int))0x40B320;
-static BOOL(* const Flip_SystemTask)(HWND hWnd) = (BOOL(*)(HWND))0x40B340;
-static BOOL(* const StartDirectDraw)(HWND hWnd, int lMagnification, int lColourDepth) = (BOOL(*)(HWND hWnd, int, int))0x40B340;
-static BOOL(* const EndDirectDraw)(HWND hWnd) = (BOOL(*)(HWND))0x40B6C0;
-static void (* const ReleaseSurface)(int s) = (void(*)(int))0x40B7A0;
-static BOOL(* const MakeSurface_Resource)(const char* name, SurfaceID surf_no) = (BOOL(*)(const char*, SurfaceID))0x40B800;
-static BOOL(* const MakeSurface_File)(const char* name, int surf_no) = (BOOL(*)(const char*, int))0x40BAC0;
-static BOOL(* const ReloadBitmap_Resource)(const char* name, SurfaceID surf_no) = (BOOL(*)(const char*, SurfaceID))0x40BE10;
-static BOOL(* const ReloadBitmap_File)(const char* name, int surf_no) = (BOOL(*)(const char*, int))0x40BFD0;
-static BOOL(* const MakeSurface_Generic)(int bxsize, int bysize, int surf_no, BOOL bSystem) = (BOOL(*)(int, int, int, BOOL))0x40C1D0;
-static void (* const BackupSurface)(SurfaceID surf_no, const RECT* rect) = (void(*)(SurfaceID, const RECT*))0x40C320;
-static void (* const PutBitmap3)(const RECT*, int, int, const RECT*, SurfaceID) = (void(*)(const RECT*, int, int, const RECT*, SurfaceID))0x40C3C0;
-static void (* const PutBitmap4)(const RECT*, int, int, const RECT*, SurfaceID) = (void(*)(const RECT*, int, int, const RECT*, SurfaceID))0x40C5B0;
-static void (* const Surface2Surface)(int x, int y, const RECT* rect, SurfaceID to, SurfaceID from) = (void(*)(int, int, const RECT*, SurfaceID, SurfaceID))0x40C7A0;
-static unsigned long (* const GetCortBoxColor)(COLORREF col) = (unsigned long(*)(COLORREF))0x40C8B0;
-static void (* const CortBox)(RECT* dst_rect, int colour) = (void(*)(RECT*, int))0x40C9E0;
-static void (* const CortBox2)(RECT* dst_rect, int colour, SurfaceID surf_no) = (void(*)(RECT*, int, SurfaceID))0x40CA80;
-static BOOL(* const out)(char surface_identifier) = (BOOL(*)(char))0x40CB30;
-static int (* const RestoreSurfaces)(void) = (int(*)(void))0x40CB60;
-static void(* const InitTextObject)(const char* name) = (void(*)(const char*))0x40CD50;
-static void (* const PutText)(int x, int y, const char* text, unsigned int colour) = (void(*)(int, int, const char*, unsigned int))0x40CE00;
-static void (* const PutText2)(int x, int y, const char* text, unsigned int colour, SurfaceID) = (void(*)(int, int, const char*, unsigned int, SurfaceID))0x40CEB0;
-static void (* const EndTextObject)(void) = (void(*)(void))0x40CF70;
+const auto SetClientOffset = reinterpret_cast<void(*)(int, int)>(0x40B320);
+const auto Flip_SystemTask = reinterpret_cast<BOOL(*)(HWND)>(0x40B340);
+const auto StartDirectDraw = reinterpret_cast<BOOL(*)(HWND, int, int)>(0x40B450);
+const auto EndDirectDraw = reinterpret_cast<void(*)(HWND)>(0x40B6C0);
+const auto ReleaseSurface = reinterpret_cast<void(*)(int)>(0x40B7A0);
+const auto MakeSurface_Resource = reinterpret_cast<BOOL(*)(const char*, int)>(0x40B800);
+const auto MakeSurface_File = reinterpret_cast<BOOL(*)(const char*, int)>(0x40BAC0);
+const auto ReloadBitmap_Resource = reinterpret_cast<BOOL(*)(const char*, int)>(0x40BE10);
+const auto ReloadBitmap_File = reinterpret_cast<BOOL(*)(const char*, int)>(0x40BFD0);
+const auto MakeSurface_Generic = reinterpret_cast<BOOL(*)(int, int, int, BOOL)>(0x40C1D0);
+const auto BackupSurface = reinterpret_cast<void(*)(int, const ::RECT*)>(0x40C320);
+const auto PutBitmap3 = reinterpret_cast<void(*)(const ::RECT*, int, int, const ::RECT*, int)>(0x40C3C0);
+const auto PutBitmap4 = reinterpret_cast<void(*)(const ::RECT*, int, int, const ::RECT*, int)>(0x40C5B0);
+const auto Surface2Surface = reinterpret_cast<void(*)(int, int, const ::RECT*, int, int)>(0x40C7A0);
+const auto GetCortBoxColor = reinterpret_cast<unsigned long(*)(COLORREF)>(0x40C8B0);
+const auto CortBox = reinterpret_cast<void(*)(const ::RECT*, unsigned long)>(0x40C9E0);
+const auto CortBox2 = reinterpret_cast<void(*)(const ::RECT*, unsigned long, int)>(0x40CA80);
+const auto out = reinterpret_cast<BOOL(*)(char)>(0x40CB30);
+const auto RestoreSurfaces = reinterpret_cast<int(*)(void)>(0x40CB60);
+const auto InitTextObject = reinterpret_cast<void(*)(const char*)>(0x40CD50);
+const auto PutText = reinterpret_cast<void(*)(int, int, const char*, unsigned long)>(0x40CE00);
+const auto PutText2 = reinterpret_cast<void(*)(int, int, const char*, unsigned long, int)>(0x40CEB0);
+const auto EndTextObject = reinterpret_cast<void(*)(void)>(0x40CF70);
 // Ending functions
-static void (* const ActionStripper)(void) = (void(*)(void))0x40CF90;
-static void (* const PutStripper)(void) = (void(*)(void))0x40D010;
-static void (* const SetStripper)(int x, int y, const char* text, int cast) = (void(*)(int, int, const char*, int))0x40D150;
-static void (* const RestoreStripper)(void) = (void(*)(void))0x40D240;
-static void (* const ActionIllust)(void) = (void(*)(void))0x40D2D0;
-static void (* const PutIllust)(void) = (void(*)(void))0x40D350;
-static void (* const ReloadIllust)(int a) = (void(*)(int))0x40D3A0;
-static void (* const InitCreditScript)(void) = (void(*)(void))0x40D3E0;
-static void (* const ReleaseCreditScript)(void) = (void(*)(void))0x40D410;
-static BOOL(* const StartCreditScript)(void) = (BOOL(*)(void))0x40D440;
-static void (* const ActionCredit)(void) = (void(*)(void))0x40D5C0;
-static void (* const ActionCredit_Read)(void) = (void(*)(void))0x40D620;
-static int (* const GetScriptNumber)(const char* text) = (int(*)(const char*))0x40DB00;
-static void (* const SetCreditIllust)(int a) = (void(*)(int))0x40DB40;
-static void (* const CutCreditIllust)(void) = (void(*)(void))0x40DB60;
-static int (* const Scene_DownIsland)(HWND hWnd, int mode) = (int(*)(HWND, int))0x40DB70;
+const auto ActionStripper = reinterpret_cast<void(*)(void)>(0x40CF90);
+const auto PutStripper = reinterpret_cast<void(*)(void)>(0x40D010);
+const auto SetStripper = reinterpret_cast<void(*)(int, int, const char*, int)>(0x40D150);
+const auto RestoreStripper = reinterpret_cast<void(*)(void)>(0x40D240);
+const auto ActionIllust = reinterpret_cast<void(*)(void)>(0x40D2D0);
+const auto PutIllust = reinterpret_cast<void(*)(void)>(0x40D350);
+const auto ReloadIllust = reinterpret_cast<void(*)(int)>(0x40D3A0);
+const auto InitCreditScript = reinterpret_cast<void(*)(void)>(0x40D3E0);
+const auto ReleaseCreditScript = reinterpret_cast<void(*)(void)>(0x40D410);
+const auto StartCreditScript = reinterpret_cast<BOOL(*)(void)>(0x40D440);
+const auto ActionCredit = reinterpret_cast<void(*)(void)>(0x40D5C0);
+const auto ActionCredit_Read = reinterpret_cast<void(*)(void)>(0x40D620);
+const auto GetScriptNumber = reinterpret_cast<int(*)(const char*)>(0x40DB00);
+const auto SetCreditIllust = reinterpret_cast<void(*)(int)>(0x40DB40);
+const auto CutCreditIllust = reinterpret_cast<void(*)(void)>(0x40DB60);
+const auto Scene_DownIsland = reinterpret_cast<void(*)(void*, int)>(0x40DB70);
 // Escape menu
-static int (* const Call_Escape)(HWND hWnd) = (int(*)(HWND))0x40DD70;
+const auto Call_Escape = reinterpret_cast<int(*)(void*)>(0x40DD70);
 // Fade functions
-static void (* const InitFade)(void) = (void(*)(void))0x40DE60;
-static void (* const SetFadeMask)(void) = (void(*)(void))0x40DE90;
-static void (* const ClearFade)(void) = (void(*)(void))0x40DEA0;
-static void (* const StartFadeOut)(signed char dir) = (void(*)(signed char))0x40DEC0;
-static void (* const StartFadeIn)(signed char dir) = (void(*)(signed char))0x40DF50;
-static void (* const ProcFade)(void) = (void(*)(void))0x40DFE0;
-static void (* const PutFade)(void) = (void(*)(void))0x40E770;
-static BOOL(* const GetFadeActive)(void) = (BOOL(*)(void))0x40E830;
+const auto InitFade = reinterpret_cast<void(*)(void)>(0x40DE60);
+const auto SetFadeMask = reinterpret_cast<void(*)(void)>(0x40DE90);
+const auto ClearFade = reinterpret_cast<void(*)(void)>(0x40DEA0);
+const auto StartFadeOut = reinterpret_cast<void(*)(int)>(0x40DEC0);
+const auto StartFadeIn = reinterpret_cast<void(*)(int)>(0x40DF50);
+const auto ProcFade = reinterpret_cast<void(*)(void)>(0x40DFE0);
+const auto PutFade = reinterpret_cast<void(*)(void)>(0x40E770);
+const auto GetFadeActive = reinterpret_cast<BOOL(*)(void)>(0x40E830);
 // Flag functions
-static void (* const InitFlags)(void) = (void(*)(void))0x40E850;
-static void (* const InitSkipFlags)(void) = (void(*)(void))0x40E870;
-static void (* const SetNPCFlag)(long a) = (void(*)(long))0x40E890;
-static void (* const CutNPCFlag)(long a) = (void(*)(long))0x40E8E0;
-static BOOL(* const GetNPCFlag)(long a) = (BOOL(*)(long))0x40E930;
-static void (* const SetSkipFlag)(long a) = (void(*)(long))0x40E970;
-static void (* const CutSkipFlag)(long a) = (void(*)(long))0x40E9C0;
-static BOOL(* const GetSkipFlag)(long a) = (BOOL(*)(long))0x40EA10;
+const auto InitFlags = reinterpret_cast<void(*)(void)>(0x40E850);
+const auto InitSkipFlags = reinterpret_cast<void(*)(void)>(0x40E870);
+const auto SetNPCFlag = reinterpret_cast<void(*)(int)>(0x40E890);
+const auto CutNPCFlag = reinterpret_cast<void(*)(int)>(0x40E8E0);
+const auto GetNPCFlag = reinterpret_cast<BOOL(*)(int)>(0x40E930);
+const auto SetSkipFlag = reinterpret_cast<void(*)(int)>(0x40E970);
+const auto CutSkipFlag = reinterpret_cast<void(*)(int)>(0x40E9C0);
+const auto GetSkipFlag = reinterpret_cast<BOOL(*)(int)>(0x40EA10);
 // Flash functions
-static void (* const InitFlash)(void) = (void(*)(void))0x40EA50;
-static void (* const SetFlash)(int x, int y, FlashMode mode) = (void(*)(int, int, FlashMode))0x40EA70;
-static void (* const ActFlash_Explosion)(int flx, int fly) = (void(*)(int, int))0x40EAC0;
-static void (* const ActFlash_Flash)(void) = (void(*)(void))0x40ED20;
-static void (* const ActFlash)(int flx, int fly) = (void(*)(int, int))0x40EDE0;
-static void (* const PutFlash)(void) = (void(*)(void))0x40EE20;
-static void (* const ResetFlash)(void) = (void(*)(void))0x40EE60;
+const auto InitFlash = reinterpret_cast<void(*)(void)>(0x40EA50);
+const auto SetFlash = reinterpret_cast<void(*)(int, int, int)>(0x40EA70);
+const auto ActFlash_Explosion = reinterpret_cast<void(*)(int, int)>(0x40EAC0);
+const auto ActFlash_Flash = reinterpret_cast<void(*)(void)>(0x40ED20);
+const auto ActFlash = reinterpret_cast<void(*)(int, int)>(0x40EDE0);
+const auto PutFlash = reinterpret_cast<void(*)(void)>(0x40EE20);
+const auto ResetFlash = reinterpret_cast<void(*)(void)>(0x40EE60);
 // Frame / camera functions
-static void (* const MoveFrame3)(void) = (void(*)(void))0x40EE70;
-static void (* const GetFramePosition)(int* fx, int* fy) = (void(*)(int*, int*))0x40F020;
-static void (* const SetFramePosition)(int fx, int fy) = (void(*)(int, int))0x40F040;
-static void (* const SetFrameMyChar)(void) = (void(*)(void))0x40F130;
-static void (* const SetFrameTargetMyChar)(int wait) = (void(*)(int))0x40F220;
-static void (* const SetFrameTargetNpChar)(int event, int wait) = (void(*)(int, int))0x40F250;
-static void (* const SetFrameTargetBoss)(int no, int wait) = (void(*)(int, int))0x40F2D0;
-static void (* const SetQuake)(int time) = (void(*)(int))0x40F310;
-static void (* const SetQuake2)(int time) = (void(*)(int))0x40F320;
-static void (* const ResetQuake)(void) = (void(*)(void))0x40F330;
+const auto MoveFrame3 = reinterpret_cast<void(*)(void)>(0x40EE70);
+const auto GetFramePosition = reinterpret_cast<void(*)(int*, int*)>(0x40F020);
+const auto SetFramePosition = reinterpret_cast<void(*)(int, int)>(0x40F040);
+const auto SetFrameMyChar = reinterpret_cast<void(*)(void)>(0x40F130);
+const auto SetFrameTargetMyChar = reinterpret_cast<void(*)(int)>(0x40F220);
+const auto SetFrameTargetNpChar = reinterpret_cast<void(*)(int, int)>(0x40F250);
+const auto SetFrameTargetBoss = reinterpret_cast<void(*)(int, int)>(0x40F2D0);
+const auto SetQuake = reinterpret_cast<void(*)(int)>(0x40F310);
+const auto SetQuake2 = reinterpret_cast<void(*)(int)>(0x40F320);
+const auto ResetQuake = reinterpret_cast<void(*)(void)>(0x40F330);
 // Game functions
-static int (* const Random)(int min, int max) = (int(*)(int, int))0x40F350;
-static void (* const PutNumber4)(int x, int y, int, int) = (void(*)(int, int, int, int))0x40F380;
-static BOOL(* const Game)(HWND hWnd) = (BOOL(*)(HWND))0x40F5F0;
-static int (* const ModeOpening)(HWND hWnd) = (int(*)(HWND))0x40F730;
-static int (* const ModeTitle)(HWND hWnd) = (int(*)(HWND))0x40F9B0;
-static int (* const ModeAction)(HWND hWnd) = (int(*)(HWND))0x410400;
+const auto Random = reinterpret_cast<int(*)(int, int)>(0x40F350);
+const auto PutNumber4 = reinterpret_cast<int(*)(int, int, int, BOOL)>(0x40F380);
+const auto Game = reinterpret_cast<BOOL(*)(void*)>(0x40F5F0);
+const auto ModeOpening = reinterpret_cast<int(*)(void*)>(0x40F730);
+const auto ModeTitle = reinterpret_cast<int(*)(void*)>(0x40F9B0);
+const auto ModeAction = reinterpret_cast<int(*)(void*)>(0x410400);
 // Generic functions
-static void (* const GetCompileDate)(int* year, int* month, int* day) = (void(*)(int*, int*, int*))0x4108B0;
-static BOOL(* const GetCompileVersion)(int* v1, int* v2, int* v3, int* v4) = (BOOL(*)(int*, int*, int*, int*))0x410990;
-static BOOL(* const OpenSoundVolume)(HWND hWnd) = (BOOL(*)(HWND))0x410AB0;
-static void (* const DeleteLog)(void) = (void(*)(void))0x410BC0;
-static BOOL(* const WriteLog)(const char* string, int value1, int value2, int value3) = (BOOL(*)(const char*, int, int, int))0x410C10;
-static int (* const GetDateLimit)(SYSTEMTIME* system_time_low, SYSTEMTIME* system_time_high) = (int(*)(SYSTEMTIME*, SYSTEMTIME*))0x410CA0;
-static BOOL(* const IsKeyFile)(const char* name) = (BOOL(*)(const char*))0x410D10;
-static long(* const GetFileSizeLong)(const char* path) = (long(*)(const char*))0x410D80;
-static BOOL(* const ErrorLog)(const char* string, int value) = (BOOL(*)(const char*, int))0x410DE0;
-static BOOL(* const IsShiftJIS)(unsigned char c) = (BOOL(*)(unsigned char))0x410E90;
-static BOOL(* const CenteringWindowByParent)(HWND hWnd) = (BOOL(*)(HWND))0x410EE0;
-static BOOL(* const LoadWindowRect)(HWND hWnd, const char* filename, BOOL unknown) = (BOOL(*)(HWND, const char*, BOOL))0x410FE0;
-static BOOL(* const SaveWindowRect)(HWND hWnd, const char* filename) = (BOOL(*)(HWND, const char*))0x4111F0;
-static BOOL(* const IsEnableBitmap)(const char* path) = (BOOL(*)(const char*))0x4112E0;
+const auto GetCompileDate = reinterpret_cast<void(*)(int*, int*, int*)>(0x4108B0);
+const auto GetCompileVersion = reinterpret_cast<BOOL(*)(int*, int*, int*, int*)>(0x410990);
+const auto OpenSoundVolume = reinterpret_cast<BOOL(*)(void*)>(0x410AB0); // Technically an HWND parameter
+const auto DeleteLog = reinterpret_cast<void(*)(void)>(0x410BC0);
+const auto WriteLog = reinterpret_cast<BOOL(*)(const char*, int, int, int)>(0x410C10);
+const auto GetDateLimit = reinterpret_cast<int(*)(SYSTEMTIME*, SYSTEMTIME*)>(0x410CA0);
+const auto IsKeyFile = reinterpret_cast<BOOL(*)(const char*)>(0x410D10);
+const auto GetFileSizeLong = reinterpret_cast<int(*)(const char*)>(0x410D80);
+const auto ErrorLog = reinterpret_cast<BOOL(*)(const char*, int)>(0x410DE0);
+const auto IsShiftJIS = reinterpret_cast<BOOL(*)(unsigned char)>(0x410E90);
+const auto CenteringWindowByParent = reinterpret_cast<BOOL(*)(void*)>(0x410EE0);
+const auto LoadWindowRect = reinterpret_cast<BOOL(*)(void*, const char*, BOOL)>(0x410FE0);
+const auto SaveWindowRect = reinterpret_cast<BOOL(*)(void*, const char*)>(0x4111F0);
+const auto IsEnableBitmap = reinterpret_cast<BOOL(*)(const char*)>(0x4112E0);
 // GenericLoad functions
-static BOOL(* const LoadGenericData)(void) = (BOOL(*)(void))0x411390;
+const auto LoadGenericData = reinterpret_cast<BOOL(*)(void)>(0x411390);
 // Input functions
-static void(* const ReleaseDirectInput)(void) = (void(*)(void))0x411E10;
-static BOOL(* const ActivateDirectInput)(BOOL aquire) = (BOOL(*)(BOOL))0x411E60;
-static BOOL(* const InitDirectInput)(HINSTANCE hinst, HWND hWnd) = (BOOL(*)(HINSTANCE, HWND))0x411EB0;
-static BOOL(* const FindAndOpenDirectInputDevice)(HWND hWnd) = (BOOL(*)(HWND))0x411EF0;
-static BOOL(* const EnumDevices_Callback)(LPCDIDEVICEINSTANCE lpddi, LPVOID pvRef) = (BOOL(*)(LPCDIDEVICEINSTANCE, LPVOID))0x411FC0;
-static BOOL(* const GetJoystickStatus)(DIRECTINPUTSTATUS* status) = (BOOL(*)(DIRECTINPUTSTATUS*))0x4120F0;
-static BOOL(* const ResetJoystickStatus)(void) = (BOOL(*)(void))0x412250;
+const auto ReleaseDirectInput = reinterpret_cast<void(*)(void)>(0x411E10);
+const auto ActivateDirectInput = reinterpret_cast<BOOL(*)(BOOL)>(0x411E60);
+const auto InitDirectInput = reinterpret_cast<BOOL(*)(HINSTANCE, HWND)>(0x411EB0);
+const auto FindAndOpenDirectInputDevice = reinterpret_cast<BOOL(*)(HWND)>(0x411EF0);
+const auto EnumDevices_Callback = reinterpret_cast<BOOL(CALLBACK*)(LPCDIDEVICEINSTANCE, LPVOID)>(0x411FC0);
+const auto GetJoystickStatus = reinterpret_cast<BOOL(*)(DIRECTINPUTSTATUS*)>(0x4120F0);
+const auto ResetJoystickStatus = reinterpret_cast<BOOL(*)(void)>(0x412250);
 // KeyControl functions
-static void (* const GetTrg)(void) = (void(*)(void))0x4122E0;
+const auto GetTrg = reinterpret_cast<void(*)(void)>(0x4122E0);
 // Main functions
-static void (* const SetWindowName)(HWND hWnd) = (void(*)(HWND))0x412320;
-static void (* const PutFramePerSecound)(void) = (void(*)(void))0x412370;
-static unsigned long (* const CountFramePerSecound)(void) = (unsigned long(*)(void))0x4123A0;
-// This function is called CS_WinMain because we can't call it WinMain
-static int (* const CS_WinMain)(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) = (int(*)(HINSTANCE, HINSTANCE, LPSTR, int))0x412420;
-static void (* const InactiveWindow)(void) = (void(*)(void))0x412BC0;
-static void (* const ActiveWindow)(void) = (void(*)(void))0x412BF0;
-static BOOL(* const DragAndDropHandler)(HWND hWnd, WPARAM wParam) = (BOOL(*)(HWND, WPARAM))0x412C30;
-static LRESULT(* const WindowProcedure)(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam) = (LRESULT(*)(HWND, UINT, WPARAM, LPARAM))0x412CA0;
-static BOOL(* const SystemTask)(void) = (BOOL(*)(void))0x413570;
-static void (* const JoystickProc)(void) = (void(*)(void))0x4135E0;
+const auto SetWindowName = reinterpret_cast<void(*)(HWND)>(0x412320); // Not the original name
+const auto PutFramePerSecound = reinterpret_cast<void(*)(void)>(0x412370);
+const auto CountFramePerSecound = reinterpret_cast<unsigned long(*)(void)>(0x4123A0);
+// This function is called Freeware_WinMain because we can't call it WinMain
+const auto Freeware_WinMain = reinterpret_cast<int(WINAPI*)(HINSTANCE, HINSTANCE, LPSTR, int)>(0x412420);
+const auto InactiveWindow = reinterpret_cast<void(*)(void)>(0x412BC0);
+const auto ActiveWindow = reinterpret_cast<void(*)(void)>(0x412BF0);
+const auto DragAndDropHandler = reinterpret_cast<BOOL(*)(HWND, WPARAM)>(0x412C30);
+const auto WindowProcedure = reinterpret_cast<LRESULT(CALLBACK*)(HWND, UINT, WPARAM, LPARAM)>(0x412CA0);
+const auto SystemTask = reinterpret_cast<BOOL(*)(void)>(0x413570);
+const auto JoystickProc = reinterpret_cast<void(*)(void)>(0x4135E0);
 // Map functions
-static BOOL(* const InitMapData2)(void) = (BOOL(*)(void))0x413750;
-static BOOL(* const LoadMapData2)(const char* path_map) = (BOOL(*)(const char*))0x413770;
-static BOOL(* const LoadAttributeData)(const char* path_atrb) = (BOOL(*)(const char*))0x4138A0;
-static void (* const EndMapData)(void) = (void(*)(void))0x413930;
-static void (* const ReleasePartsImage)(void) = (void(*)(void))0x413950;
-static void (* const GetMapData)(unsigned char** data, short* mw, short* ml) = (void(*)(unsigned char**, short*, short*))0x413960;
-static unsigned char (* const GetAttribute)(int x, int y) = (unsigned char(*)(int, int))0x4139A0;
-static void (* const DeleteMapParts)(int x, int y) = (void(*)(int, int))0x413A00;
-static void (* const ShiftMapParts)(int x, int y) = (void(*)(int, int))0x413A20;
-static BOOL(* const ChangeMapParts)(int x, int y, unsigned char no) = (BOOL(*)(int, int, unsigned char))0x413A60;
-static void (* const PutStage_Back)(int fx, int fy) = (void(*)(int, int))0x413AF0;
-static void (* const PutStage_Front)(int fx, int fy) = (void(*)(int, int))0x413C60;
-static void (* const PutMapDataVector)(int fx, int fy) = (void(*)(int, int))0x413E40;
+const auto InitMapData2 = reinterpret_cast<BOOL(*)(void)>(0x413750);
+const auto LoadMapData2 = reinterpret_cast<BOOL(*)(const char*)>(0x413770);
+const auto LoadAttributeData = reinterpret_cast<BOOL(*)(const char*)>(0x4138A0);
+const auto EndMapData = reinterpret_cast<void(*)(void)>(0x413930);
+const auto ReleasePartsImage = reinterpret_cast<void(*)(void)>(0x413950);
+const auto GetMapData = reinterpret_cast<void(*)(unsigned char**, short*, short*)>(0x413960);
+const auto GetAttribute = reinterpret_cast<unsigned char(*)(int, int)>(0x4139A0);
+const auto DeleteMapParts = reinterpret_cast<void(*)(int, int)>(0x413A00);
+const auto ShiftMapParts = reinterpret_cast<void(*)(int, int)>(0x413A20);
+const auto ChangeMapParts = reinterpret_cast<BOOL(*)(int, int, unsigned char)>(0x413A60);
+const auto PutStage_Back = reinterpret_cast<void(*)(int, int)>(0x413AF0);
+const auto PutStage_Front = reinterpret_cast<void(*)(int, int)>(0x413C60);
+const auto PutMapDataVector = reinterpret_cast<void(*)(int, int)>(0x413E40);
 // Map name functions
-static void (* const ReadyMapName)(const char* str) = (void(*)(const char*))0x4140F0;
-static void (* const PutMapName)(BOOL bMini) = (void(*)(BOOL))0x414250;
-static void (* const StartMapName)(void) = (void(*)(void))0x414310;
-static void (* const RestoreMapName)(void) = (void(*)(void))0x414330;
+const auto ReadyMapName = reinterpret_cast<void(*)(const char*)>(0x4140F0);
+const auto PutMapName = reinterpret_cast<void(*)(BOOL)>(0x414250);
+const auto StartMapName = reinterpret_cast<void(*)(void)>(0x414310);
+const auto RestoreMapName = reinterpret_cast<void(*)(void)>(0x414330);
 // MiniMap / Map System functions
-static void (* const WriteMiniMapLine)(int line) = (void(*)(int))0x4143C0;
-static int (* const MiniMapLoop)(void) = (int(*)(void))0x414640;
-static BOOL(* const IsMapping)(void) = (BOOL(*)(void))0x414B00;
-static void (* const StartMapping)(void) = (void(*)(void))0x414B20;
-static void (* const SetMapping)(int a) = (void(*)(int))0x414B40;
+const auto WriteMiniMapLine = reinterpret_cast<void(*)(int)>(0x4143C0);
+const auto MiniMapLoop = reinterpret_cast<int(*)(void)>(0x414640);
+const auto IsMapping = reinterpret_cast<BOOL(*)(void)>(0x414B00);
+const auto StartMapping = reinterpret_cast<void(*)(void)>(0x414B20);
+const auto SetMapping = reinterpret_cast<void(*)(int)>(0x414B40);
 // MyChar functions
-static void (* const InitMyChar)(void) = (void(*)(void))0x414B50;
-static void (* const AnimationMyChar)(BOOL bKey) = (void(*)(BOOL))0x414BF0;
-static void (* const ShowMyChar)(BOOL bShow) = (void(*)(BOOL))0x415220;
-static void (* const PutMyChar)(int camera_x, int camera_y) = (void(*)(int, int))0x415250;
-static void (* const ActMyChar_Normal)(BOOL bKey) = (void(*)(BOOL))0x4156C0;
-static void (* const ActMyChar_Stream)(BOOL bKey) = (void(*)(BOOL))0x416470;
-static void (* const ActMyChar)(BOOL bKey) = (void(*)(BOOL))0x4168C0;
-static void (* const AirProcess)(void) = (void(*)(void))0x416990;
-static void (* const GetMyCharPosition)(int* x, int* y) = (void(*)(int*, int*))0x416AA0;
-static void (* const SetMyCharPosition)(int x, int y) = (void(*)(int, int))0x416AC0;
-static void (* const MoveMyChar)(int x, int y) = (void(*)(int, int))0x416B30;
-static void (* const ZeroMyCharXMove)(void) = (void(*)(void))0x416B50;
-static int (* const GetUnitMyChar)(void) = (int(*)(void))0x416B60;
-static void (* const SetMyCharDirect)(unsigned char dir) = (void(*)(unsigned char))0x416B70;
-static void (* const ChangeMyUnit)(unsigned char a) = (void(*)(unsigned char))0x416C40;
-static void (* const PitMyChar)(void) = (void(*)(void))0x416C50;
-static void (* const EquipItem)(int flag, BOOL b) = (void(*)(int, BOOL))0x416C70;
-static void (* const ResetCheck)(void) = (void(*)(void))0x416CA0;
-static void (* const SetNoise)(int no, int freq) = (void(*)(int, int))0x416CC0;
-static void (* const CutNoise)(void) = (void(*)(void))0x416D40;
-static void (* const ResetNoise)(void) = (void(*)(void))0x416D80;
-static void (* const SleepNoise)(void) = (void(*)(void))0x416DF0;
+const auto InitMyChar = reinterpret_cast<void(*)(void)>(0x414B50);
+const auto AnimationMyChar = reinterpret_cast<void(*)(BOOL)>(0x414BF0);
+const auto ShowMyChar = reinterpret_cast<void(*)(BOOL)>(0x415220);
+const auto PutMyChar = reinterpret_cast<void(*)(int, int)>(0x415250);
+const auto ActMyChar_Normal = reinterpret_cast<void(*)(BOOL)>(0x4156C0);
+const auto ActMyChar_Stream = reinterpret_cast<void(*)(BOOL)>(0x416470);
+const auto ActMyChar = reinterpret_cast<void(*)(BOOL)>(0x4168C0);
+const auto AirProcess = reinterpret_cast<void(*)(void)>(0x416990);
+const auto GetMyCharPosition = reinterpret_cast<void(*)(int*, int*)>(0x416AA0);
+const auto SetMyCharPosition = reinterpret_cast<void(*)(int, int)>(0x416AC0);
+const auto MoveMyChar = reinterpret_cast<void(*)(int, int)>(0x416B30);
+const auto ZeroMyCharXMove = reinterpret_cast<void(*)(void)>(0x416B50);
+const auto GetUnitMyChar = reinterpret_cast<int(*)(void)>(0x416B60);
+const auto SetMyCharDirect = reinterpret_cast<void(*)(unsigned char)>(0x416B70);
+const auto ChangeMyUnit = reinterpret_cast<void(*)(unsigned char)>(0x416C40);
+const auto PitMyChar = reinterpret_cast<void(*)(void)>(0x416C50);
+const auto EquipItem = reinterpret_cast<void(*)(int, BOOL)>(0x416C70);
+const auto ResetCheck = reinterpret_cast<void(*)(void)>(0x416CA0);
 // MycHit / MyChar collision functions
-static void (* const ResetMyCharFlag)(void) = (void(*)(void))0x416E20;
-static int (* const JudgeHitMyCharBlock)(int x, int y) = (int(*)(int, int))0x416E30;
-static void (* const PutlittleStar)(void) = (void(*)(void))0x417160;
-static int (* const JudgeHitMyCharTriangleA)(int x, int y) = (int(*)(int, int))0x4171D0;
-static int (* const JudgeHitMyCharTriangleB)(int x, int y) = (int(*)(int, int))0x4172E0;
-static int (* const JudgeHitMyCharTriangleC)(int x, int y) = (int(*)(int, int))0x4173F0;
-static int (* const JudgeHitMyCharTriangleD)(int x, int y) = (int(*)(int, int))0x417500;
-static int (* const JudgeHitMyCharTriangleE)(int x, int y) = (int(*)(int, int))0x417610;
-static int (* const JudgeHitMyCharTriangleF)(int x, int y) = (int(*)(int, int))0x417720;
-static int (* const JudgeHitMyCharTriangleG)(int x, int y) = (int(*)(int, int))0x417830;
-static int (* const JudgeHitMyCharTriangleH)(int x, int y) = (int(*)(int, int))0x417940;
-static int (* const JudgeHitMyCharWater)(int x, int y) = (int(*)(int, int))0x417A50;
-static int (* const JudgeHitMyCharDamage)(int x, int y) = (int(*)(int, int))0x417AE0;
-static int (* const JudgeHitMyCharDamageW)(int x, int y) = (int(*)(int, int))0x417B70;
-static int (* const JudgeHitMyCharVectLeft)(int x, int y) = (int(*)(int, int))0x417C00;
-static int (* const JudgeHitMyCharVectUp)(int x, int y) = (int(*)(int, int))0x417C90;
-static int (* const JudgeHitMyCharVectRight)(int x, int y) = (int(*)(int, int))0x417D20;
-static int (* const JudgeHitMyCharVectDown)(int x, int y) = (int(*)(int, int))0x417DB0;
-static void (* const HitMyCharMap)(void) = (void(*)(void))0x417E40;
-static int (* const JudgeHitMyCharNPC)(NPCHAR* npc) = (int(*)(NPCHAR*))0x4187F0;
-static unsigned char (* const JudgeHitMyCharNPC3)(NPCHAR* npc) = (unsigned char(*)(NPCHAR*))0x418B10;
-static int (* const JudgeHitMyCharNPC4)(NPCHAR* npc) = (int(*)(NPCHAR*))0x418C20;
-static void (* const HitMyCharNpChar)(void) = (void(*)(void))0x419030;
-static void (* const HitMyCharBoss)(void) = (void(*)(void))0x417E40;
+const auto ResetMyCharFlag = reinterpret_cast<void(*)(void)>(0x416E20);
+const auto JudgeHitMyCharBlock = reinterpret_cast<int(*)(int, int)>(0x416E30);
+const auto PutlittleStar = reinterpret_cast<void(*)(void)>(0x417160);
+const auto JudgeHitMyCharTriangleA = reinterpret_cast<int(*)(int, int)>(0x4171D0);
+const auto JudgeHitMyCharTriangleB = reinterpret_cast<int(*)(int, int)>(0x4172E0);
+const auto JudgeHitMyCharTriangleC = reinterpret_cast<int(*)(int, int)>(0x4173F0);
+const auto JudgeHitMyCharTriangleD = reinterpret_cast<int(*)(int, int)>(0x417500);
+const auto JudgeHitMyCharTriangleE = reinterpret_cast<int(*)(int, int)>(0x417610);
+const auto JudgeHitMyCharTriangleF = reinterpret_cast<int(*)(int, int)>(0x417720);
+const auto JudgeHitMyCharTriangleG = reinterpret_cast<int(*)(int, int)>(0x417830);
+const auto JudgeHitMyCharTriangleH = reinterpret_cast<int(*)(int, int)>(0x417940);
+const auto JudgeHitMyCharWater = reinterpret_cast<int(*)(int, int)>(0x417A50);
+const auto JudgeHitMyCharDamage = reinterpret_cast<int(*)(int, int)>(0x417AE0);
+const auto JudgeHitMyCharDamageW = reinterpret_cast<int(*)(int, int)>(0x417B70);
+const auto JudgeHitMyCharVectLeft = reinterpret_cast<int(*)(int, int)>(0x417C00);
+const auto JudgeHitMyCharVectUp = reinterpret_cast<int(*)(int, int)>(0x417C90);
+const auto JudgeHitMyCharVectRight = reinterpret_cast<int(*)(int, int)>(0x417D20);
+const auto JudgeHitMyCharVectDown = reinterpret_cast<int(*)(int, int)>(0x417DB0);
+const auto HitMyCharMap = reinterpret_cast<void(*)(void)>(0x417E40);
+const auto JudgeHitMyCharNPC = reinterpret_cast<int(*)(NPCHAR*)>(0x4187F0);
+const auto JudgeHitMyCharNPC3 = reinterpret_cast<unsigned char(*)(NPCHAR*)>(0x418B10);
+const auto JudgeHitMyCharNPC4 = reinterpret_cast<int(*)(NPCHAR*)>(0x418C20);
+const auto HitMyCharNpChar = reinterpret_cast<void(*)(void)>(0x419030);
+const auto HitMyCharBoss = reinterpret_cast<void(*)(void)>(0x419450);
 // MycParam functions
-static void (* const AddExpMyChar)(int x) = (void(*)(int))0x4196F0;
-static void (* const ZeroExpMyChar)(void) = (void(*)(void))0x419890;
-static BOOL(* const IsExpMyChar)(void) = (BOOL(*)(void))0x4198C0;
-static void (* const DamageMyChar)(int damage) = (void(*)(int))0x419910;
-static void (* const ZeroArmsEnergy_All)(void) = (void(*)(void))0x419B50;
-static void (* const AddBulletMyChar)(int no, int val) = (void(*)(int, int))0x419BA0;
-static void (* const AddLifeMyChar)(int x) = (void(*)(int))0x419C60;
-static void (* const AddMaxLifeMyChar)(int val) = (void(*)(int))0x419CB0;
-static void (* const PutArmsEnergy)(BOOL flash) = (void(*)(BOOL))0x419D10;
-static void (* const PutActiveArmsList)(void) = (void(*)(void))0x41A0B0;
-static void (* const PutMyLife)(BOOL flash) = (void(*)(BOOL))0x41A1D0;
-static void (* const PutMyAir)(int x, int y) = (void(*)(int, int))0x41A350;
-static void (* const PutTimeCounter)(int x, int y) = (void(*)(int, int))0x41A430;
-static BOOL(* const SaveTimeCounter)(void) = (BOOL(*)(void))0x41A5D0;
-static int (* const LoadTimeCounter)(void) = (int(*)(void))0x41A7C0;
+const auto AddExpMyChar = reinterpret_cast<void(*)(int)>(0x4196F0);
+const auto ZeroExpMyChar = reinterpret_cast<void(*)(void)>(0x419890);
+const auto IsMaxExpMyChar = reinterpret_cast<BOOL(*)(void)>(0x4198C0);
+const auto DamageMyChar = reinterpret_cast<void(*)(int)>(0x419910);
+const auto ZeroArmsEnergy_All = reinterpret_cast<void(*)(void)>(0x419B50);
+const auto AddBulletMyChar = reinterpret_cast<void(*)(int, int)>(0x419BA0);
+const auto AddLifeMyChar = reinterpret_cast<void(*)(int)>(0x419C60);
+const auto AddMaxLifeMyChar = reinterpret_cast<void(*)(int)>(0x419CB0);
+const auto PutArmsEnergy = reinterpret_cast<void(*)(BOOL)>(0x419D10);
+const auto PutActiveArmsList = reinterpret_cast<void(*)(void)>(0x41A0B0);
+const auto PutMyLife = reinterpret_cast<void(*)(BOOL)>(0x41A1D0);
+const auto PutMyAir = reinterpret_cast<void(*)(int, int)>(0x41A350);
+const auto PutTimeCounter = reinterpret_cast<void(*)(int, int)>(0x41A430);
+const auto SaveTimeCounter = reinterpret_cast<BOOL(*)(void)>(0x41A5D0);
+const auto LoadTimeCounter = reinterpret_cast<int(*)(void)>(0x41A7C0);
 // Organya functions
-static BOOL(* const MakeSoundObject8)(signed char* wavep, signed char track, signed char pipi) = (BOOL(*)(signed char*, signed char, signed char))0x41A8F0;
-static void (* const ChangeOrganFrequency)(unsigned char key, signed char track, long a) = (void(*)(unsigned char, signed char, long))0x41ABA0;
-static void (* const ChangeOrganPan)(unsigned char key, unsigned char pan, signed char track) = (void(*)(unsigned char, unsigned char, signed char))0x41AC70;
-static void (* const ChangeOrganVolume)(int no, long volume, signed char track) = (void(*)(int, long, signed char))0x41AD20;
-static void (* const PlayOrganObject)(unsigned char key, int mode, signed char track, long freq) = (void(*)(unsigned char, int, signed char, long))0x41ADC03;
-static void (* const ReleaseOrganyaObject)(signed char track) = (void(*)(signed char))0x41B2A0;
-static BOOL(* const InitWaveData100)(void) = (BOOL(*)(void))0x41B380;
-static BOOL(* const MakeOrganyaWave)(signed char track, signed char wave_no, signed char pipi) = (BOOL(*)(signed char, signed char, signed char))0x41B3F0;
-static void (* const ChangeDramFrequency)(unsigned char key, signed char track) = (void(*)(unsigned char, signed char))0x41B440;
-static void (* const ChangeDramPan)(unsigned char pan, signed char track) = (void(*)(unsigned char, signed char))0x41B440;
-static void (* const ChangeDramVolume)(long volume, signed char track) = (void(*)(long, signed char))0x41B4D0;
-static void (* const PlayDramObject)(unsigned char key, int mode, signed char track) = (void(*)(unsigned char, int, signed char))0x41B510;
-
-// These classes aren't implemented, as I, Kaitlyn, don't know how to implement them.
-// OrgData::OrgData - 0x41B600
-
-// OrgData::InitOrgData - 0x41B650
-
-// OrgData::SetMusicInfo - 0x41B730
-
-// OrgData::NoteAlloc - 0x41B890
-
-// OrgData::ReleaseNote - 0x41BA70
-
-// OrgData::InitMusicData - 0x41BAD0
-
-// OrgData::GetMusicInfo - 0x41C0B0
-
-// InitMMTimer - 0x41C180
-
-// StartTimer - 0x41C1E0
-
-// TimerProc - 0x41C230
-
-// QuitMMTimer - 0x41C250
-
-// OrgData::PlayData - 0x41C2B0
-
-// OrgData::SetPlayerPointer - 0x41C630
-
-static BOOL(* const StartOrganya)(LPDIRECTSOUND lpDS, const char* path_wave) = (BOOL(*)(LPDIRECTSOUND, const char*))0x41C6C0;
-static void (* const LoadOrganya)(const char*) = (void(*)(const char*))0x41C6F0;
-static void (* const SetOrganyaPosition)(int) = (void(*)(int))0x41C730;
-static int (* const GetOrganyaPosition)(void) = (int(*)(void))0x41C770;
-static void (* const PlayOrganyaMusic)(void) = (void(*)(void))0x41C790;
-static void (* const ChangeOrganyaVolume)(int) = (void(*)(int))0x41C7C0;
-static void (* const StopOrganyaMusic)(void) = (void(*)(void))0x41C7F0;
-static void (* const SetOrganyaFadeout)(void) = (void(*)(void))0x41C880;
-static void (* const EndOrganya)(void) = (void(*)(void))0x41C890;
+const auto MakeSoundObject8 = reinterpret_cast<BOOL(*)(signed char*, signed char, signed char)>(0x41A8F0);
+const auto ChangeOrganFrequency = reinterpret_cast<void(*)(unsigned char, signed char, long)>(0x41ABA0);
+const auto ChangeOrganPan = reinterpret_cast<void(*)(unsigned char, unsigned char, signed char)>(0x41AC70);
+const auto ChangeOrganVolume = reinterpret_cast<void(*)(int, long, signed char)>(0x41AD20);
+const auto PlayOrganObject = reinterpret_cast<void(*)(unsigned char, int, signed char, long)>(0x41ADC0);
+const auto ReleaseOrganyaObject = reinterpret_cast<void(*)(signed char)>(0x41B2A0);
+const auto InitWaveData100 = reinterpret_cast<BOOL(*)(void)>(0x41B380);
+const auto MakeOrganyaWave = reinterpret_cast<BOOL(*)(signed char, signed char, signed char)>(0x41B3F0);
+const auto ChangeDramFrequency = reinterpret_cast<void(*)(unsigned char, signed char)>(0x41B440);
+const auto ChangeDramPan = reinterpret_cast<void(*)(unsigned char, signed char)>(0x41B480);
+const auto ChangeDramVolume = reinterpret_cast<void(*)(long, signed char)>(0x41B4D0);
+const auto PlayDramObject = reinterpret_cast<void(*)(unsigned char, int, signed char)>(0x41B510);
+// Pointers to ORGDATA member functions
+namespace OrgData
+{
+	const auto ctor = reinterpret_cast<ORGDATA * (__thiscall*)(ORGDATA*)>(0x41B600);
+	const auto InitOrgData = reinterpret_cast<void(__thiscall*)(ORGDATA*)>(0x41B650);
+	const auto SetMusicInfo = reinterpret_cast<BOOL(__thiscall*)(ORGDATA*, MUSICINFO*, unsigned long)>(0x41B730);
+	const auto NoteAlloc = reinterpret_cast<BOOL(__thiscall*)(ORGDATA*, unsigned short)>(0x41B890);
+	const auto ReleaseNote = reinterpret_cast<void(__thiscall*)(ORGDATA*)>(0x41BA70);
+	const auto InitMusicData = reinterpret_cast<BOOL(__thiscall*)(ORGDATA*, const char*)>(0x41BAD0);
+	const auto PlayData = reinterpret_cast<void(__thiscall*)(ORGDATA*)>(0x41C2B0);
+	const auto SetPlayPointer = reinterpret_cast<void(__thiscall*)(ORGDATA*, long)>(0x41C630);
+	const auto GetMusicInfo = reinterpret_cast<void(__thiscall*)(ORGDATA*, MUSICINFO*)>(0x41C0B0);
+}
+// Wrappers for the above in case you need to call them from within your own code
+inline ORGDATA::ORGDATA() : info{}, track{}, mute{}, def_pan{}, def_volume{} // Initialize to shut up compiler warnings
+{
+	OrgData::ctor(this);
+}
+inline void ORGDATA::InitOrgData()
+{
+	return OrgData::InitOrgData(this);
+}
+inline BOOL ORGDATA::SetMusicInfo(MUSICINFO* mi, unsigned long flag)
+{
+	return OrgData::SetMusicInfo(this, mi, flag);
+}
+inline BOOL ORGDATA::NoteAlloc(unsigned short note_num)
+{
+	return OrgData::NoteAlloc(this, note_num);
+}
+inline void ORGDATA::ReleaseNote(void)
+{
+	return OrgData::ReleaseNote(this);
+}
+inline BOOL ORGDATA::InitMusicData(const char* path)
+{
+	return OrgData::InitMusicData(this, path);
+}
+inline void ORGDATA::GetMusicInfo(MUSICINFO* mi)
+{
+	return OrgData::GetMusicInfo(this, mi);
+}
+inline void ORGDATA::PlayData(void)
+{
+	return OrgData::PlayData(this);
+}
+inline void ORGDATA::SetPlayPointer(long x)
+{
+	return OrgData::SetPlayPointer(this, x);
+}
+const auto StartOrganya = reinterpret_cast<BOOL(*)(LPDIRECTSOUND, const char*)>(0x41C6C0);
+const auto LoadOrganya = reinterpret_cast<BOOL(*)(const char*)>(0x41C6F0);
+const auto SetOrganyaPosition = reinterpret_cast<void(*)(unsigned int)>(0x41C730);
+const auto GetOrganyaPosition = reinterpret_cast<unsigned int(*)(void)>(0x41C770);
+const auto PlayOrganyaMusic = reinterpret_cast<void(*)(void)>(0x41C790);
+const auto ChangeOrganyaVolume = reinterpret_cast<BOOL(*)(int)>(0x41C7C0);
+const auto StopOrganyaMusic = reinterpret_cast<void(*)(void)>(0x41C7F0);
+const auto SetOrganyaFadeout = reinterpret_cast<void(*)(void)>(0x41C880);
+const auto EndOrganya = reinterpret_cast<void(*)(void)>(0x41C890);
 // PixTone functions
-static void (* const MakeWaveTables)(void) = (void(*)(void))0x41C8F0;
-static BOOL(* const MakePixelWaveData)(const PIXTONEPARAMETER* ptp, unsigned char* pData) = (BOOL(*)(const PIXTONEPARAMETER*, unsigned char*))0x41CB10;
+const auto MakeWaveTables = reinterpret_cast<void(*)(void)>(0x41C8F0);
+const auto MakePixelWaveData = reinterpret_cast<BOOL(*)(const PIXTONEPARAMETER*, unsigned char)>(0x41CB10);
 // Profile / Save data functions
-static BOOL(* const IsProfile)(void) = (BOOL(*)(void))0x41CFC0;
-static BOOL(* const SaveProfile)(const char* name) = (BOOL(*)(const char*))0x41D040;
-static BOOL(* const LoadProfile)(const char* name) = (BOOL(*)(const char*))0x41D260;
-static BOOL(* const InitializeGame)(HWND hWnd) = (BOOL(*)(HWND))0x41D550;
+const auto IsProfile = reinterpret_cast<BOOL(*)(void)>(0x41CFC0);
+const auto SaveProfile = reinterpret_cast<BOOL(*)(const char*)>(0x41D040);
+const auto LoadProfile = reinterpret_cast<BOOL(*)(const char*)>(0x41D260);
+const auto InitializeGame = reinterpret_cast<BOOL(*)(void*)>(0x41D550); // Parameter is technically HWND
 // SelStage / Teleporter Menu functions
-static void (* const ClearPermitStage)(void) = (void(*)(void))0x41D610;
-static BOOL(* const AddPermitStage)(int index, int event) = (BOOL(*)(int, int))0x41D630;
-static BOOL(* const SubPermitStage)(int index) = (BOOL(*)(int))0x41D6A0;
-static void (* const MoveStageSelectCursor)(void) = (void(*)(void))0x41D740;
-static void (* const PutStageSelectObject)(void) = (void(*)(void))0x41D840;
-static int (* const StageSelectLoop)(int* p_event) = (int(*)(int*))0x41DA00;
+const auto ClearPermitStage = reinterpret_cast<void(*)(void)>(0x41D610);
+const auto AddPermitStage = reinterpret_cast<BOOL(*)(int, int)>(0x41D630);
+const auto SubPermitStage = reinterpret_cast<BOOL(*)(int)>(0x41D6A0);
+const auto MoveStageSelectCursor = reinterpret_cast<void(*)(void)>(0x41D740);
+const auto PutStageSelectObject = reinterpret_cast<void(*)(void)>(0x41D840);
+const auto StageSelectLoop = reinterpret_cast<int(*)(int*)>(0x41DA00);
 // Shoot functions
-static void (* const ShootBullet_Frontia1)(int level) = (void(*)(int))0x41DBD0;
-static void (* const ShootBullet_PoleStar)(int level) = (void(*)(int))0x41DE60;
-static void (* const ShootBullet_FireBall)(int level) = (void(*)(int))0x41E110;
-static void (* const ShootBullet_Machinegun1)(int level) = (void(*)(int))0x41E3D0;
-static void (* const ShootBullet_Missile)(int level, BOOL bSuper) = (void(*)(int, BOOL))0x41E7B0;
-static void (* const ShootBullet_Bubblin1)(void) = (void(*)(void))0x41EFD0;
-static void (* const ShootBullet_Bubblin2)(int level) = (void(*)(int))0x41F280;
-static void (* const ShootBullet_Sword)(int level) = (void(*)(int))0x41F580;
-static void (* const ShootBullet_Nemesis)(int level) = (void(*)(int))0x41F710;
-static void (* const ResetSpurCharge)(void) = (void(*)(void))0x41F9E0;
-static void (* const ShootBullet_Spur)(int level) = (void(*)(int))0x41FA10;
-static void (* const ShootBullet)(void) = (void(*)(void))0x41FE70;
+const auto ShootBullet_Frontia1 = reinterpret_cast<void(*)(int)>(0x41DBD0);
+const auto ShootBullet_PoleStar = reinterpret_cast<void(*)(int)>(0x41DE60);
+const auto ShootBullet_FireBall = reinterpret_cast<void(*)(int)>(0x41E110);
+const auto ShootBullet_Machinegun1 = reinterpret_cast<void(*)(int)>(0x41E3D0);
+const auto ShootBullet_Missile = reinterpret_cast<void(*)(int, BOOL)>(0x41E7B0);
+const auto ShootBullet_Bubblin1 = reinterpret_cast<void(*)(void)>(0x41EFD0);
+const auto ShootBullet_Bubblin2 = reinterpret_cast<void(*)(int)>(0x41F280);
+const auto ShootBullet_Sword = reinterpret_cast<void(*)(int)>(0x41F580);
+const auto ShootBullet_Nemesis = reinterpret_cast<void(*)(int)>(0x41F710);
+const auto ResetSpurCharge = reinterpret_cast<void(*)(void)>(0x41F9E0);
+const auto ShootBullet_Spur = reinterpret_cast<void(*)(int)>(0x41FA10);
+const auto ShootBullet = reinterpret_cast<void(*)(void)>(0x41FE70);
 // Sound functions
-static BOOL(* const InitDirectSound)(HWND hWnd) = (BOOL(*)(HWND))0x4200C0;
-static void (* const EndDirectSound)(void) = (void(*)(void))0x4201A0;
-static BOOL(* const InitSoundObject)(LPCSTR resname, int no) = (BOOL(*)(LPCSTR, int))0x420240;
-static BOOL(* const LoadSoundObject)(LPCSTR file_name, int no) = (BOOL(*)(LPCSTR, int))0x420390;
-static BOOL(* const PlaySoundObject)(int no, SoundMode mode) = (BOOL(*)(int, SoundMode))0x420640;
-static void (* const ChangeSoundFrequency)(int no, DWORD rate) = (void(*)(int, DWORD))0x420720;
-static void (* const ChangeSoundVolume)(int no, long volume) = (void(*)(int, long))0x420760;
-static void (* const ChangeSoundPan)(int no, long pan) = (void(*)(int, long))0x4207A0;
-static int (* const MakePixToneObject)(const PIXTONEPARAMETER* ptp, int ptp_num, int no) = (int(*)(const PIXTONEPARAMETER*, int, int))0x4207E0;
+const auto SetNoise = reinterpret_cast<void(*)(int, int)>(0x416CC0);
+const auto CutNoise = reinterpret_cast<void(*)(void)>(0x416D40);
+const auto ResetNoise = reinterpret_cast<void(*)(void)>(0x416D80);
+const auto SleepNoise = reinterpret_cast<void(*)(void)>(0x416DF0);
+const auto InitDirectSound = reinterpret_cast<BOOL(*)(HWND)>(0x4200C0);
+const auto EndDirectSound = reinterpret_cast<void(*)(void)>(0x4201A0);
+const auto InitSoundObject = reinterpret_cast<BOOL(*)(LPCSTR, int)>(0x420240);
+const auto LoadSoundObject = reinterpret_cast<BOOL(*)(LPCSTR, int)>(0x420390);
+const auto PlaySoundObject = reinterpret_cast<void(*)(int, int)>(0x420640);
+const auto ChangeSoundFrequency = reinterpret_cast<void(*)(int, DWORD)>(0x420720);
+const auto ChangeSoundVolume = reinterpret_cast<void(*)(int, long)>(0x420760);
+const auto ChangeSoundPan = reinterpret_cast<void(*)(int, long)>(0x4207A0);
+const auto MakePixToneObject = reinterpret_cast<int(*)(const PIXTONEPARAMETER*, int, int)>(0x4207E0);
 // Stage functions
-static BOOL(* const TransferStage)(int no, int w, int x, int y) = (BOOL(*)(int, int, int, int))0x420BE0;
-static void (* const ChangeMusic)(int music_id) = (void(*)(int))0x420EE0;
-static void (* const ReCallMusic)(void) = (void(*)(void))0x420F50;
+const auto TransferStage = reinterpret_cast<BOOL(*)(int, int, int, int)>(0x420BE0);
+const auto ChangeMusic = reinterpret_cast<void(*)(int)>(0x420EE0);
+const auto ReCallMusic = reinterpret_cast<void(*)(void)>(0x420F50);
 // Star / Whimsical Star functions
-static void (* const InitStar)(void) = (void(*)(void))0x420FA0;
-static void (* const ActStar)(void) = (void(*)(void))0x421040;
-static void (* const PutStar)(int fx, int fy) = (void(*)(int, int))0x4213B0;
+const auto InitStar = reinterpret_cast<void(*)(void)>(0x420FA0);
+const auto ActStar = reinterpret_cast<void(*)(void)>(0x421040);
+const auto PutStar = reinterpret_cast<void(*)(int, int)>(0x4213B0);
 // TextScript / TSC functions
-static BOOL(* const InitTextScript2)(void) = (BOOL(*)(void))0x4214E0;
-static void (* const EndTextScript)(void) = (void(*)(void))0x421570;
-static void (* const EncryptionBinaryData2)(unsigned char* pData, long size) = (void(*)(unsigned char*, long))0x4215C0;
-static BOOL(* const LoadTextScript2)(const char* name) = (BOOL(*)(const char*))0x421660;
-static BOOL(* const LoadTextScript_Stage)(const char* name) = (BOOL(*)(const char*))0x421750;
-static void (* const GetTextScriptPath)(char* path) = (void(*)(char*))0x4218E0;
-static int (* const GetTextScriptNo)(int a) = (int(*)(int))0x421900;
-static BOOL(* const StartTextScript)(int no) = (BOOL(*)(int))0x421990;
-static BOOL(* const JumpTextScript)(int no) = (BOOL(*)(int))0x421AF0;
-static void (* const StopTextScript)(void) = (void(*)(void))0x421C50;
-static void (* const CheckNewLine)(void) = (void(*)(void))0x421C80;
-static void (* const SetNumberTextScript)(int index) = (void(*)(int))0x421D10;
-static void (* const ClearTextLine)(void) = (void(*)(void))0x421E90;
-static void (* const PutTextScript)(void) = (void(*)(void))0x421F10;
-static int (* const TextScriptProc)(void) = (int(*)(void))0x422510;
-static void (* const RestoreTextScript)(void) = (void(*)(void))0x425790;
+const auto InitTextScript2 = reinterpret_cast<BOOL(*)(void)>(0x4214E0);
+const auto EndTextScript = reinterpret_cast<void(*)(void)>(0x421570);
+const auto EncryptionBinaryData2 = reinterpret_cast<void(*)(unsigned char*, int)>(0x4215C0);
+const auto LoadTextScript2 = reinterpret_cast<BOOL(*)(const char*)>(0x421660);
+const auto LoadTextScript_Stage = reinterpret_cast<BOOL(*)(const char*)>(0x421750);
+const auto GetTextScriptPath = reinterpret_cast<void(*)(char*)>(0x4218E0);
+const auto GetTextScriptNo = reinterpret_cast<int(*)(int)>(0x421900);
+const auto StartTextScript = reinterpret_cast<BOOL(*)(int)>(0x421990);
+const auto JumpTextScript = reinterpret_cast<BOOL(*)(int)>(0x421AF0);
+const auto StopTextScript = reinterpret_cast<void(*)(void)>(0x421C50);
+const auto CheckNewLine = reinterpret_cast<void(*)(void)>(0x421C80);
+const auto SetNumberTextScript = reinterpret_cast<void(*)(int)>(0x421D10);
+const auto ClearTextLine = reinterpret_cast<void(*)(void)>(0x421E90);
+const auto PutTextScript = reinterpret_cast<void(*)(void)>(0x421F10);
+const auto TextScriptProc = reinterpret_cast<int(*)(void)>(0x422510);
+const auto RestoreTextScript = reinterpret_cast<void(*)(void)>(0x425790);
 // Triangle functions
-static void (* const InitTriangleTable)(void) = (void(*)(void))0x4257F0;
-static int (* const GetSin)(unsigned char deg) = (int(*)(unsigned char))0x4258B0;
-static int (* const GetCos)(unsigned char deg) = (int(*)(unsigned char))0x4258C0;
-static unsigned char (* const GetArktan)(int x, int y) = (unsigned char(*)(int, int))0x4258E0;
+const auto InitTriangleTable = reinterpret_cast<void(*)(void)>(0x4257F0);
+const auto GetSin = reinterpret_cast<int(*)(unsigned char)>(0x4258B0);
+const auto GetCos = reinterpret_cast<int(*)(unsigned char)>(0x4258C0);
+const auto GetArktan = reinterpret_cast<unsigned char(*)(int, int)>(0x4258E0);
 // ValueView functions
-static void (* const ClearValueView)(void) = (void(*)(void))0x425BC0;
-static void (* const SetValueView)(int* px, int* py, int value) = (void(*)(int*, int*, int))0x425BF0;
-static void (* const ActValueView)(void) = (void(*)(void))0x426360;
-static void (* const PutValueView)(int flx, int fly) = (void(*)(int, int))0x426430;
+const auto ClearValueView = reinterpret_cast<void(*)(void)>(0x425BC0);
+const auto SetValueView = reinterpret_cast<void(*)(int*, int*, int)>(0x425BF0);
+const auto ActValueView = reinterpret_cast<void(*)(void)>(0x426360);
+const auto PutValueView = reinterpret_cast<void(*)(int, int)>(0x426430);
 // ActNpc function list (000 - 361)
 static void (* const ActNpc000)(NPCHAR* npc) = (void(*)(NPCHAR*))0x426530;
 static void (* const ActNpc001)(NPCHAR* npc) = (void(*)(NPCHAR*))0x4265B0;
@@ -1647,99 +1882,119 @@ static void (* const ActNpc358)(NPCHAR* npc) = (void(*)(NPCHAR*))0x46E870;
 static void (* const ActNpc359)(NPCHAR* npc) = (void(*)(NPCHAR*))0x46E9E0;
 static void (* const ActNpc360)(NPCHAR* npc) = (void(*)(NPCHAR*))0x46EA90;
 // NpChar functions
-static void (* const InitNpChar)(void) = (void(*)(void))0x46EB30;
-static BOOL(* const LoadEvent)(const char* path_event) = (BOOL(*)(const char*))0x46EB50;
-static void (* const SetUniqueParameter)(NPCHAR* npc) = (void(*)(NPCHAR*))0x46EE50;
-static void (* const SetNpChar)(int object_ID, int x_pos, int y_pos, int a4, int a5, int facing_right, int a7, int object_RAM_index) = (void(*)(int, int, int, int, int, int, int, int))0x46EFD0;
-static void (* const SetDestroyNpChar)(int x, int y, signed int w, int num) = (void(*)(int, int, int, int))0x46F150;
-static void (* const SetDestroyNpCharUp)(int x, int y, signed int w, int num) = (void(*)(int, int, int, int))0x46F200;
-static void (* const SetExpObjects)(int x, int y, int exp) = (void(*)(int, int, int))0x46F2B0;
-static BOOL(* const SetBulletObject)(int x, int y, int val) = (BOOL(*)(int, int, int))0x46F430;
-static BOOL(* const SetLifeObject)(int x, int y, int val) = (BOOL(*)(int, int, int))0x46F630;
-static void (* const VanishNpChar)(NPCHAR* npc) = (void(*)(NPCHAR*))0x46F760;
-static void (* const PutNpChar)(int fx, int fy) = (void(*)(int, int))0x46F810;
-static void (* const ActNpChar)(void) = (void(*)(void))0x46FA00;
-static void (* const ChangeNpCharByEvent)(int code_event, int code_char, int dir) = (void(*)(int, int, int))0x46FAB0;
-static void (* const ChangeCheckableNpCharByEvent)(int code_event, int code_char, int dir) = (void(*)(int, int, int))0x46FD10;
-static void (* const SetNpCharActionNo)(int code_event, int code_char, int dir) = (void(*)(int, int, int))0x46FF90;
-static void (* const MoveNpChar)(int code_event, int x, int y, int dir) = (void(*)(int, int, int, int))0x470060;
-static void (* const BackStepMyChar)(int code_event) = (void(*)(int))0x470150;
-static void (* const DeleteNpCharEvent)(int code) = (void(*)(int))0x470250;
-static void (* const DeleteNpCharCode)(int code, BOOL bSmoke) = (void(*)(int, BOOL))0x4702D0;
-static void (* const GetNpCharPosition)(int* x, int* y, int i) = (void(*)(int*, int*, int))0x470460;
-static BOOL(* const IsNpCharCode)(int code) = (BOOL(*)(int))0x470490;
-static BOOL(* const GetNpCharAlive)(int code_event) = (BOOL(*)(int))0x4704F0;
-static int (* const CountAliveNpChar)(void) = (int(*)(void))0x470560;
+const auto InitNpChar = reinterpret_cast<void(*)(void)>(0x46EB30);
+const auto LoadEvent = reinterpret_cast<BOOL(*)(const char*)>(0x46EB50);
+const auto SetUniqueParameter = reinterpret_cast<void(*)(NPCHAR*)>(0x46EE50);
+const auto SetNpChar = reinterpret_cast<void(*)(int, int, int, int, int, int, NPCHAR*, int)>(0x46EFD0);
+const auto SetDestroyNpChar = reinterpret_cast<void(*)(int, int, int, int)>(0x46F150);
+const auto SetDestroyNpCharUp = reinterpret_cast<void(*)(int, int, int, int)>(0x46F200);
+const auto SetExpObjects = reinterpret_cast<void(*)(int, int, int)>(0x46F2B0);
+const auto SetBulletObject = reinterpret_cast<BOOL(*)(int, int, int)>(0x46F430);
+const auto SetLifeObject = reinterpret_cast<BOOL(*)(int, int, int)>(0x46F630);
+const auto VanishNpChar = reinterpret_cast<void(*)(NPCHAR*)>(0x46F760);
+const auto PutNpChar = reinterpret_cast<void(*)(int, int)>(0x46F810);
+const auto ActNpChar = reinterpret_cast<void(*)(void)>(0x46FA00);
+const auto ChangeNpCharByEvent = reinterpret_cast<void(*)(int, int, int)>(0x46FAB0);
+const auto ChangeCheckableNpCharByEvent = reinterpret_cast<void(*)(int, int, int)>(0x46FD10);
+const auto SetNpCharActionNo = reinterpret_cast<void(*)(int, int, int)>(0x46FF90);
+const auto MoveNpChar = reinterpret_cast<void(*)(int, int, int, int)>(0x470060);
+const auto BackStepMyChar = reinterpret_cast<void(*)(int)>(0x470150);
+const auto DeleteNpCharEvent = reinterpret_cast<void(*)(int)>(0x470250);
+const auto DeleteNpCharCode = reinterpret_cast<void(*)(int, BOOL)>(0x4702D0);
+const auto GetNpCharPosition = reinterpret_cast<void(*)(int*, int*, int)>(0x470460);
+const auto IsNpCharCode = reinterpret_cast<BOOL(*)(int)>(0x470490);
+const auto GetNpCharAlive = reinterpret_cast<BOOL(*)(int)>(0x4704F0);
+const auto CountAliveNpChar = reinterpret_cast<int(*)(void)>(0x470560);
 // NpcHit / Npc collision functions
-static void (* const JadgeHitNpCharBlock)(NPCHAR* npc, int x, int y) = (void(*)(NPCHAR*, int, int))0x4705C0;
-static void (* const JudgeHitNpCharTriangleA)(NPCHAR* npc, int x, int y) = (void(*)(NPCHAR*, int, int))0x470870;
-static void (* const JudgeHitNpCharTriangleB)(NPCHAR* npc, int x, int y) = (void(*)(NPCHAR*, int, int))0x470970;
-static void (* const JudgeHitNpCharTriangleC)(NPCHAR* npc, int x, int y) = (void(*)(NPCHAR*, int, int))0x470A70;
-static void (* const JudgeHitNpCharTriangleD)(NPCHAR* npc, int x, int y) = (void(*)(NPCHAR*, int, int))0x470B70;
-static void (* const JudgeHitNpCharTriangleE)(NPCHAR* npc, int x, int y) = (void(*)(NPCHAR*, int, int))0x470C70;
-static void (* const JudgeHitNpCharTriangleF)(NPCHAR* npc, int x, int y) = (void(*)(NPCHAR*, int, int))0x470D80;
-static void (* const JudgeHitNpCharTriangleG)(NPCHAR* npc, int x, int y) = (void(*)(NPCHAR*, int, int))0x470E90;
-static void (* const JudgeHitNpCharTriangleH)(NPCHAR* npc, int x, int y) = (void(*)(NPCHAR*, int, int))0x470FA0;
-static void (* const JudgeHitNpCharWater)(NPCHAR* npc, int x, int y) = (void(*)(NPCHAR*, int, int))0x4710B0;
-static void (* const HitNpCharMap)(void) = (void(*)(void))0x471160;
-static void (* const LoseNpChar)(NPCHAR* npc, BOOL bVanish) = (void(*)(NPCHAR*, BOOL))0x471B80;
-static void (* const JudgeHitNpCharBullet)(void) = (void(*)(void))0x471D50;
+const auto JadgeHitNpCharBlock = reinterpret_cast<void(*)(NPCHAR*, int, int)>(0x4705C0);
+const auto JudgeHitNpCharTriangleA = reinterpret_cast<void(*)(NPCHAR*, int, int)>(0x470870);
+const auto JudgeHitNpCharTriangleB = reinterpret_cast<void(*)(NPCHAR*, int, int)>(0x470970);
+const auto JudgeHitNpCharTriangleC = reinterpret_cast<void(*)(NPCHAR*, int, int)>(0x470A70);
+const auto JudgeHitNpCharTriangleD = reinterpret_cast<void(*)(NPCHAR*, int, int)>(0x470B70);
+const auto JudgeHitNpCharTriangleE = reinterpret_cast<void(*)(NPCHAR*, int, int)>(0x470C70);
+const auto JudgeHitNpCharTriangleF = reinterpret_cast<void(*)(NPCHAR*, int, int)>(0x470D80);
+const auto JudgeHitNpCharTriangleG = reinterpret_cast<void(*)(NPCHAR*, int, int)>(0x470E90);
+const auto JudgeHitNpCharTriangleH = reinterpret_cast<void(*)(NPCHAR*, int, int)>(0x470FA0);
+const auto JudgeHitNpCharWater = reinterpret_cast<void(*)(NPCHAR*, int, int)>(0x4710B0);
+const auto HitNpCharMap = reinterpret_cast<void(*)(void)>(0x471160);
+const auto LoseNpChar = reinterpret_cast<void(*)(NPCHAR*, BOOL)>(0x471B80);
+const auto HitNpCharBullet = reinterpret_cast<void(*)(void)>(0x471D50);
 // NpcTbl / Npc Table functions
-static BOOL(* const LoadNpcTable)(const char* path) = (BOOL(*)(const char*))0x472400;
-static void (* const ReleaseNpcTable)(void) = (void(*)(void))0x472710;
+const auto LoadNpcTable = reinterpret_cast<BOOL(*)(const char*)>(0x472400);
+const auto ReleaseNpcTable = reinterpret_cast<void(*)(void)>(0x472710);
 // Boss functions
-static void (* const InitBossChar)(int code) = (void(*)(int))0x472740;
-static void (* const PutBossChar)(int fx, int fy) = (void(*)(int, int))0x472770;
-static void (* const SetBossCharActNo)(int a) = (void(*)(int))0x472940;
-static void (* const HitBossBullet)(void) = (void(*)(void))0x472950;
-static void (* const ActBossChar_0)(void) = (void(*)(void))0x472FF0;
-static void (* const ActBossChar)(void) = (void(*)(void))0x473000;
-static void (* const HitBossMap)(void) = (void(*)(void))0x473080;
+const auto InitBossChar = reinterpret_cast<void(*)(int)>(0x472740);
+const auto PutBossChar = reinterpret_cast<void(*)(int, int)>(0x472770);
+const auto SetBossCharActNo = reinterpret_cast<void(*)(int)>(0x472940);
+const auto HitBossBullet = reinterpret_cast<void(*)(void)>(0x472950);
+const auto ActBossChar_0 = reinterpret_cast<void(*)(void)>(0x472FF0);
+const auto ActBossChar = reinterpret_cast<void(*)(void)>(0x473000);
+const auto HitBossMap = reinterpret_cast<void(*)(void)>(0x473080);
 // Core boss
-static void (* const ActBossChar_Core_Face)(NPCHAR* npc) = (void(*)(NPCHAR*))0x4739B0;
-static void (* const ActBossChar_Core_Tail)(NPCHAR* npc) = (void(*)(NPCHAR*))0x473BD0;
-static void (* const ActBossChar_Core_Mini)(NPCHAR* npc) = (void(*)(NPCHAR*))0x473DE0;
-static void (* const ActBossChar_Core_Hit)(NPCHAR* npc) = (void(*)(NPCHAR*))0x474340;
-static void (* const ActBossChar_Core)(void) = (void(*)(void))0x474400;
+const auto ActBossChar_Core_Face = reinterpret_cast<void(*)(NPCHAR*)>(0x4739B0);
+const auto ActBossChar_Core_Tail = reinterpret_cast<void(*)(NPCHAR*)>(0x473BD0);
+const auto ActBossChar_Core_Mini = reinterpret_cast<void(*)(NPCHAR*)>(0x473DE0);
+const auto ActBossChar_Core_Hit = reinterpret_cast<void(*)(NPCHAR*)>(0x474340);
+const auto ActBossChar_Core = reinterpret_cast<void(*)(void)>(0x474400);
 // Undead Core boss
-static void (* const ActBossChar_Undead)(void) = (void(*)(void))0x4753D0;
-static void (* const ActBossCharA_Head)(NPCHAR* npc) = (void(*)(NPCHAR*))0x476790;
-static void (* const ActBossCharA_Tail)(NPCHAR* npc) = (void(*)(NPCHAR*))0x4769A0;
-static void (* const ActBossCharA_Face)(NPCHAR* npc) = (void(*)(NPCHAR*))0x476B90;
-static void (* const ActBossCharA_Mini)(NPCHAR* npc) = (void(*)(NPCHAR*))0x476E50;
-static void (* const ActBossCharA_Hit)(NPCHAR* npc) = (void(*)(NPCHAR*))0x477230;
+const auto ActBossChar_Undead = reinterpret_cast<void(*)(void)>(0x4753D0);
+const auto ActBossCharA_Head = reinterpret_cast<void(*)(NPCHAR*)>(0x476790);
+const auto ActBossCharA_Tail = reinterpret_cast<void(*)(NPCHAR*)>(0x4769A0);
+const auto ActBossCharA_Face = reinterpret_cast<void(*)(NPCHAR*)>(0x476B90);
+const auto ActBossCharA_Mini = reinterpret_cast<void(*)(NPCHAR*)>(0x476E50);
+const auto ActBossCharA_Hit = reinterpret_cast<void(*)(NPCHAR*)>(0x477230);
 // Ballos boss
-static void (* const ActBossChar_Ballos)(void) = (void(*)(void))0x4772F0;
-static void (* const ActBossCharA_Eye)(NPCHAR* npc) = (void(*)(NPCHAR*))0x478AA0;
-static void (* const ActBossCharA_Body)(NPCHAR* npc) = (void(*)(NPCHAR*))0x478F20;
-static void (* const ActBossCharA_HITAI)(NPCHAR* npc) = (void(*)(NPCHAR*))0x478FE0;
-static void (* const ActBossCharA_HARA)(NPCHAR* npc) = (void(*)(NPCHAR*))0x479010;
+const auto ActBossChar_Ballos = reinterpret_cast<void(*)(void)>(0x4772F0);
+const auto ActBossChar_Eye = reinterpret_cast<void(*)(NPCHAR*)>(0x478AA0);
+const auto ActBossChar_Body = reinterpret_cast<void(*)(NPCHAR*)>(0x478F20);
+const auto ActBossChar_HITAI = reinterpret_cast<void(*)(NPCHAR*)>(0x478FE0);
+const auto ActBossChar_HARA = reinterpret_cast<void(*)(NPCHAR*)>(0x479010);
 // Balfrog boss
-static void (* const ActBossChar_Frog)(void) = (void(*)(void))0x479030;
-static void (* const ActBossChar02_01)(void) = (void(*)(void))0x47A6A0;
-static void (* const ActBossChar02_02)(void) = (void(*)(void))0x47A800;
+const auto ActBossChar_Frog = reinterpret_cast<void(*)(void)>(0x479030);
+const auto ActBossChar02_01 = reinterpret_cast<void(*)(void)>(0x47A6A0);
+const auto ActBossChar02_02 = reinterpret_cast<void(*)(void)>(0x47A800);
 // Ironhead boss
-static void (* const ActBossChar_Ironhead)(void) = (void(*)(void))0x47A8A0;
+const auto ActBossChar_Ironhead = reinterpret_cast<void(*)(void)>(0x47A8A0);
 // Boss Life functions
-static void (* const InitBossLife)(void) = (void(*)(void))0x47B450;
-static BOOL(* const StartBossLife)(int code_event) = (BOOL(*)(int))0x47B460;
-static BOOL(* const StartBossLife2)(void) = (BOOL(*)(void))0x47B500;
-static void (* const PutBossLife)(void) = (void(*)(void))0x47B540;
+const auto InitBossLife = reinterpret_cast<void(*)(void)>(0x47B450);
+const auto StartBossLife = reinterpret_cast<BOOL(*)(int)>(0x47B460);
+const auto StartBossLife2 = reinterpret_cast<BOOL(*)(void)>(0x47B500);
+const auto PutBossLife = reinterpret_cast<void(*)(void)>(0x47B540);
 // Omega boss
-static void (* const ActBossChar_Omega)(void) = (void(*)(void))0x47B6F0;
-static void (* const ActBoss01_12)(void) = (void(*)(void))0x47C380;
-static void (* const ActBoss01_34)(void) = (void(*)(void))0x47C4E0;
-static void (* const ActBoss01_5)(void) = (void(*)(void))0x47C7A0;
+const auto ActBossChar_Omega = reinterpret_cast<void(*)(void)>(0x47B6F0);
+const auto ActBoss01_12 = reinterpret_cast<void(*)(void)>(0x47C380);
+const auto ActBoss01_34 = reinterpret_cast<void(*)(void)>(0x47C4E0);
+const auto ActBoss01_5 = reinterpret_cast<void(*)(void)>(0x47C7A0);
 // Heavy Press boss
-static void (* const ActBossChar_Press)(void) = (void(*)(void))0x47C820;
+const auto ActBossChar_Press = reinterpret_cast<void(*)(void)>(0x47C820);
 // The Sisters boss
-static void (* const ActBossChar_Twin)(void) = (void(*)(void))0x47D170;
-static void (* const ActBossCharT_DragonBody)(NPCHAR* npc) = (void(*)(NPCHAR*))0x47DAA0;
-static void (* const ActBossCharT_DragonHead)(NPCHAR* npc) = (void(*)(NPCHAR*))0x47DF10;
+const auto ActBossChar_Twin = reinterpret_cast<void(*)(void)>(0x47D170);
+const auto ActBossCharT_DragonBody = reinterpret_cast<void(*)(NPCHAR*)>(0x47DAA0);
+const auto ActBossCharT_DragonHead = reinterpret_cast<void(*)(NPCHAR*)>(0x47DF10);
 // Monster X boss
-static void (* const ActBossChar_MonstX)(void) = (void(*)(void))0x47E6F0;
-static void (* const ActBossChar_03_01)(NPCHAR* npc) = (void(*)(NPCHAR*))0x47F710;
-static void (* const ActBossChar_03_02)(NPCHAR* npc) = (void(*)(NPCHAR*))0x480090;
-static void (* const ActBossChar_03_03)(NPCHAR* npc) = (void(*)(NPCHAR*))0x4802A0;
-static void (* const ActBossChar_03_04)(NPCHAR* npc) = (void(*)(NPCHAR*))0x480550;
-static void (* const ActBossChar_03_face)(NPCHAR* npc) = (void(*)(NPCHAR*))0x4808C0;
+const auto ActBossChar_MonstX = reinterpret_cast<void(*)(void)>(0x47E6F0);
+const auto ActBossChar03_01 = reinterpret_cast<void(*)(NPCHAR*)>(0x47F710);
+const auto ActBossChar03_02 = reinterpret_cast<void(*)(NPCHAR*)>(0x480090);
+const auto ActBossChar03_03 = reinterpret_cast<void(*)(NPCHAR*)>(0x4802A0);
+const auto ActBossChar03_04 = reinterpret_cast<void(*)(NPCHAR*)>(0x480550);
+const auto ActBossChar03_face = reinterpret_cast<void(*)(NPCHAR*)>(0x4808C0);
+// Freeware Functions -- periwinkle headers
+const auto Freeware_memset = reinterpret_cast<void* (*)(void*, int, size_t)>(0x480D30);
+const auto Freeware_fclose = reinterpret_cast<int(*)(FILE*)>(0x480E1B);
+const auto Freeware_fread = reinterpret_cast<size_t(*)(void*, size_t, size_t, FILE*)>(0x480F55);
+const auto Freeware_fopen = reinterpret_cast<FILE * (*)(const char*, const char*)>(0x480FFD);
+const auto Freeware_sprintf = reinterpret_cast<int(*)(char*, const char*, ...)>(0x481010);
+const auto Freeware_strcmp = reinterpret_cast<int(*)(const char*, const char*)>(0x481070);
+const auto Freeware_strcpy = reinterpret_cast<char* (*)(char*, const char*)>(0x481100);
+const auto Freeware_strcat = reinterpret_cast<char* (*)(char*, const char*)>(0x481110);
+const auto Freeware_strlen = reinterpret_cast<size_t(*)(const char*)>(0x481200);
+const auto Freeware_free = reinterpret_cast<void(*)(void*)>(0x48128B);
+const auto Freeware_malloc = reinterpret_cast<void* (*)(size_t)>(0x4813A3);
+const auto Freeware_memcpy = reinterpret_cast<void* (*)(void*, const void*, size_t)>(0x4813C0);
+const auto Freeware_srand = reinterpret_cast<void(*)(unsigned)>(0x4816FD);
+const auto Freeware_rand = reinterpret_cast<int(*)(void)>(0x48170A);
+const auto Freeware_memcmp = reinterpret_cast<int(*)(const void*, const void*, size_t)>(0x481730);
+const auto Freeware_sscanf = reinterpret_cast<int(*)(const char*, const char*, ...)>(0x4817E8);
+const auto Freeware_fprintf = reinterpret_cast<int(*)(FILE*, const char*, ...)>(0x48181C);
+const auto Freeware_fwrite = reinterpret_cast<int(*)(void*, size_t, size_t, FILE*)>(0x481981);
+const auto Freeware_fseek = reinterpret_cast<int(*)(FILE*, int, int)>(0x481A5C);

@@ -5,7 +5,7 @@
 #define MAX_NAME 0x14
 #define NAME_MIN 2
 
-#define NET_VERSION 10
+#define NET_VERSION 11
 
 const std::chrono::milliseconds TICKRATE = std::chrono::milliseconds(60);
 #define MAX_CLIENTS 0x80
@@ -31,8 +31,7 @@ enum PACKET_CODES
 	PACKETCODE_DEFINE_PLAYER,
 	PACKETCODE_CHAT_MESSAGE,
 	PACKETCODE_REPLICATE_PLAYER,
-	PACKETCODE_SKIN,
-	PACKETCODE_GRAB_PLAYER,
+	PACKETCODE_RECEIVE_DEATH, //death link
 };
 
 struct VIRTUAL_PLAYER

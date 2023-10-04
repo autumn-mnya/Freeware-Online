@@ -11,6 +11,7 @@
 
 #include "File.h"
 #include "Networking.h"
+#include "main.h"
 #include "cave_story.h"
 #include "mod_loader.h"
 #include "ByteStream.h"
@@ -29,6 +30,11 @@ unsigned int gLastChatMessage = 0;
 
 const char *skinFilename = "Skin";
 const char *playerName = "Player";
+
+static int SubpixelToScreenCoord(int coord)
+{
+	return (coord / 0x200);
+}
 
 //Handle ENet
 bool InitNetworking()
@@ -157,26 +163,26 @@ void HandleClient()
 		packetData->WriteLE32(PACKETCODE_REPLICATE_PLAYER);
 		
 		//Set attributes
-		packetData->WriteLE32(gMC->cond);
-		packetData->WriteLE32(gMC->unit);
-		packetData->WriteLE32(gMC->flag);
-		packetData->WriteLE32(gMC->x);
-		packetData->WriteLE32(gMC->y);
-		packetData->WriteLE32(gMC->xm);
-		packetData->WriteLE32(gMC->ym);
-		packetData->WriteLE32(gMC->up);
-		packetData->WriteLE32(gMC->down);
+		packetData->WriteLE32(gMC.cond);
+		packetData->WriteLE32(gMC.unit);
+		packetData->WriteLE32(gMC.flag);
+		packetData->WriteLE32(gMC.x);
+		packetData->WriteLE32(gMC.y);
+		packetData->WriteLE32(gMC.xm);
+		packetData->WriteLE32(gMC.ym);
+		packetData->WriteLE32(gMC.up);
+		packetData->WriteLE32(gMC.down);
 		packetData->WriteLE32(gArmsData[gSelectedArms].code);
-		packetData->WriteLE32(gMC->equip);
-		packetData->WriteLE32(gMC->ani_no);
-		packetData->WriteLE32(gMC->hit.back);
-		packetData->WriteLE32(gMC->hit.top);
-		packetData->WriteLE32(gMC->hit.front);
-		packetData->WriteLE32(gMC->hit.bottom);
-		packetData->WriteLE32(gMC->direct);
-		packetData->WriteLE32(gMC->shock);
-		packetData->WriteLE32(gMC->life);
-		packetData->WriteLE32(gMC->max_life);
+		packetData->WriteLE32(gMC.equip);
+		packetData->WriteLE32(gMC.ani_no);
+		packetData->WriteLE32(gMC.hit.back);
+		packetData->WriteLE32(gMC.hit.top);
+		packetData->WriteLE32(gMC.hit.front);
+		packetData->WriteLE32(gMC.hit.bottom);
+		packetData->WriteLE32(gMC.direct);
+		packetData->WriteLE32(gMC.shock);
+		packetData->WriteLE32(gMC.life);
+		packetData->WriteLE32(gMC.max_life);
 		packetData->WriteLE32(gStageNo);
 
 		// <MIM patch location
@@ -386,35 +392,14 @@ void HandleClient()
 							}
 
 							break;
-							
-							// was used for skins in CSE2 online, but i dont know if we can do that very easily in freeware
-						case PACKETCODE_SKIN:
-							/*
-							i = SDL_ReadLE32(packetData);
-							
-							printf("Recieved %d's skin\n", i);
-							
-							//Get bitmap data (packet data but with first 12 bytes cut-off)
-							SDL_RWops *bitmapData = SDL_RWFromConstMem(event.packet->data + 12, event.packet->dataLength - 12);
-							
-							//Load bitmap to skin slot (or use placeholder if failed)
-							ReleaseSurface(SURFACE_ID_SKIN_0 + i);
-							if (LoadBitmap(bitmapData, SURFACE_ID_SKIN_0 + i, true))
-							{
-								printf("Loaded %d's skin\n", i);
-							}
-							else
-							{
-								printf("Failed to open %d's skin\n", i);
-								ReleaseSurface(SURFACE_ID_SKIN_0 + i);
-								MakeSurface_File("MyChar", SURFACE_ID_SKIN_0 + i);
-								SDL_RWclose(bitmapData);
-							}
-							*/
-							break;
 
 							// undefined currently, might be for grabbing other players and throwing them similar to New Super Mario Bros.
-						case PACKETCODE_GRAB_PLAYER:
+						case PACKETCODE_RECEIVE_DEATH:
+							if (enable_deathlink == true)
+							{
+								printf("Received death from Server\n");
+								PlayerDeath();
+							}
 							break;
 					}
 				}
@@ -470,6 +455,8 @@ void PutVirtualPlayers(int fx, int fy)
 				{96,  0, 112, 16},
 				{112, 0, 128, 16},
 			};
+
+			RECT rcVirtualPlayerHitbox;
 			
 			if ((gVirtualPlayers[i].cond & 0x80) && !(gVirtualPlayers[i].cond & 2))
 			{
@@ -563,6 +550,17 @@ void PutVirtualPlayers(int fx, int fy)
 				RECT rcUsername = { 0, i * 16, WINDOW_WIDTH, i * 16 + 16 };
 				if (show_player_names != 1)
 					PutBitmap3(&grcGame, drawX / 0x200 - fx / 0x200 - WINDOW_WIDTH / 2, drawY / 0x200 - fy / 0x200 - 22, &rcUsername, SURFACE_ID_USERNAME);
+			}
+
+			// Draw Virtual Player hitboxes
+
+			if (show_players_hitboxes == true)
+			{
+				rcVirtualPlayerHitbox.left = SubpixelToScreenCoord(gVirtualPlayers[i].x) - SubpixelToScreenCoord(gVirtualPlayers[i].hit.left) - SubpixelToScreenCoord(fx) + SubpixelToScreenCoord(3 * 0x200);
+				rcVirtualPlayerHitbox.top = SubpixelToScreenCoord(gVirtualPlayers[i].y) - SubpixelToScreenCoord(gVirtualPlayers[i].hit.top) - SubpixelToScreenCoord(fy) + SubpixelToScreenCoord(6 * 0x200);
+				rcVirtualPlayerHitbox.right = SubpixelToScreenCoord(gVirtualPlayers[i].x) + SubpixelToScreenCoord(gVirtualPlayers[i].hit.right) - SubpixelToScreenCoord(fx) - SubpixelToScreenCoord(3 * 0x200);
+				rcVirtualPlayerHitbox.bottom = SubpixelToScreenCoord(gVirtualPlayers[i].y) + SubpixelToScreenCoord(gVirtualPlayers[i].hit.bottom) - SubpixelToScreenCoord(fy) - SubpixelToScreenCoord(6 * 0x200);
+				CortBox(&rcVirtualPlayerHitbox, GetCortBoxColor(RGB(0xFF, 0x00, 0xFF)));
 			}
 		}
 	}
@@ -767,4 +765,19 @@ void LoadMySkin()
 	sprintf(path, "../%s", skinFilename);
 	MakeSurface_File(path, SURFACE_ID_MY_CHAR);
 	*/
+}
+
+void SendMyDeathPacket()
+{
+	uint8_t packet[8];
+	ByteStream packetData(packet, 8);
+
+	packetData.WriteLE32(NET_VERSION);
+	packetData.WriteLE32(PACKETCODE_RECEIVE_DEATH);
+
+	//Send packet
+	auto definePacket = enet_packet_create(packet, 8, ENET_PACKET_FLAG_RELIABLE);
+
+	if (enet_peer_send(toServer, 0, definePacket) < 0)
+		KillClient();
 }

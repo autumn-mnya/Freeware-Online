@@ -21,3 +21,7 @@ void PrintChat(const char *text);
 void PutServer();
 char *GetProfileName();
 void LoadMySkin();
+void SendMyDeathPacket();
+
+// Main.cpp
+void PlayerDeath();
