@@ -247,4 +247,6 @@ void InitMod(void)
 		ModLoader_WriteCall((void*)0x419B40, (void*)DamageMyChar_Death);
 		ModLoader_WriteCall((void*)0x416A0D, (void*)AirProcess_Drown);
 	}
+
+	InitExperiment_NPCSync();
 }

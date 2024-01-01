@@ -1998,3 +1998,6 @@ const auto Freeware_sscanf = reinterpret_cast<int(*)(const char*, const char*, .
 const auto Freeware_fprintf = reinterpret_cast<int(*)(FILE*, const char*, ...)>(0x48181C);
 const auto Freeware_fwrite = reinterpret_cast<int(*)(void*, size_t, size_t, FILE*)>(0x481981);
 const auto Freeware_fseek = reinterpret_cast<int(*)(FILE*, int, int)>(0x481A5C);
+
+typedef void (*NPCFUNCTION)(NPCHAR*);
+static NPCFUNCTION* gpNpcFuncTbl = (NPCFUNCTION*)0x498548;

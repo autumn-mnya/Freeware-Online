@@ -25,3 +25,4 @@ void SendMyDeathPacket();
 
 // Main.cpp
 void PlayerDeath();
+void InitExperiment_NPCSync();

@@ -140,6 +140,23 @@ void KillClient()
 	client = NULL;
 }
 
+// Define the NPCHAR synchronization message structure
+typedef struct NPCHARSyncMessage {
+	int npcIndex;
+	NPCHAR npc;
+	// Add other fields as needed
+} NPCHARSyncMessage;
+
+void HandleNPCHARSyncMessage(ByteStream* packetData) {
+	NPCHARSyncMessage npcSyncMessage;
+	packetData->Read(&npcSyncMessage, sizeof(NPCHARSyncMessage), 1);
+
+	// Update the local NPC array
+	if (npcSyncMessage.npcIndex >= 0 && npcSyncMessage.npcIndex < NPC_MAX) {
+		gNPC[npcSyncMessage.npcIndex] = npcSyncMessage.npc;
+	}
+}
+
 //Handle client
 void HandleClient()
 {
@@ -401,6 +418,28 @@ void HandleClient()
 								PlayerDeath();
 							}
 							break;
+
+						case PACKETCODE_NPC_SYNC:
+						{
+							// Handle NPC synchronization data
+							NPCHARSyncMessage npcSyncMessage;
+							packetData->Read(&npcSyncMessage, sizeof(NPCHARSyncMessage), 1);
+
+							// Only synchronize NPCs if the player is in the same stage
+							for (int i = 0; i < MAX_CLIENTS; i++)
+							{
+								if (gVirtualPlayers[i].stage == gStageNo)
+								{
+									// Update the local gNPC array only if the NPC data has changed
+									if (npcSyncMessage.npcIndex >= 0 && npcSyncMessage.npcIndex < NPC_MAX &&
+										memcmp(&gNPC[npcSyncMessage.npcIndex], &npcSyncMessage.npc, sizeof(NPCHAR)) != 0) {
+										gNPC[npcSyncMessage.npcIndex] = npcSyncMessage.npc;
+									}
+								}
+							}
+						}
+						break;
+
 					}
 				}
 				
@@ -772,7 +811,7 @@ void SendMyDeathPacket()
 	uint8_t packet[8];
 	ByteStream packetData(packet, 8);
 
-	packetData.WriteLE32(NET_VERSION);
+	 
 	packetData.WriteLE32(PACKETCODE_RECEIVE_DEATH);
 
 	//Send packet
@@ -780,4 +819,72 @@ void SendMyDeathPacket()
 
 	if (enet_peer_send(toServer, 0, definePacket) < 0)
 		KillClient();
+}
+
+// Function to handle client-side NPCHAR synchronization messages
+void HandleNPCHARSyncMessageClient(NPCHARSyncMessage* message) {
+	// Apply the received NPCHAR synchronization message to the local game state
+	// You need to have a function to update the local game state based on the received NPC data
+	// For example: UpdateNPCHAR(&message->npc);
+}
+
+// Modified ActNpChar function to synchronize NPCs on the client
+// 0x46FA00
+
+// Inside ActNpChar_Networking function
+void ActNpChar_Networking(void) {
+	if (InServer()) {
+		int i;
+		int code_char;
+
+		for (i = 0; i < NPC_MAX; ++i) {
+			if (gNPC[i].cond & 0x80) {
+				code_char = gNPC[i].code_char;
+
+				gpNpcFuncTbl[code_char](&gNPC[i]);
+
+				if (gNPC[i].shock)
+					--gNPC[i].shock;
+
+				// Send NPCHAR synchronization message to the server for each NPC
+				NPCHARSyncMessage syncMessage;
+				syncMessage.npcIndex = i;
+				syncMessage.npc = gNPC[i];
+
+				// Create an ENetPacket and send the message to the server
+				uint8_t packet[sizeof(uint32_t) + sizeof(NPCHARSyncMessage)];
+				ByteStream packetData(packet, sizeof(uint32_t) + sizeof(NPCHARSyncMessage));
+
+				// Write NET_VERSION and PACKETCODE_NPC_SYNC to the packet
+				packetData.WriteLE32(NET_VERSION);
+				packetData.WriteLE32(PACKETCODE_NPC_SYNC);
+				packetData.Write(&syncMessage, sizeof(NPCHARSyncMessage), 1);
+
+				ENetPacket* definePacket = enet_packet_create(packet, sizeof(uint32_t) + sizeof(NPCHARSyncMessage), ENET_PACKET_FLAG_RELIABLE);
+				enet_peer_send(toServer, 0, definePacket);
+			}
+		}
+	}
+	else {
+		// If not connected to a server, perform the normal ActNpChar logic
+		int i;
+		int code_char;
+
+		for (i = 0; i < NPC_MAX; ++i) {
+			if (gNPC[i].cond & 0x80) {
+				code_char = gNPC[i].code_char;
+
+				gpNpcFuncTbl[code_char](&gNPC[i]);
+
+				if (gNPC[i].shock)
+					--gNPC[i].shock;
+			}
+		}
+	}
+}
+
+
+void InitExperiment_NPCSync()
+{
+	ModLoader_WriteJump((void*)0x46FA00, (void*)ActNpChar_Networking);
 }
