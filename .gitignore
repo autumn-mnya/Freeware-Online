@@ -14,3 +14,10 @@ CaveStory/window.rect
 CaveStory/mods/netplay
 CaveStory/Ultimate Doukutsu Trainer.exe
 CaveStory/error.log
+
+!CaveStory/lua.dll
+!CaveStory/mods/autpi/autpi.dll
+!CaveStory/mods/autpi/settings.ini
+!CaveStory/mods/netplay/netplay.dll
+!CaveStory/mods/netplay/settings.ini
+!CaveStory/NetConfig.ini

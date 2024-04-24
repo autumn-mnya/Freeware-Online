@@ -11,9 +11,6 @@ static int& window_magnification = *reinterpret_cast<int*>(0x48F914); // Window 
 static ::RECT& grcGame = *reinterpret_cast<::RECT*>(0x48F91C);
 static ::RECT& grcFull = *reinterpret_cast<::RECT*>(0x48F92C);
 
-static auto& gModulePath = *reinterpret_cast<char(*)[MAX_PATH]>(0x49E328);
-static auto& gDataPath = *reinterpret_cast<char(*)[MAX_PATH]>(0x49E220);
-
 #define WINDOW_WIDTH grcGame.right
 #define WINDOW_HEIGHT grcGame.bottom
 
@@ -949,13 +946,15 @@ static BACK& gBack = *reinterpret_cast<BACK*>(0x499C74);
 static int& gWaterY = *reinterpret_cast<int*>(0x499C90); // Global water level
 
 static auto& gBul = *reinterpret_cast<BULLET(*)[64]>(0x499C98);
-static auto& gBulTbl = *reinterpret_cast<BULLET_TABLE(*)[46]>(0x48F044);
+static auto& gBulTbl = *reinterpret_cast<BULLET_TABLE(*)[46]>(0x48F048);
 static int& spur_charge = *reinterpret_cast<int*>(0x4A5550);
+static int& empty_caret_timer = *reinterpret_cast<int*>(0x4A554C);
 
 static auto& gBoss = *reinterpret_cast<NPCHAR(*)[20]>(0x4BBA58);
 static auto& gpBossFuncTbl = *reinterpret_cast<BOSSFUNCTION(*)[10]>(0x498AEC);
 static BOSSLIFE& gBL = *reinterpret_cast<BOSSLIFE*>(0x4BBA44);
 
+static auto& gCrt = *reinterpret_cast<CARET(*)[64]>(0x49BCA8); // idk if i did this right actually
 static auto& gCaretTable = *reinterpret_cast<CARET_TABLE(*)[18]>(0x48F830);
 static auto& gpCaretFuncTbl = *reinterpret_cast<CARETFUNCTION(*)[18]>(0x48F8C0);
 static auto& star = *reinterpret_cast<CARET(*)[3]>(0x4A5800);
@@ -991,6 +990,7 @@ static int& gSuperYpos = *reinterpret_cast<int*>(0x4BBA28);
 static const char*& gPassPixEve = *reinterpret_cast<const char**>(0x498540);
 
 static NPC_TABLE** gNpcTable = (NPC_TABLE**)0x4BBA34;
+static NPCFUNCTION* gpNpcFuncTbl = (NPCFUNCTION*)0x498548;
 
 static auto& gPermitStage = *reinterpret_cast<PERMIT_STAGE(*)[8]>(0x4A5500);
 
@@ -1998,6 +1998,3 @@ const auto Freeware_sscanf = reinterpret_cast<int(*)(const char*, const char*, .
 const auto Freeware_fprintf = reinterpret_cast<int(*)(FILE*, const char*, ...)>(0x48181C);
 const auto Freeware_fwrite = reinterpret_cast<int(*)(void*, size_t, size_t, FILE*)>(0x481981);
 const auto Freeware_fseek = reinterpret_cast<int(*)(FILE*, int, int)>(0x481A5C);
-
-typedef void (*NPCFUNCTION)(NPCHAR*);
-static NPCFUNCTION* gpNpcFuncTbl = (NPCFUNCTION*)0x498548;

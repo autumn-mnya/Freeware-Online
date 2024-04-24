@@ -2,6 +2,7 @@
 
 #include "cave_story.h"
 
+extern bool networking;
 extern const char* gameIp;
 extern const char* gamePort;
 extern int mim_compatibility;
@@ -11,3 +12,5 @@ extern bool im_being_held;
 extern bool show_players_hitboxes;
 extern bool enable_deathlink;
 extern bool enable_deathlink_on_death;
+
+extern int gCurrentGameMode;

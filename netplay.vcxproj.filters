@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\ByteStream.cpp" />
+    <ClCompile Include="src\\main.cpp" />
+    <ClCompile Include="src\\mod_loader.cpp" />
+    <ClCompile Include="src\\Networking.cpp" />
+    <ClCompile Include="src\lua\Lua.cpp">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AutPI.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\ByteStream.h" />
+    <ClInclude Include="src\main.h" />
+    <ClInclude Include="src\\cave_story.h" />
+    <ClInclude Include="src\\mod_loader.h" />
+    <ClInclude Include="src\\mod_loader_hooks.h" />
+    <ClInclude Include="src\\NetworkDefine.h" />
+    <ClInclude Include="src\\Networking.h" />
+    <ClInclude Include="src\lua\Lua.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AutPI.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="lua">
+      <UniqueIdentifier>{d9d75e08-968d-43b8-a3cf-90320eacc1b5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

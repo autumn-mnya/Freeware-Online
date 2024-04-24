@@ -1,2 +1,3 @@
+autpi
 netplay
 graphics_enhancement
