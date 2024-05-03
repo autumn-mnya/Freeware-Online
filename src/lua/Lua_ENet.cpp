@@ -197,7 +197,7 @@ int SendPacketCustom(lua_State* L)
     const char* packetData = luaL_checklstring(L, 2, &dataSize);
 
     // Calculate the total size of the packet (packet code + size + data)
-    size_t packetSize = sizeof(gNetVersion) + sizeof(mainCode) + sizeof(packetCode) + sizeof(dataSize) + dataSize;
+    size_t packetSize = sizeof(gNetVersion) + sizeof(mainCode) + sizeof(packetCode) + sizeof(uint32_t) + dataSize;
 
     // Allocate memory for the packet
     uint8_t* packet = new uint8_t[packetSize];
@@ -207,7 +207,7 @@ int SendPacketCustom(lua_State* L)
     packetDataStream.WriteLE32(gNetVersion);
     packetDataStream.WriteLE32(mainCode);
     packetDataStream.WriteLE32(packetCode);
-    packetDataStream.WriteLE32((uint32_t)dataSize);
+    packetDataStream.WriteLE32(static_cast<uint32_t>(dataSize));
 
     // Write the actual data
     packetDataStream.Write(packetData, 1, dataSize);
@@ -223,7 +223,6 @@ int SendPacketCustom(lua_State* L)
 
     return 0;
 }
-
 
 // Function table for ENet functions
 FUNCTION_TABLE EnetFunctionTable[FUNCTION_TABLE_ENET_SIZE] = {

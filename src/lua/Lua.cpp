@@ -55,7 +55,11 @@ static int lua_GetSpecialPacketCode(lua_State* L)
 }
 
 static int lua_GetSpecialPacketData(lua_State* L) {
-	lua_pushstring(L, specialData);
+	if (specialData == nullptr)
+		lua_pushstring(L, "No data");
+	else
+		lua_pushstring(L, specialData);
+
 	return 1;
 }
 

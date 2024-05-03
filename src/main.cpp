@@ -158,9 +158,8 @@ void Netplay_PutFPS()
 	}
 }
 
-void MakeCustomSurfaces(int x, int y, int s, BOOL r)
+void MakeCustomSurfaces()
 {
-	MakeSurface_Generic(x, y, s, r);
 	MakeSurface_Generic(WINDOW_WIDTH * 2, MAX_CLIENTS * 16, SURFACE_ID_USERNAME, FALSE);
 }
 
@@ -210,7 +209,7 @@ void InitMod(void)
 		if (pause_window_on_lost_focus == false)
 			ModLoader_WriteCall((void*)0x413316, (void*)ActiveWindow);
 
-		ModLoader_WriteCall((void*)0x4115F0, (void*)MakeCustomSurfaces);
+		RegisterPreModeElement(MakeCustomSurfaces);
 		// CampLoop replacement CALLs (run networking in inventory)
 		// ModLoader_WriteCall((void*)0x401DD8, (void*)CampLoop_GetTrg);
 		// ModLoader_WriteCall((void*)0x401E84, (void*)CampLoop_PutFramePerSecound);

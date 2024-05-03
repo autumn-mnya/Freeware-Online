@@ -5,6 +5,7 @@
 /Release
 /CaveStory/release
 netplay.vcxproj.user
+/ZZ-FinalRelease
 
 CaveStory/mod/
 CaveStory/fps

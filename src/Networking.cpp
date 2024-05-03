@@ -38,7 +38,7 @@ const char *playerName = "Player";
 int gNetVersion = 11;
 int packetcode = 0;
 int specialPacketCode = 0;
-char* specialData = "null";
+char* specialData = nullptr;
 
 ENetPeer* ReturnToServer()
 {
@@ -469,19 +469,18 @@ void HandleClient()
 
 						case PACKETCODE_RECEIVE_CUSTOM_DATA:
 						{
+							// Read data size
 							specialPacketCode = packetData->ReadLE32();
 							uint32_t dataSize = packetData->ReadLE32();
 
-							// Read variable-length data
-							specialData = new char[dataSize];
+							// Allocate memory for received data
+							specialData = new char[dataSize + 1]; // +1 for null terminator
 							packetData->Read(specialData, 1, dataSize);
+							specialData[dataSize] = '\0'; // Null-terminate the string
 
-							printf("Received custom data from server: %s\n", specialData);
+							// printf("Received custom data from Server: %s\n", specialData);
 
 							ClientActNetScript();
-
-							// Clean up
-							specialData = "null";
 							break;
 						}
 
