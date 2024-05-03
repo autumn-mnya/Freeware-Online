@@ -1,7 +1,3 @@
-#include <Windows.h>
-
-#include "cave_story.h"
-
 extern bool networking;
 extern const char* gameIp;
 extern const char* gamePort;

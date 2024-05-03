@@ -255,5 +255,6 @@ void InitMod(void)
 	RegisterTitleInitElement(SetModeTitle);
 	RegisterInitElement(SetModeAction);
 
+	// RegisterLuaMetadataElement(PushNetplayMetadata);
 	RegisterLuaFuncElement(SetNetplayLua);
 }

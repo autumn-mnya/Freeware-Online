@@ -9,6 +9,9 @@
       <Filter>lua</Filter>
     </ClCompile>
     <ClCompile Include="src\AutPI.cpp" />
+    <ClCompile Include="src\lua\Lua_ENet.cpp">
+      <Filter>lua</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ByteStream.h" />
@@ -22,6 +25,13 @@
       <Filter>lua</Filter>
     </ClInclude>
     <ClInclude Include="src\AutPI.h" />
+    <ClInclude Include="src\lua\Lua_ENet.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lua\ENet_FunctionDeclare.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CommonNetplayVariables.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="lua">

@@ -15,6 +15,10 @@
 #include "cave_story.h"
 #include "mod_loader.h"
 #include "ByteStream.h"
+#include "lua/Lua_ENet.h"
+#include "lua/ENet_FunctionDeclare.h"
+#include "CommonNetplayVariables.h"
+#include "AutPI.h"
 
 ENetHost *client;
 ENetAddress clientAddress;
@@ -30,6 +34,16 @@ unsigned int gLastChatMessage = 0;
 
 const char *skinFilename = "Skin";
 const char *playerName = "Player";
+
+int gNetVersion = 11;
+int packetcode = 0;
+int specialPacketCode = 0;
+char* specialData = "null";
+
+ENetPeer* ReturnToServer()
+{
+	return toServer;
+}
 
 static int SubpixelToScreenCoord(int coord)
 {
@@ -157,6 +171,33 @@ void HandleNPCHARSyncMessage(ByteStream* packetData) {
 	}
 }
 
+int ClientActNetScript()
+{
+	lua_getglobal(gL, "ModCS");
+	lua_getfield(gL, -1, "Netplay");
+	lua_getfield(gL, -1, "ActClient");
+
+	if (lua_isnil(gL, -1))
+	{
+		lua_settop(gL, 0); // Clear stack
+		return 1;
+	}
+
+	if (lua_pcall(gL, 0, 0, 0) != LUA_OK)
+	{
+		const char* error = lua_tostring(gL, -1);
+
+		// ErrorLog(error, 0);
+		printf("ERROR: %s\n", error);
+		// MessageBoxA(ghWnd, "Couldn't execute game act function", "ModScript Error", MB_OK);
+		return 0;
+	}
+
+	lua_settop(gL, 0); // Clear stack
+
+	return 1;
+}
+
 //Handle client
 void HandleClient()
 {
@@ -176,7 +217,7 @@ void HandleClient()
 		uint8_t packet[0x100];
 		memset(packet, 0, 0x100);
 		packetData = new ByteStream(packet, 0x100);
-		packetData->WriteLE32(NET_VERSION);
+		packetData->WriteLE32(gNetVersion);
 		packetData->WriteLE32(PACKETCODE_REPLICATE_PLAYER);
 		
 		//Set attributes
@@ -253,7 +294,7 @@ void HandleClient()
 				
 				packetData = new ByteStream(packet, packetSize);
 				
-				packetData->WriteLE32(NET_VERSION);
+				packetData->WriteLE32(gNetVersion);
 				packetData->WriteLE32(PACKETCODE_DEFINE_PLAYER);
 				packetData->Write(username, 1, MAX_NAME);
 				
@@ -291,7 +332,7 @@ void HandleClient()
 						memset(packet, 0, packetSize);
 						
 						packetData = SDL_RWFromMem(packet, packetSize);
-						SDL_WriteLE32(packetData, NET_VERSION);
+						SDL_WriteLE32(packetData, gNetVersion);
 						SDL_WriteLE32(packetData, PACKETCODE_SKIN);
 						SDL_RWclose(packetData);
 						SDL_RWread(temp, packet + 8, 1, SDL_RWsize(temp));
@@ -313,13 +354,20 @@ void HandleClient()
 				return;
 				
 			case ENET_EVENT_TYPE_RECEIVE:
+				// ClientActNetScript
 				//Handle packet data
 				packetData = new ByteStream(event.packet->data, event.packet->dataLength);
 				
-				if (packetData->ReadLE32() == NET_VERSION)
+				if (packetData->ReadLE32() == gNetVersion)
 				{
-					switch (packetData->ReadLE32())
+					packetcode = packetData->ReadLE32();
+					switch (packetcode)
 					{
+						default:
+						{
+							ClientActNetScript();
+							break;
+						}
 						case PACKETCODE_CHAT_MESSAGE:
 							packetData->Read(msg, 1, event.packet->dataLength - 8);
 							PrintChat(msg);
@@ -418,6 +466,24 @@ void HandleClient()
 								PlayerDeath();
 							}
 							break;
+
+						case PACKETCODE_RECEIVE_CUSTOM_DATA:
+						{
+							specialPacketCode = packetData->ReadLE32();
+							uint32_t dataSize = packetData->ReadLE32();
+
+							// Read variable-length data
+							specialData = new char[dataSize];
+							packetData->Read(specialData, 1, dataSize);
+
+							printf("Received custom data from server: %s\n", specialData);
+
+							ClientActNetScript();
+
+							// Clean up
+							specialData = "null";
+							break;
+						}
 
 						case PACKETCODE_NPC_SYNC:
 						{
@@ -639,7 +705,7 @@ void SendChatMessage(const char *name, const char *text)
 	auto packetSize = 8 + (strlen(msgText) + 1);
 	uint8_t* packet = new uint8_t[packetSize];
 	SDL_RWops *packetData = SDL_RWFromMem(packet, packetSize);
-	SDL_WriteLE32(packetData, NET_VERSION);
+	SDL_WriteLE32(packetData, gNetVersion);
 	SDL_WriteLE32(packetData, PACKETCODE_CHAT_MESSAGE);
 	SDL_RWwrite(packetData, msgText, 1, sizeof(msgText));
 	SDL_RWclose(packetData);
@@ -855,8 +921,8 @@ void ActNpChar_Networking(void) {
 				uint8_t packet[sizeof(uint32_t) + sizeof(NPCHARSyncMessage)];
 				ByteStream packetData(packet, sizeof(uint32_t) + sizeof(NPCHARSyncMessage));
 
-				// Write NET_VERSION and PACKETCODE_NPC_SYNC to the packet
-				packetData.WriteLE32(NET_VERSION);
+				// Write gNetVersion and PACKETCODE_NPC_SYNC to the packet
+				packetData.WriteLE32(gNetVersion);
 				packetData.WriteLE32(PACKETCODE_NPC_SYNC);
 				packetData.Write(&syncMessage, sizeof(NPCHARSyncMessage), 1);
 

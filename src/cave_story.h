@@ -1979,6 +1979,7 @@ const auto ActBossChar03_03 = reinterpret_cast<void(*)(NPCHAR*)>(0x4802A0);
 const auto ActBossChar03_04 = reinterpret_cast<void(*)(NPCHAR*)>(0x480550);
 const auto ActBossChar03_face = reinterpret_cast<void(*)(NPCHAR*)>(0x4808C0);
 // Freeware Functions -- periwinkle headers
+/*
 const auto Freeware_memset = reinterpret_cast<void* (*)(void*, int, size_t)>(0x480D30);
 const auto Freeware_fclose = reinterpret_cast<int(*)(FILE*)>(0x480E1B);
 const auto Freeware_fread = reinterpret_cast<size_t(*)(void*, size_t, size_t, FILE*)>(0x480F55);
@@ -1998,3 +1999,4 @@ const auto Freeware_sscanf = reinterpret_cast<int(*)(const char*, const char*, .
 const auto Freeware_fprintf = reinterpret_cast<int(*)(FILE*, const char*, ...)>(0x48181C);
 const auto Freeware_fwrite = reinterpret_cast<int(*)(void*, size_t, size_t, FILE*)>(0x481981);
 const auto Freeware_fseek = reinterpret_cast<int(*)(FILE*, int, int)>(0x481A5C);
+*/
